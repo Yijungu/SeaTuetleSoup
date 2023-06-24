@@ -1,0 +1,18 @@
+# 이미지 설정
+FROM node:16
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 의존성 설치
+COPY package.json yarn.lock ./
+RUN yarn install
+
+# 프로젝트 코드 복사
+COPY . .
+
+# Next.js 빌드
+RUN yarn build
+
+# 서버 실행
+CMD ["yarn", "start"]
