@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+  web:
+    build:
+      context: ./tutle_backend
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./tutle_backend:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  frontend:
+    build:
+      context: ./tutle_frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./tutle_frontend:/app
+    ports:
+      - "3000:3000"
