@@ -6,7 +6,8 @@ export default function asd() {
   <div className="e218_230">
     <div className="e172_65">
       <div className="ei172_65_152_95"></div>
-    </div><span  className="e108_103">남편은 병으로 산소호흡기와 같은 의료 기구를 달고 있었는데 병원 전체가 정전이 되어 죽게 되었고, 
+    </div>
+    <span  className="e108_103">남편은 병으로 산소호흡기와 같은 의료 기구를 달고 있었는데 병원 전체가 정전이 되어 죽게 되었고, 
 아내는 작동되지 않는 엘리베이터를 보고 그 사실을 깨닫게 되었다.</span>
   </div>
   <div className="e154_160">
