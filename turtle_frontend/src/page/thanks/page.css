@@ -39,18 +39,18 @@ body, html {
 .i172_65_152_95 { 
 	border:1px solid rgba(243.31249594688416, 243.31249594688416, 243.31249594688416, 1);
 }
-.e108_103 { 
+.user_answer { 
 	color:rgba(51.00000075995922, 51.00000075995922, 51.00000075995922, 1);
-	width:669px;
+	width:700px;
 	height:90px;
 	position:absolute;
 	left:71px;
-	top:31px;
+	top:40px;
 	font-family:Apple SD Gothic Neo;
 	text-align:left;
 	font-size:18px;
 	letter-spacing:-0.5;
-	line-height:px;
+	line-height:30px;
 }
 .e154_160 { 
 	width:702.9998779296875px;
@@ -78,19 +78,90 @@ body, html {
 .k154_146 { 
 	border:2px solid rgba(79.6875, 79.6875, 79.6875, 1);
 }
-.e154_152 { 
+.my_play { 
 	color:rgba(0, 0, 0, 1);
 	width:528px;
 	height:257px;
 	position:absolute;
 	left:32px;
-	top:17.723663330078125px;
+	top:35px;
 	font-family:Inter;
 	text-align:left;
 	font-size:17px;
 	letter-spacing:-0.5;
 	line-height:px;
 }
+
+.my_play_2 { 
+	color:rgba(0, 0, 0, 1);
+	width:528px;
+	height:257px;
+	position:absolute;
+	left:32px;
+	top:85px;
+	font-family:Inter;
+	text-align:left;
+	font-size:17px;
+	letter-spacing:-0.5;
+	line-height:px;
+}
+
+.my_play_3 { 
+	color:rgba(0, 0, 0, 1);
+	width:528px;
+	height:257px;
+	position:absolute;
+	left:32px;
+	top:115px;
+	font-family:Inter;
+	text-align:left;
+	font-size:17px;
+	letter-spacing:-0.5;
+	line-height:px;
+}
+
+.my_play_4 { 
+	color:rgba(0, 0, 0, 1);
+	width:528px;
+	height:257px;
+	position:absolute;
+	left:32px;
+	top:145px;
+	font-family:Inter;
+	text-align:left;
+	font-size:17px;
+	letter-spacing:-0.5;
+	line-height:px;
+}
+
+.my_play_5 { 
+	color:rgba(0, 0, 0, 1);
+	width:528px;
+	height:257px;
+	position:absolute;
+	left:32px;
+	top:175px;
+	font-family:Inter;
+	text-align:left;
+	font-size:17px;
+	letter-spacing:-0.5;
+	line-height:px;
+}
+
+.my_play_6 { 
+	color:rgba(0, 0, 0, 1);
+	width:528px;
+	height:257px;
+	position:absolute;
+	left:32px;
+	top:205px;
+	font-family:Inter;
+	text-align:left;
+	font-size:17px;
+	letter-spacing:-0.5;
+	line-height:px;
+}
+
 .e218_229 { 
 	width:80px;
 	height:33px;
@@ -159,18 +230,18 @@ body, html {
 	left:27.614118576049805px;
 	top:148.80941772460938px;
 }
-.e106_101 { 
+.AI_answer { 
 	color:rgba(51.00000075995922, 51.00000075995922, 51.00000075995922, 1);
-	width:697px;
+	width:710px;
 	height:104.92462158203125px;
 	position:absolute;
 	left:58px;
-	top:31px;
+	top:41px;
 	font-family:Apple SD Gothic Neo;
 	text-align:left;
 	font-size:18px;
 	letter-spacing:-0.5;
-	line-height:px;
+	line-height:30px;
 }
 .e218_202 { 
 	width:80px;
@@ -219,13 +290,13 @@ body, html {
 	left:657.6910400390625px;
 	top:0px;
 }
-.e218_218 { 
+.nickname { 
 	color:rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-	width:153.56227111816406px;
+	width:152px;
 	height:63px;
 	position:absolute;
 	left:0px;
-	top:0px;
+	top:22px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:14.5px;
@@ -280,16 +351,17 @@ body, html {
 .i218_221_144_2659 { 
 	border:5px solid rgba(0, 0, 0, 1);
 }
-.e218_222 { 
+.F22F { 
 	color:rgba(0, 0, 0, 1);
-	width:161.64450073242188px;
+	width:160px;
 	height:58px;
 	position:absolute;
-	left:0px;
+	left:-10px;
 	top:12px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:35px;
 	letter-spacing:-0.5;
 	line-height:px;
+	font-weight:bold;
 }

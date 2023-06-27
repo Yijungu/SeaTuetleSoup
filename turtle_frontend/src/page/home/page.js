@@ -22,19 +22,19 @@ export default function Home() {
         <div className="e6_27"></div>
         <div className="e12_16">
           <div className="ei12_16_152_101"></div>
-          <span className="ei12_16_152_102">바닷가 레스토랑인게 중요합니까?</span>
+          <span className="my_chat">바닷가 레스토랑인게 중요합니까?</span>
         </div>
         <div className="e6_30">
-          <div className="ei6_30_152_95"></div>
-          <span className="ei6_30_152_96">네. 그 남자의 과거와 관련이 있습니다.</span>
+          <div className="AI_chat_box_2"></div>
+          <span className="AI_chat_2">네. 그 남자의 과거와 관련이 있습니다.</span>
         </div>
         <div className="e12_26">
-          <div className="ei12_26_152_95"></div>
-          <span className="ei12_26_152_96">네. 조금은 관계 있습니다.</span>
+          <div className="AI_chat_box"></div>
+          <span className="AI_chat">네. 조금은 관계 있습니다.</span>
         </div>
         <div className="e6_29">
           <div className="ei6_29_152_101"></div>
-          <span className="ei6_29_152_102">수프가 그 남자의 과거와 관련이 있나요? </span>
+          <span className="my_chat">수프가 그 남자의 과거와 관련이 있나요? </span>
         </div>
       </div>
       <div className="e111_293">
@@ -78,8 +78,8 @@ export default function Home() {
         <p className="e186_178">A. ??</p>
       </div>
       <div className="e186_185">
-        <span className="e186_175">Q. 여태 플레이한 기록을 볼 수 있나요?</span>
-        <span className="e186_178">A. 플레이한 기록은 우측 상단의 ‘log’에서 볼 수 있습니다. 홈 화면에서 닉네임을 입력하면 어쩌고~</span>
+        <p className="e186_175">Q. 여태 플레이한 기록을 볼 수 있나요?</p>
+        <p className="e186_178">A. 플레이한 기록은 우측 상단의 ‘log’에서 볼 수 있습니다. 홈 화면에서 닉네임을 입력하면 어쩌고~</p>
       </div>
       <div className="e186_188">
         <span className="e186_175">Q. 바다거북수프 이야기는 어떻게 정해지나요?</span>
@@ -88,8 +88,7 @@ export default function Home() {
       <div className="e186_191">
         <span className="e186_175">Q. 하루에 한 번 이상 플레이할 수 없나요?</span>
         <span className="e186_178">A. 바다거북수프는 하루에 한 번만 플레이 할 수 있습니다. 저희는 꼬맨틀과 같은 게임의 핵심 요소는 &quot;하루에 한 번만, 모두가 동일한 정답&quot;이라고 생각합니다. 
-     정답 단어는 국제 표준시(UTC) 기준 매일 오후 3시 또는 한국 표준시(KST) 기준 자정에 바뀝니다.
-</span>
+     정답 단어는 국제 표준시(UTC) 기준 매일 오후 3시 또는 한국 표준시(KST) 기준 자정에 바뀝니다.</span>
       </div>
       <div className="e186_194">
         <span className="e186_175">Q. 다른 질문이나 피드백은 어떻게 보내나요?</span>

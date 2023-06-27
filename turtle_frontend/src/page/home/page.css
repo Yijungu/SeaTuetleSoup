@@ -170,13 +170,13 @@ body, html {
 	top:0px;
 	border-radius:14px;
 }
-.ei12_16_152_102 { 
+.my_chat { 
 	color:rgba(255, 255, 255, 1);
 	width:357px;
 	height:24px;
 	position:absolute;
 	left:16px;
-	top:17px;
+	top:22px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:19px;
@@ -189,7 +189,7 @@ body, html {
 	left:58px;
 	top:187px;
 }
-.ei6_30_152_95 { 
+.AI_chat_box_2 { 
 	background-color:rgba(246.0000005364418, 246.0000005364418, 246.0000005364418, 1);
 	width:367px;
 	height:60px;
@@ -220,30 +220,44 @@ body, html {
 	left:58px;
 	top:387px;
 }
-.ei12_26_152_95 { 
+.AI_chat_box { 
 	background-color:rgba(246.0000005364418, 246.0000005364418, 246.0000005364418, 1);
-	width:281px;
+	width:330px;
 	height:60px;
 	position:absolute;
 	left:0px;
-	top:0px;
+	top:2px;
 	border-radius:14px;
 }
 .i12_26_152_95 { 
 	border:1px solid rgba(231.62500709295273, 231.62500709295273, 231.62500709295273, 1);
 }
-.ei12_26_152_96 { 
+.AI_chat { 
 	color:rgba(0, 0, 0, 1);
-	width:249px;
+	width:300px;
 	height:72px;
 	position:absolute;
 	left:16px;
-	top:15px;
+	top:22px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:19px;
 	letter-spacing:0;
 }
+
+.AI_chat_2 { 
+	color:rgba(0, 0, 0, 1);
+	width:300px;
+	height:72px;
+	position:absolute;
+	left:30px;
+	top:20px;
+	font-family:Apple SD Gothic Neo;
+	text-align:center;
+	font-size:19px;
+	letter-spacing:0;
+}
+
 .e6_29 { 
 	width:389px;
 	height:64.23843383789062px;
