@@ -6,7 +6,7 @@ body, html {
 .k9_52 { 
 	overflow:hidden;
 }
-.e9_52 { 
+.all { 
 	background-color:rgba(255, 255, 255, 1);
 	width:1440px;
 	height:1747px;
@@ -36,9 +36,7 @@ body, html {
 	top:0px;
 	border-radius:100px;
 }
-.i125_118_144_2659 { 
-	border:1px solid rgba(131.74999594688416, 131.74999594688416, 131.74999594688416, 1);
-}
+
 .ei125_118_152_168 { 
 	width:34px;
 	height:34px;
@@ -46,7 +44,7 @@ body, html {
 	left:774px;
 	top:6px;
 }
-.ei125_118_152_135 { 
+.send_button { 
 	border-radius:500px;
 	background-color:rgba(93.33176985383034, 176.37499898672104, 116.5838697552681, 1);
 	width:34px;
@@ -67,12 +65,12 @@ body, html {
 	top:10px;
 	border-radius:14px;
 }
-.e28_53 { 
+.textbox { 
 	color:rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-	width:1124px;
-	height:36px;
+	width:810px;
+	height:38px;
 	position:absolute;
-	left:26px;
+	left:-0.5px;
 	top:0px;
 	font-family:Apple SD Gothic Neo;
 	text-align:left;
@@ -94,13 +92,13 @@ body, html {
 	left:651px;
 	top:0px;
 }
-.e28_68 { 
+.nickname { 
 	color:rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
 	width:152px;
 	height:63px;
 	position:absolute;
 	left:0px;
-	top:0px;
+	top:22px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:14.5px;
@@ -114,20 +112,20 @@ body, html {
 	left:4px;
 	top:13px;
 }
-.e125_158 { 
+.profile_photo { 
 	background-color:rgba(33.00000183284283, 33.00000183284283, 33.00000183284283, 1);
 	width:20px;
 	height:20px;
 	position:absolute;
-	left:7.890625px;
-	top:6.90625px;
+	left:3.890625px;
+	top:6px;
 }
-.e125_142 { 
+.About { 
 	color:rgba(0, 0, 0, 1);
 	width:770px;
 	height:58px;
 	position:absolute;
-	left:884px;
+	left:800px;
 	top:6px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
@@ -135,6 +133,36 @@ body, html {
 	letter-spacing:-0.5;
 	line-height:px;
 }
+
+.QnA { 
+	color:rgba(0, 0, 0, 1);
+	width:770px;
+	height:58px;
+	position:absolute;
+	left:900px;
+	top:6px;
+	font-family:Apple SD Gothic Neo;
+	text-align:center;
+	font-size:18px;
+	letter-spacing:-0.5;
+	line-height:px;
+}
+
+.Log { 
+	color:rgba(0, 0, 0, 1);
+	width:770px;
+	height:58px;
+	position:absolute;
+	left:1000px;
+	top:6px;
+	font-family:Apple SD Gothic Neo;
+	text-align:center;
+	font-size:18px;
+	letter-spacing:-0.5;
+	line-height:px;
+}
+	
+
 .e125_159 { 
 	background-color:rgba(255, 255, 255, 1);
 	width:101px;
@@ -155,18 +183,20 @@ body, html {
 .i125_159_144_2659 { 
 	border:5px solid rgba(0, 0, 0, 1);
 }
-.e102_34 { 
+.F22F { 
 	color:rgba(0, 0, 0, 1);
 	width:160px;
 	height:58px;
 	position:absolute;
-	left:0px;
+	left:-10px;
 	top:12px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:35px;
 	letter-spacing:-0.5;
 	line-height:px;
+	font-weight:bold;
+
 }
 .e168_70 { 
 	width:1105px;
@@ -175,19 +205,36 @@ body, html {
 	left:167px;
 	top:79px;
 }
-.e168_73 { 
+.description { 
 	color:rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
 	width:1105px;
 	height:80px;
 	position:absolute;
 	left:0px;
-	top:0px;
+	top:30px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:20px;
 	letter-spacing:-0.5;
 	line-height:px;
+	font-weight:550;
 }
+.description_2 { 
+	color:rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
+	width:1105px;
+	height:80px;
+	position:absolute;
+	left:0px;
+	top:70px;
+	font-family:Apple SD Gothic Neo;
+	text-align:center;
+	font-size:20px;
+	letter-spacing:-0.5;
+	line-height:px;
+	font-weight:550;
+}
+
+
 .e218_180 { 
 	width:1105px;
 	height:166px;
@@ -215,19 +262,22 @@ body, html {
 .i102_77_152_95 { 
 	border:1px solid rgba(243.31249594688416, 243.31249594688416, 243.31249594688416, 1);
 }
-.e19_34 { 
+.Question { 
 	color:rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-	width:1105px;
+	width:413px;
 	height:90px;
 	position:absolute;
-	left:0px;
-	top:25px;
+	left:345px;
+	top:40px;
 	font-family:Apple SD Gothic Neo;
 	text-align:center;
 	font-size:22px;
 	letter-spacing:-0.5;
-	line-height:px;
+	line-height:40px;
+	font-weight:bold;
 }
+
+
 .e218_179 { 
 	width:50px;
 	height:40px;
