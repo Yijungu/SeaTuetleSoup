@@ -129,5 +129,26 @@ export default function Problem() {
       ))}
       <span className="give_up">포기하기</span>
     </div>
+    <span  className="F22F">F22F</span>
+  </div>
+  <div className="e168_70">
+    <span  className="description">텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의 답을 받을 수 있습니다.</span>
+<span  className="description_2">N번째 바다거북수프의 정답을 맞혀보세요.</span>
+</div>
+  <div className="e218_180">
+    <div className="e102_77">
+      <div className="ei102_77_152_95"></div>
+    </div><span  className="Question">여자는 귀가하기 위해 엘리베이터를 타려다가,
+자신의 남편이 죽은 것을 깨달았다. 왜 그랬을까?</span>
+  </div>
+  <div className="e218_179">
+    <div className="e186_106"></div>
+    <div className="e186_107">
+      <div className="ei186_107_5790_3581"></div>
+    </div><span  className="top">TOP</span>
+  </div>
+  <span  className="give_up">포기하기</span>
+</div>
+    )
   );
 }
