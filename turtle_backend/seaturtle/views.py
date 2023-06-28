@@ -1,25 +1,38 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from .qa import question, submit
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .qa import question, submit, getProblem, getStory
 import json
 
-def request_QA(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        question_text = data['question']
-        reponse = question(question_text)
-        
-        return JsonResponse({'status': 'ok'})
-    else:
-        return JsonResponse({'status': 'only POST method allowed'})
+class RequestQaView(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        question_text = question(data["text"])
+        if question_text is not None:
+            return Response({'response': question_text})
+        else:
+            return Response({'status': 'question is required'}, status=400)
+
+class RequestSmView(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        submit_text = submit(data["data"])
+        if submit_text is not None:
+            return Response({'response': submit_text})
+        else:
+            return Response({'status': 'submit text is required'}, status=400)
+
+class GetQuestionView(APIView):
+    def get(self, request, format=None):
+        problem_text = getProblem()
+        data = {
+            'question': problem_text 
+        }
+        return Response(data)
     
-
-def request_SM(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        submit_text = data['submit']
-        reponse = submit(submit_text)
-
-        return JsonResponse({'status': 'ok'})
-    else:
-        return JsonResponse({'status': 'only POST method allowed'})
+class GetStroyView(APIView):
+    def get(self, request, format=None):
+        story_text = getStory()
+        data = {
+            'story': story_text 
+        }
+        return Response(data)
