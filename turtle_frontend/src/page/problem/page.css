@@ -354,53 +354,51 @@ html {
   background-color: #008cba; /* 기본 색상을 표현 (예: 파란색) */
 }
 
-.e218_179 { 
-	width:50px;
-	height:40px;
-	position:absolute;
-	left:1357px;
-	top:1663px;
+.e218_179 {
+  width: 50px;
+  height: 40px;
+  position: absolute;
+  left: 1357px;
+  top: 1663px;
 }
-.e186_106 { 
-	background-color:rgba(170.02655804157257, 200.41814804077148, 235.87500303983688, 1);
-	width:40px;
-	height:40px;
-	position:absolute;
-	left:5px;
-	top:0px;
-	border-top-left-radius:40px;
-	border-top-right-radius:40px;
-	border-bottom-left-radius:40px;
-	border-bottom-right-radius:40px;
+.e186_106 {
+  background-color: rgba(
+    170.02655804157257,
+    200.41814804077148,
+    235.87500303983688,
+    1
+  );
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 5px;
+  top: 0px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
 }
-.e186_107 { 
-	width:20px;
-	height:20px;
-	position:absolute;
-	left:15px;
-	top:1px;
+.e186_107 {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 15px;
+  top: 1px;
 }
-.ei186_107_5790_3581 { 
-	background-color:rgba(78.62500101327896, 78.62500101327896, 78.62500101327896, 1);
-	width:8.764562606811523px;
-	height:5.20549201965332px;
-	position:absolute;
-	left:5.6285014152526855px;
-	top:7.395168304443359px;
+.ei186_107_5790_3581 {
+  background-color: rgba(
+    78.62500101327896,
+    78.62500101327896,
+    78.62500101327896,
+    1
+  );
+  width: 8.764562606811523px;
+  height: 5.20549201965332px;
+  position: absolute;
+  left: 5.6285014152526855px;
+  top: 7.395168304443359px;
 }
-.top { 
-	color:rgba(78.62500101327896, 78.62500101327896, 78.62500101327896, 1);
-	width:50px;
-	height:15px;
-	position:absolute;
-	left:0px;
-	top:18px;
-	font-family:Apple SD Gothic Neo;
-	text-align:center;
-	font-size:14px;
-	letter-spacing:2;
-	line-height:px;
- )
+
 .give_up {
   color: rgba(78.62500101327896, 78.62500101327896, 78.62500101327896, 1);
   width: 50px;
@@ -414,4 +412,18 @@ html {
   letter-spacing: 2;
   line-height: px;
   font-weight: bold;
+}
+
+.top {
+  color: rgba(78.62500101327896, 78.62500101327896, 78.62500101327896, 1);
+  width: 50px;
+  height: 15px;
+  position: absolute;
+  left: 0px;
+  top: 18px;
+  font-family: Apple SD Gothic Neo;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 2;
+  line-height: px;
 }
