@@ -312,7 +312,7 @@ body, html {
 	left:5.6285014152526855px;
 	top:7.395168304443359px;
 }
-.e186_108 { 
+.top { 
 	color:rgba(78.62500101327896, 78.62500101327896, 78.62500101327896, 1);
 	width:50px;
 	height:15px;
@@ -325,3 +325,29 @@ body, html {
 	letter-spacing:2;
 	line-height:px;
 }
+.top { 
+	color:rgba(78.62500101327896, 78.62500101327896, 78.62500101327896, 1);
+	width:50px;
+	height:15px;
+	position:absolute;
+	left:0px;
+	top:18px;
+	font-family:Apple SD Gothic Neo;
+	text-align:center;
+	font-size:14px;
+	letter-spacing:2;
+	line-height:px
+}
+.give_up { 
+	color:rgba(78.62500101327896, 78.62500101327896, 78.62500101327896, 1);
+	width:50px;
+	height:15px;
+	position:absolute;
+	left:220px;
+	top:438px;
+	font-family:Apple SD Gothic Neo;
+	text-align:center;
+	font-size:14px;
+	letter-spacing:2;
+	line-height:px;
+	font-weight:bold;}

@@ -64,8 +64,9 @@ export default function Problem() {
     <div className="e186_106"></div>
     <div className="e186_107">
       <div className="ei186_107_5790_3581"></div>
-    </div><span  className="e186_108">TOP</span>
+    </div><span  className="top">TOP</span>
   </div>
+  <span  className="give_up">포기하기</span>
 </div>
     )
 }
