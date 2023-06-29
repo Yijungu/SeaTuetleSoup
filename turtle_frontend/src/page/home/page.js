@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import "./page.css";
+import Profile from "../../images/Profile.png";
+import Check from "../../images/Check.png";
 
 export default function Home() {
   return (
@@ -52,7 +54,7 @@ export default function Home() {
         <div className="e111_294">
           <div className="ei111_294_144_2659"></div>
         </div>
-        <span className="e111_295">F22F</span>
+        <span className="F22F">F22F</span>
       </div>
       <div className="e204_182">
         <div className="e172_228"></div>
@@ -64,12 +66,26 @@ export default function Home() {
       <div className="e204_184">
         <div className="e186_126"></div>
         <div className="e186_133">
-          <div className="ei186_133_5790_5654"></div>
+          <img
+            className="check"
+            src={Check}
+            alt="Profile"
+            width="30"
+            height="30"
+          />
         </div>
-        <div className="e186_114">
-          <div className="ei186_114_125_158"></div>
+        <div className="nickanme_profile">
+          <div className="e186_114">
+            <img
+              className="profile_photo"
+              src={Profile}
+              alt="Profile"
+              width="25"
+              height="25"
+            />
+          </div>
+          <span className="nickname">닉네임을 입력하세요.</span>
         </div>
-        <span className="e186_197">닉네임을 입력하세요.</span>
       </div>
       <div className="e186_174">
         <p className="e186_175">Q. 바다거북수프란 무엇인가요?</p>

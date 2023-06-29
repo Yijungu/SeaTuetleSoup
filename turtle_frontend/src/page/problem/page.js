@@ -3,14 +3,13 @@ import axios from "axios";
 import QnA from "../../component/qna";
 import "./page.css";
 import { useNavigate } from "react-router-dom";
-
-// 컴포넌트 안에서
+import Profile from "../../images/Profile.png";
+import SendButton from "../../images/SendButton.png";
 
 export default function Problem() {
   const [text, setText] = useState("");
   const [qnas, setQnas] = useState([]);
   const [question, setQuestion] = useState("");
-  const [buttonColor, setButtonColor] = useState("defaultColor");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,10 +78,15 @@ export default function Problem() {
           onKeyPress={handleKeyPress}
         />
         <div className="ei125_118_152_168">
-          <button
-            className={`send_button ${buttonColor}`}
-            onClick={handleSendClick}
-          ></button>
+          <button className={`send_button`} onClick={handleSendClick}>
+            <img
+              className="SendButton"
+              src={SendButton}
+              alt="SendButton"
+              width="15"
+              height="18"
+            />
+          </button>
         </div>
       </div>
 
@@ -90,7 +94,13 @@ export default function Problem() {
         <div className="e111_301">
           <span className="nickname">thisis2jun9 님</span>
           <div className="e125_157">
-            <div className="profile_photo"></div>
+            <img
+              className="profile_photo"
+              src={Profile}
+              alt="Profile"
+              width="25"
+              height="25"
+            />
           </div>
         </div>
         <p className="About">About</p>
@@ -127,8 +137,6 @@ export default function Problem() {
           />
         </div>
       ))}
-      <span className="F22F">F22F</span>
-      <span className="give_up">포기하기</span>
     </div>
   );
 }

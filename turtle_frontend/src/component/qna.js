@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import AIIcon from "../images/AIIcon.png"; // 이미지 import
+import SeaTurtleIcon from "../images/SeaTurtleIcon.png"; // 이미지 import
 
 const QnA = ({ question, answer, borderStrength, borderBottomStrength }) => {
   return (
@@ -26,7 +27,13 @@ const QnA = ({ question, answer, borderStrength, borderBottomStrength }) => {
           borderRight: "0.01px solid black",
         }}
       >
-        <QuestionAnswerIcon />
+        <img
+          src={SeaTurtleIcon}
+          alt="SeaTurtle"
+          width="25"
+          height="25"
+          style={{ marginLeft: "10px", marginRight: "10px" }}
+        />
         <Typography>{question}</Typography>
       </Box>
       <Box
@@ -43,7 +50,13 @@ const QnA = ({ question, answer, borderStrength, borderBottomStrength }) => {
           borderBottom: `${borderBottomStrength} solid black`,
         }}
       >
-        <QuestionAnswerIcon />
+        <img
+          src={AIIcon}
+          alt="AI"
+          width="25"
+          height="25"
+          style={{ marginLeft: "10px", marginRight: "10px" }}
+        />
         <Typography>{answer}</Typography>
       </Box>
     </Box>

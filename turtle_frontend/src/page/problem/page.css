@@ -46,19 +46,22 @@ html {
   top: -240px;
 }
 .send_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 500px;
-  background-color: rgba(
-    93.33176985383034,
-    176.37499898672104,
-    116.5838697552681,
-    1
-  );
+  background-color: #5db075;
   width: 34px;
   height: 34px;
   position: absolute;
   left: 0px;
-  top: 0px;
+  top: 1px;
+  border: 0px;
 }
+.send_button:active {
+  background-color: #367247; /* 보다 진한 색상 코드로 변경하세요 */
+}
+
 .i125_118_152_122 {
   border: 2.000000238418579px solid rgba(255, 255, 255, 1);
 }
@@ -119,17 +122,11 @@ html {
   top: 13px;
 }
 .profile_photo {
-  background-color: rgba(
-    33.00000183284283,
-    33.00000183284283,
-    33.00000183284283,
-    1
-  );
   width: 20px;
   height: 20px;
   position: absolute;
-  left: 3.890625px;
-  top: 6px;
+  left: 5px;
+  top: 5.8px;
 }
 .About {
   color: rgba(0, 0, 0, 1);
@@ -192,20 +189,6 @@ html {
 }
 .i125_159_144_2659 {
   border: 5px solid rgba(0, 0, 0, 1);
-}
-.F22F {
-  color: rgba(0, 0, 0, 1);
-  width: 160px;
-  height: 58px;
-  position: absolute;
-  left: -10px;
-  top: 12px;
-  font-family: Apple SD Gothic Neo;
-  text-align: center;
-  font-size: 35px;
-  letter-spacing: -0.5;
-  line-height: px;
-  font-weight: bold;
 }
 .e168_70 {
   width: 1105px;
@@ -284,6 +267,7 @@ html {
   line-height: 40px;
   font-weight: bold;
   padding: 10px;
+  overflow-wrap: break-word;
 }
 
 .e218_179 {
@@ -426,4 +410,46 @@ html {
   font-size: 14px;
   letter-spacing: 2;
   line-height: px;
+}
+
+.F22F {
+  border: 6px solid black;
+  color: rgba(0, 0, 0, 1);
+  width: 97px;
+  height: 38px;
+  position: absolute;
+  left: 0px;
+  top: 12px;
+  font-family: Apple SD Gothic Neo;
+  font-weight: 750;
+  text-align: center;
+  align-items: center;
+  font-size: 35px;
+  letter-spacing: -0.5;
+  line-height: px;
+  border-radius: 55px;
+}
+.nickname {
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  left: 8px;
+  top: 21px;
+  font-family: Apple SD Gothic Neo;
+  text-align: center;
+  align-items: center;
+  letter-spacing: -0.5;
+  line-height: px;
+  border-radius: 55px;
+}
+.nickanme_profile {
+  border: 2px solid black;
+  position: absolute;
+  width: 155px;
+  height: 40px;
+  left: 22px;
+  top: 5px;
+  font-size: 35px;
+  letter-spacing: -0.5;
+  line-height: px;
+  border-radius: 40px;
 }
