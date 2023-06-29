@@ -10,7 +10,11 @@ RUN npm install
 RUN npm install @mui/material @emotion/react @emotion/styled
 RUN npm install @mui/icons-material
 RUN npm install react-router-dom
+<<<<<<< HEAD
 RUN npm install framer-motion
+=======
+Run npm install framer-motion
+>>>>>>> de1257485766e505c2d6c9bedbdfd3b7b0302b28
 # 프로젝트 코드 복사
 COPY . .
 # Install dependencies
