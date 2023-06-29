@@ -5,12 +5,16 @@ import "./page.css";
 import { useNavigate } from "react-router-dom";
 import Profile from "../../images/Profile.png";
 import SendButton from "../../images/SendButton.png";
+import Loading from "../../component/loading";
+import { motion } from 'framer-motion';
 
 export default function Problem() {
   const [text, setText] = useState("");
   const [qnas, setQnas] = useState([]);
   const [question, setQuestion] = useState("");
   const navigate = useNavigate();
+  const [shake, setShake] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -51,28 +55,46 @@ export default function Problem() {
           navigate("/thanks", { state: { userAnswer: text } });
         } else {
           setText("");
+          setShake(true); // 실패 시 shake 상태를 true로 변경
+          setQnas([{ question: text, answer: "정답이 아닙니다." }, ...qnas]);
+          setTimeout(() => setShake(false), 500);
         }
       } else {
+        const tempQnas = [{ question: text, answer: <Loading /> }, ...qnas];
+        setQnas(tempQnas);  // 임시로 Loading 애니메이션을 표시
+  
         const response = await axios.post("http://localhost:8000/question/", {
           text,
         });
-
-        setQnas([{ question: text, answer: response.data.response }, ...qnas]);
+  
+        const updatedQnas = tempQnas.map(qna =>
+          qna.question === text && qna.answer.type === Loading
+            ? { question: text, answer: response.data.response }
+            : qna
+        );
+  
+        setQnas(updatedQnas); // 응답으로 교체
         setText("");
       }
     } catch (error) {
+      setIsLoading(false);
       console.error(error);
     }
   };
 
   return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
     <div className="all">
       <div className="e218_192">
         <div className="e102_77">
           <span className="Question">{question}</span>
         </div>
         <input
-          className="textbox"
+          className={`textbox ${shake ? 'shake' : ''}`}
           value={text}
           onChange={handleChange}
           onKeyPress={handleKeyPress}
@@ -88,6 +110,16 @@ export default function Problem() {
             />
           </button>
         </div>
+        {qnas.map((qna, index) => (
+      <div className="QAresponse" key={index}>
+        <QnA
+          question={qna.question}
+          answer={isLoading && qna.question === text ? <span className="loading">Loading</span> : qna.answer}
+          borderStrength={index === 0 ? "2px" : "0px"}
+          borderBottomStrength={index === qnas.length - 1 ? "0.01px" : "0px"}
+        />
+      </div>
+    ))}
       </div>
 
       <div className="e28_163">
@@ -127,16 +159,8 @@ export default function Problem() {
         </div>
         <span className="e186_108">TOP</span>
       </div>
-      {qnas.map((qna, index) => (
-        <div className="QAresponse" key={index}>
-          <QnA
-            question={qna.question}
-            answer={qna.answer}
-            borderStrength={index === 0 ? "2px" : "0px"}
-            borderBottomStrength={index === qnas.length - 1 ? "0.01px" : "0px"}
-          />
-        </div>
-      ))}
     </div>
+     {/* 컴포넌트 내용 */}
+     </motion.div>
   );
 }

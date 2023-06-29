@@ -2,9 +2,15 @@ import { Link } from "react-router-dom";
 import "./page.css";
 import Profile from "../../images/Profile.png";
 import Check from "../../images/Check.png";
+import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
     <div className="e4_2">
       <div className="e6_15">
         <span className="e6_16">땅끝마을 바다거북수프 맛집</span>
@@ -54,7 +60,7 @@ export default function Home() {
         <div className="e111_294">
           <div className="ei111_294_144_2659"></div>
         </div>
-        <span className="F22F">F22F</span>
+        <span className="F22F_main">F22F</span>
       </div>
       <div className="e204_182">
         <div className="e172_228"></div>
@@ -74,17 +80,17 @@ export default function Home() {
             height="30"
           />
         </div>
-        <div className="nickanme_profile">
+        <div className="nickname_profile_main">
           <div className="e186_114">
             <img
-              className="profile_photo"
+              className="profile_photo_main"
               src={Profile}
               alt="Profile"
-              width="25"
-              height="25"
+              width="23"
+              height="23"
             />
           </div>
-          <span className="nickname">닉네임을 입력하세요.</span>
+          <span className="nickname_main">닉네임을 입력하세요.</span>
         </div>
       </div>
       <div className="e186_174">
@@ -146,5 +152,6 @@ export default function Home() {
         </span>
       </div>
     </div>
+    </motion.div>
   );
 }

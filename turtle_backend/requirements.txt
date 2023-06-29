@@ -1,4 +1,5 @@
 Django
+framer-motion
 djangorestframework
 psycopg2-binary
 django-cors-headers
