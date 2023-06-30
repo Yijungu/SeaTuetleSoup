@@ -291,12 +291,18 @@ export default function Problem() {
               />
             </div>
           ))}
+          <button className="giveup_button" onClick={handleGiveUpClick}>
+          포기하기
+        </button>
         </div>
 
         <div className="menu">
           <div className="e111_301">
-            <span className="nickname">{nickname} 님</span>
+            <div><p className="nickname">{nickname}   님</p>
+            <p className="border_line"></p>
+            </div>
             <div className="e125_157">
+           
               <img
                 className="profile_photo"
                 src={Profile}
@@ -306,11 +312,10 @@ export default function Problem() {
               />
             </div>
           </div>
-          <p className="About">About</p>
-          <p className="QnA">QnA</p>
-          <p className="Log">Log</p>
         </div>
-        <span className="F22F">F22F</span>
+
+        <button className="F22F">F22F</button>
+
         <div className="e168_70">
           <span className="description">
             텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의 답을
@@ -322,14 +327,9 @@ export default function Problem() {
         </div>
         <div className="e218_179"></div>
         <div>
-          {/* 페이지의 다른 요소들... */}
           <ScrollToTopButton className="scroll_to_top" />
         </div>
-        <button className="giveup_button" onClick={handleGiveUpClick}>
-          포기하기
-        </button>
       </div>
-      {/* 컴포넌트 내용 */}
     </motion.div>
   );
 }

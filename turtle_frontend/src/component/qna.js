@@ -18,7 +18,7 @@ const QnA = ({ question, answer, borderStrength, borderBottomStrength }) => {
           display: "flex",
           gap: "0px",
           alignItems: "center",
-          backgroundColor: "#E0EBF9",
+          backgroundColor: "#F3F3F3",
           width: "805px",
           minheight: "100px",
           padding: "12.5px",
