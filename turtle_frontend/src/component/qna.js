@@ -11,7 +11,6 @@ const QnA = ({ question, answer, borderStrength, borderBottomStrength }) => {
         flexDirection: "column",
         width: "810px",
         // height: "50px",
-        border: `${borderStrength} solid black`,
       }}
     >
       <Box
@@ -20,11 +19,12 @@ const QnA = ({ question, answer, borderStrength, borderBottomStrength }) => {
           gap: "0px",
           alignItems: "center",
           backgroundColor: "#E0EBF9",
-          width: "810px",
-          height: "50px",
+          width: "805px",
+          minheight: "100px",
+          padding: "12.5px",
+          overflowWrap: "break-word",
+          wordBreak: "keep-all",
           borderTop: "0.01px solid black",
-          borderLeft: "0.01px solid black",
-          borderRight: "0.01px solid black",
         }}
       >
         <img
@@ -42,11 +42,12 @@ const QnA = ({ question, answer, borderStrength, borderBottomStrength }) => {
           gap: "0px",
           alignItems: "center",
           backgroundColor: "white",
-          width: "810px",
-          height: "50px",
+          width: "805px",
+          minheight: "100px",
+          padding: "12.5px",
           borderTop: "0.01px solid black",
-          borderLeft: "0.01px solid black",
-          borderRight: "0.01px solid black",
+          overflowWrap: "break-word",
+          wordBreak: "keep-all",
           borderBottom: `${borderBottomStrength} solid black`,
         }}
       >

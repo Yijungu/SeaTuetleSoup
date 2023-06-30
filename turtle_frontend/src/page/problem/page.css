@@ -1,40 +1,66 @@
 @keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
 }
 
 .shake {
-  animation: shake 0.5s; 
-  animation-iteration-count: 1; 
-  transform-origin: 50% 50%; 
+  animation: shake 0.5s;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
   animation-timing-function: linear;
 }
 
 @keyframes loading {
-  0% { content: "Loading"; }
-  25% { content: "Loading."; }
-  50% { content: "Loading.."; }
-  75% { content: "Loading..."; }
-  100% { content: "Loading"; }
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+  100% {
+    content: "Loading";
+  }
 }
 
 .loading {
   animation: loading 1s infinite;
-}
-body,
-html {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .k9_52 {
   overflow: hidden;
@@ -42,7 +68,7 @@ html {
 .all {
   background-color: rgba(255, 255, 255, 1);
   width: 1440px;
-  height: 1747px;
+  min-height: 1747px;
   position: relative;
 }
 .e218_192 {
@@ -69,14 +95,6 @@ html {
   top: 0px;
   border-radius: 100px;
 }
-
-.ei125_118_152_168 {
-  width: 34px;
-  height: 34px;
-  position: relative;
-  left: 774px;
-  top: -240px;
-}
 .send_button {
   display: flex;
   justify-content: center;
@@ -85,15 +103,17 @@ html {
   background-color: #5db075;
   width: 34px;
   height: 34px;
-  position: absolute;
-  left: 0px;
-  top: 1px;
+  position: relative;
+  left: 777px;
+  top: -169px;
   border: 0px;
 }
 .send_button:active {
   background-color: #367247; /* 보다 진한 색상 코드로 변경하세요 */
 }
-
+.send_button.tabPressed {
+  background-color: rgb(75, 75, 233); /* 원하는 색상을 입력하세요 */
+}
 .i125_118_152_122 {
   border: 2.000000238418579px solid rgba(255, 255, 255, 1);
 }
@@ -112,19 +132,14 @@ html {
   height: 38px;
   position: relative;
   left: -0.5px;
-  top: -200px;
+  top: -130px;
   font-family: Apple SD Gothic Neo;
   text-align: left;
   font-size: 18px;
   letter-spacing: -0.5;
   line-height: px;
-}
-.e28_163 {
-  width: 1654px;
-  height: 70px;
-  position: absolute;
-  left: -9px;
-  top: -2px;
+  border-radius: 10px;
+  outline: none;
 }
 .e111_301 {
   width: 152px;
@@ -228,7 +243,7 @@ html {
   font-size: 20px;
   letter-spacing: -0.5;
   line-height: px;
-  font-weight: 550;
+  font-weight: 650;
 }
 .description_2 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -242,7 +257,7 @@ html {
   font-size: 20px;
   letter-spacing: -0.5;
   line-height: px;
-  font-weight: 550;
+  font-weight: 650;
 }
 
 .e218_180 {
@@ -252,7 +267,7 @@ html {
   left: 167px;
   top: 200px;
 }
-.e102_77 {
+.question_box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -268,25 +283,40 @@ html {
   width: 818px;
   position: relative;
   left: 0px;
-  top: -220px;
+  top: -200px;
   border-radius: 14px;
 }
+.question_box::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(
+    243.31249594688416,
+    243.31249594688416,
+    243.31249594688416,
+    1
+  );
+  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+}
+
 .i102_77_152_95 {
   border: 1px solid
     rgba(243.31249594688416, 243.31249594688416, 243.31249594688416, 1);
 }
 .Question {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-  max-width: 413px;
+  max-width: 570px;
   position: relative;
   font-family: Apple SD Gothic Neo;
   text-align: center;
   font-size: 22px;
   letter-spacing: -0.5;
   line-height: 40px;
-  font-weight: bold;
-  padding: 10px;
+  font-weight: 600;
+  padding: 30px;
   overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 .e218_179 {
@@ -349,7 +379,7 @@ html {
 .QAresponse {
   position: relative;
   left: 0px;
-  top: -200px;
+  top: -140px;
   display: flex;
   flex-direction: column-reverse;
 }
@@ -437,8 +467,8 @@ html {
   width: 97px;
   height: 38px;
   position: absolute;
-  left: 0;
-  top: 50%;
+  left: 0px;
+  top: 40px;
   transform: translateY(-50%);
   font-family: "Apple SD Gothic Neo";
   font-weight: 750;
@@ -460,4 +490,26 @@ html {
   line-height: px;
   border-radius: 55px;
 }
+.scroll_to_top {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 1000; /* z-index를 적절하게 설정하여 다른 요소 위에 나타나도록 할 수 있습니다. */
+}
+.giveup_button {
+  outline: none;
+  color: #ffffff;
+  background-color: #7096ff;
+  box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.8);
+  position: relative;
+  top: 700px;
+  width: 80px;
+  height: 30px;
+  border-radius: 7px;
+}
 
+.giveup_button:active {
+  background-color: #5d7ed9;
+}
