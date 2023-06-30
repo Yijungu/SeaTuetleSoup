@@ -13,7 +13,8 @@
 
 # misc
 .DS_Store
-.env
+turtle_frontend/.env
+turtle_backend/.env
 .env.local
 .env.development.local
 .env.test.local
