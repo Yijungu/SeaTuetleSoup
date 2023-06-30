@@ -31,36 +31,36 @@ export default function Home() {
     >
       <div className="e4_2">
         <div className="e6_15">
-          <span className="e6_16">땅끝마을 바다거북수프 맛집</span>
-          <span className="e6_17">AI 기반 무한 바다거북수프</span>
+          <span className="e6_16">My Soup Recipe 🍽️</span>
+          <span className="e6_17">AI 기반 바다거북수프 공장</span>
         </div>
         <div className="e6_18">
-          <div className="e6_19"></div>
+          <div className="start_button"></div>
           <Link
             to="/problem"
             className="e6_20"
             style={{ textDecoration: "none" }}
           >
-            시작하기{" "}
+            시작하기 ✨{" "}
           </Link>
         </div>
         <div className="e19_10">
-          <div className="e6_22">
-            <div className="e6_23"></div>
+  
+            <div className="computer_top"></div>
             <div className="e6_24"></div>
-          </div>
+        
           <div className="e6_28"></div>
           <div className="e6_25"></div>
           <div className="e6_26"></div>
           <div className="e6_27"></div>
           <div className="e12_16">
-            <div className="ei12_16_152_101"></div>
+            <div className="my_chat_box"></div>
             <span className="my_chat">바닷가 레스토랑인게 중요합니까?</span>
           </div>
           <div className="e6_30">
             <div className="AI_chat_box_2"></div>
             <span className="AI_chat_2">
-              네. 그 남자의 과거와 관련이 있습니다.
+              네. 그 남자의 과거와 관련있습니다.
             </span>
           </div>
           <div className="e12_26">
@@ -68,13 +68,13 @@ export default function Home() {
             <span className="AI_chat">네. 조금은 관계 있습니다.</span>
           </div>
           <div className="e6_29">
-            <div className="ei6_29_152_101"></div>
+            <div className="my_chat_box_2"></div>
             <span className="my_chat">
-              수프가 그 남자의 과거와 관련이 있나요?{" "}
+              수프가 남자의 과거와 관련이 있나요?{" "}
             </span>
           </div>
         </div>
-        <span className="F22F_main">F22F</span>
+        <button className="F22F_main">F22F</button>
         <div className="e204_184">
           <div className="e186_126"></div>
           <div className="e186_133" onClick={handleClick}>
@@ -104,7 +104,9 @@ export default function Home() {
               onChange={handleChange}
               placeholder="닉네임을 입력하세요."
             />
+            
           </div>
+          <p className="border_line"></p>
         </div>
         <div className="e186_174">
           <p className="e186_175">Q. 바다거북수프란 무엇인가요?</p>

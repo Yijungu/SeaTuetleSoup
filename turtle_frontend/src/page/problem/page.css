@@ -142,11 +142,13 @@
   outline: none;
 }
 .e111_301 {
+  
   width: 152px;
-  height: 63px;
+  height: 40px;
   position: absolute;
   left: 651px;
   top: 0px;
+  
 }
 .e125_157 {
   width: 36px;
@@ -155,13 +157,7 @@
   left: 4px;
   top: 13px;
 }
-.profile_photo {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  left: 5px;
-  top: 5.8px;
-}
+
 .About {
   color: rgba(0, 0, 0, 1);
   width: 770px;
@@ -274,12 +270,7 @@
   justify-content: center;
   min-height: 50px;
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
-  background-color: rgba(
-    243.31249594688416,
-    243.31249594688416,
-    243.31249594688416,
-    1
-  );
+  background-color: hsla(215, 62%, 88%, 0.868);
   width: 818px;
   position: relative;
   left: 0px;
@@ -462,34 +453,59 @@
 }
 
 .F22F {
-  border: 6px solid black;
-  color: rgba(0, 0, 0, 1);
-  width: 97px;
-  height: 38px;
-  position: absolute;
-  left: 0px;
+  border: 4.5px solid black;
+  color: rgb(21, 21, 21);
+  width: 101px;
+  height: 45px;
+  position: relative;
+  left: 10px;
   top: 40px;
   transform: translateY(-50%);
   font-family: "Apple SD Gothic Neo";
-  font-weight: 750;
+  font-weight: 650;
   text-align: center;
   font-size: 35px;
-  letter-spacing: -0.5px;
-  line-height: 38px; /* 텍스트 높이와 동일하게 설정 */
+  letter-spacing: -0.3px;
+  line-height: 38px; 
   border-radius: 55px;
+  background-color: #ffffff;
+  padding-top: 2.5px;
 }
+
 .nickname {
   color: rgba(0, 0, 0, 1);
   position: absolute;
-  left: 8px;
-  top: 21px;
+  left: 720px;
+  top: 17.5px;
   font-family: Apple SD Gothic Neo;
-  text-align: center;
+  text-align: left;
   align-items: center;
   letter-spacing: -0.5;
   line-height: px;
   border-radius: 55px;
 }
+
+.profile_photo {
+  background-color: transparent;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 690px;
+  top: 15px;
+}
+
+.border_line {
+  border: 1px solid rgb(55, 52, 52);
+  background-color: transparent;
+  height: 30px;
+  position: relative;
+  left: 683px;
+  top: 8px;
+  border-radius: 55px;
+  width: calc(100% + 10px); /* 너비를 글씨의 길이에 따라 조정합니다. 여기서는 간단하게 글씨 길이에 10px를 더한 값으로 설정했습니다. */
+}
+
+
 .scroll_to_top {
   position: fixed;
   bottom: 10px;
@@ -500,14 +516,15 @@
 }
 .giveup_button {
   outline: none;
-  color: #ffffff;
-  background-color: #7096ff;
-  box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.8);
+  border: 1.5px solid black;
+  color: #292626;
+  background-color: #f8fbff;
   position: relative;
-  top: 700px;
-  width: 80px;
+  left: 750px;
+  top: -110px;
+  width: 70px;
   height: 30px;
-  border-radius: 7px;
+  border-radius: 8px;
 }
 
 .giveup_button:active {

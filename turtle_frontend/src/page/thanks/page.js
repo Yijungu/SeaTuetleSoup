@@ -106,7 +106,9 @@ export default function Thanks() {
           <p className="Log_3">Log</p>
         </div>
       </div>
-      <span className="F22F">F22F</span>
+
+      <button className="F22F">F22F</button>
+
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import scrollToTopImage from "../images/ScollTopButton.png";
+import scrollToTopImage from "../images/ScrollToTopButton.png";
 
 const ScrollToTopButton = ({ className }) => {
   const [isVisible, setIsVisible] = useState(false);

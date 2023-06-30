@@ -55,15 +55,15 @@ html {
   left: 635px;
   top: 403px;
 }
-.e6_19 {
-  box-shadow: 0px 16px 24px
+.start_button {
+  box-shadow:0px 12px 10px
     rgba(
       18.88193730264902,
       36.03742964565754,
       50.82965210080147,
       0.23999999463558197
     );
-  background-color: rgba(0, 69.00000348687172, 255, 1);
+  background-color: rgb(19, 82, 255);
   width: 169px;
   height: 56px;
   position: absolute;
@@ -76,15 +76,16 @@ html {
 }
 .e6_20 {
   color: rgba(255, 255, 255, 1);
-  width: 80px;
+  width: 100px;
   height: 22px;
   position: absolute;
-  left: 43.5px;
+  left: 38px;
   top: 17px;
   font-family: Apple SD Gothic Neo;
   text-align: center;
   font-size: 18px;
   letter-spacing: 1;
+  font-weight: 550;
 }
 .e19_10 {
   width: 1105px;
@@ -112,9 +113,10 @@ html {
   position: absolute;
   left: 0px;
   top: 0px;
+  
 }
-.e6_23 {
-  box-shadow: 0px 32px 48px
+.computer_top {
+  box-shadow: 0px 30px 30px
     rgba(
       18.88193730264902,
       36.03742964565754,
@@ -125,17 +127,17 @@ html {
     224.000001847744,
     232.00000137090683,
     240.00000089406967,
-    1
+    1 
   );
   width: 1105px;
   height: 557px;
   position: absolute;
   left: 0px;
   top: 0px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 .e6_24 {
   background-color: rgba(
@@ -149,6 +151,8 @@ html {
   position: absolute;
   left: 0px;
   top: 504.9660949707031px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 .k6_24 {
   border: 1px solid
@@ -206,20 +210,25 @@ html {
   left: 637px;
   top: 287px;
 }
-.ei12_16_152_101 {
+.my_chat_box {
   transform: rotate(180deg);
-  background-color: rgba(
-    93.33176985383034,
-    176.37499898672104,
-    116.5838697552681,
-    1
-  );
+  background-color: #00C637;
   width: 370px;
-  height: 64.23843383789062px;
+  height: 55px;
   position: absolute;
   left: 10px;
-  top: 0px;
-  border-radius: 5px;
+  top: 10px;
+  border-radius: 55px;
+}
+.my_chat_box_2 {
+  transform: rotate(180deg);
+  background-color: #00C637;
+  width: 370px;
+  height: 55px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  border-radius: 55px;
 }
 .my_chat {
   color: rgba(255, 255, 255, 1);
@@ -227,11 +236,12 @@ html {
   height: 24px;
   position: absolute;
   left: 16px;
-  top: 22px;
+  top: 27px;
   font-family: Apple SD Gothic Neo;
   text-align: center;
-  font-size: 19px;
+  font-size: 18.6px;
   letter-spacing: 0;
+  font-weight: 525;
 }
 .e6_30 {
   width: 367px;
@@ -248,11 +258,11 @@ html {
     1
   );
   width: 367px;
-  height: 60px;
+  height: 55px;
   position: absolute;
   left: 0px;
-  top: 0px;
-  border-radius: 5px;
+  top: 5px;
+  border-radius: 55px;
 }
 .i6_30_152_95 {
   border: 1px solid
@@ -285,11 +295,11 @@ html {
     1
   );
   width: 330px;
-  height: 60px;
+  height: 55px;
   position: absolute;
   left: 0px;
-  top: 2px;
-  border-radius: 5px;
+  top: 5px;
+  border-radius: 55px;
 }
 .i12_26_152_95 {
   border: 1px solid
@@ -301,11 +311,12 @@ html {
   height: 72px;
   position: absolute;
   left: 16px;
-  top: 22px;
+  top: 22.5px;
   font-family: Apple SD Gothic Neo;
   text-align: center;
-  font-size: 19px;
+  font-size: 18.5px;
   letter-spacing: 0;
+  font-weight: 420;
 }
 
 .AI_chat_2 {
@@ -314,11 +325,12 @@ html {
   height: 72px;
   position: absolute;
   left: 10px;
-  top: 20px;
+  top: 22.5px;
   font-family: Apple SD Gothic Neo;
   text-align: center;
-  font-size: 19px;
+  font-size: 18.5px;
   letter-spacing: 0;
+  font-weight: 420;
 }
 
 .e6_29 {
@@ -383,21 +395,23 @@ html {
   border: 5px solid rgba(0, 0, 0, 1);
 }
 .F22F_main {
-  border: 6px solid black;
-  color: rgba(0, 0, 0, 1);
-  width: 97px;
-  height: 38px;
-  position: absolute;
-  left: 0px;
+  border: 4.5px solid black;
+  color: rgb(21, 21, 21);
+  width: 101px;
+  height: 45px;
+  position: relative;
+  left: 10px;
   top: 40px;
   transform: translateY(-50%);
   font-family: "Apple SD Gothic Neo";
-  font-weight: 750;
+  font-weight: 650;
   text-align: center;
   font-size: 35px;
-  letter-spacing: -0.5px;
-  line-height: 38px; /* 텍스트 높이와 동일하게 설정 */
+  letter-spacing: -0.3px;
+  line-height: 38px; 
   border-radius: 55px;
+  background-color: #ffffff;
+  padding-top: 2.5px;
 }
 .e204_182 {
   width: 50px;
@@ -500,6 +514,18 @@ html {
   position: absolute;
   top: 3.5px;
 }
+
+.border_line {
+  border: 1px solid rgb(55, 52, 52);
+  background-color: transparent;
+  height: 30px;
+  position: relative;
+  left: 60px;
+  top: 80px;
+  border-radius: 55px;
+  width: calc(100% + 10px); /* 너비를 글씨의 길이에 따라 조정합니다. 여기서는 간단하게 글씨 길이에 10px를 더한 값으로 설정했습니다. */
+}
+
 .e186_197 {
   color: rgba(0, 0, 0, 1);
   width: 145px;
@@ -548,12 +574,13 @@ html {
   height: 63px;
   position: absolute;
   left: 0px;
-  top: 54px;
+  top: 85px;
   font-family: Apple SD Gothic Neo;
   text-align: left;
-  font-size: 40px;
+  font-size: 33px;
   letter-spacing: -0.5;
   line-height: px;
+  font-weight: 600;
 }
 .e186_178 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
