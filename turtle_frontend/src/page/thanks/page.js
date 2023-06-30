@@ -27,7 +27,7 @@ export default function Thanks() {
 
   useEffect(() => {
     axios
-      .get("${process.env.REACT_APP_API_URL}/getStory/")
+      .get(process.env.REACT_APP_API_URL + "/getStory/")
       .then((response) => {
         const data = response.data;
         setStory(data.story);

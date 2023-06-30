@@ -111,8 +111,9 @@ export default function Problem() {
   }, [qnas]);
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL);
     axios
-      .get("${process.env.REACT_APP_API_URL}/getQuestion/")
+      .get(process.env.REACT_APP_API_URL + "/getQuestion/")
       .then((response) => {
         const data = response.data;
         setQuestion(data.question);
@@ -165,7 +166,7 @@ export default function Problem() {
       if (tabPressed === true) {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
         const anotherResponse = await axios.post(
-          "${process.env.REACT_APP_API_URL}/submit/",
+          process.env.REACT_APP_API_URL + "/submit/",
           {
             data: text,
           }
@@ -216,7 +217,7 @@ export default function Problem() {
         setQnas(tempQnas); // 임시로 Loading 애니메이션을 표시
 
         const response = await axios.post(
-          "${process.env.REACT_APP_API_URL}/question/",
+          process.env.REACT_APP_API_URL + "/question/",
           {
             text,
           }

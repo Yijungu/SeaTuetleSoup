@@ -1,7 +1,7 @@
 from django.db import models
 
 class SeaTurtle(models.Model):
-    date = models.IntegerField(unique=True)
+    date = models.AutoField(primary_key=True)
     story = models.TextField()
     problem = models.TextField()
 
@@ -9,7 +9,7 @@ class SeaTurtle(models.Model):
         return str(self.date)
 
 class Keyword(models.Model):
-    date = models.ForeignKey(SeaTurtle, on_delete=models.CASCADE)  # if a SeaTurtle object is deleted, all associated Keyword objects will be deleted as well
+    date = models.ForeignKey(SeaTurtle, on_delete=models.CASCADE)
     word = models.CharField(max_length=200)
 
     def __str__(self):
