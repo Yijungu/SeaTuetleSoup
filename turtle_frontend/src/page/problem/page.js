@@ -161,14 +161,15 @@ export default function Problem() {
     if (isProcessing) return;
     // 실행 중이 아니라면, 실행 중임을 표시
     setIsProcessing(true);
-
     try {
+      const text_t = text;
+      setTimeout(() => setText(""), 0);
       if (tabPressed === true) {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
         const anotherResponse = await axios.post(
           process.env.REACT_APP_API_URL + "/submit/",
           {
-            data: text,
+            data: text_t,
           }
         );
         console.log(anotherResponse.data.response);
@@ -201,7 +202,6 @@ export default function Problem() {
           }
           setUpdateState(true);
         } else {
-          setText("");
           setShake(true); // 실패 시 shake 상태를 true로 변경
           const newQnas = [
             { question: text, answer: "정답이 아닙니다." },
@@ -219,10 +219,9 @@ export default function Problem() {
         const response = await axios.post(
           process.env.REACT_APP_API_URL + "/question/",
           {
-            text,
+            data: text_t,
           }
         );
-
         const updatedQnas = tempQnas.map((qna) =>
           qna.question === text && qna.answer.type === Loading
             ? { question: text, answer: response.data.response }
@@ -232,7 +231,6 @@ export default function Problem() {
         setQnas(updatedQnas); // 응답으로 교체
         saveQnas(updatedQnas);
         setTotalQuestionsAsked(totalQuestionsAsked + 1); // localStorage에 저장
-        setText("");
       }
       setIsProcessing(false);
     } catch (error) {
@@ -248,61 +246,60 @@ export default function Problem() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="all">
-        <div className="e218_192">
-          <div className="question_box">
-            <span className="Question">{question}</span>
-          </div>
-          <input
-            className={`textbox ${shake ? "shake" : ""}`}
-            value={text}
-            onChange={handleChange}
-            onKeyDown={handleKeyPress}
-          />
-
-          <button
-            className={`send_button ${tabPressed ? "tabPressed" : ""}`}
-            onClick={handleSendClick}
-          >
-            <img
-              className="SendButton"
-              src={SendButton}
-              alt="SendButton"
-              width="15"
-              height="18"
+      <div className="container">
+        <div className="all">
+          <div className="e218_192">
+            <div className="question_box">
+              <span className="Question">{question}</span>
+            </div>
+            <input
+              className={`textbox ${shake ? "shake" : ""}`}
+              value={text}
+              onChange={handleChange}
+              onKeyDown={handleKeyPress}
             />
-          </button>
 
-          {qnas.map((qna, index) => (
-            <div className="QAresponse" key={index}>
-              <QnA
-                question={qna.question}
-                answer={
-                  isLoading && qna.question === text ? (
-                    <span className="loading">Loading</span>
-                  ) : (
-                    qna.answer
-                  )
-                }
-                borderStrength={index === 0 ? "2px" : "0px"}
-                borderBottomStrength={
-                  index === qnas.length - 1 ? "0.01px" : "0px"
-                }
+            <button
+              className={`send_button ${tabPressed ? "tabPressed" : ""}`}
+              onClick={handleSendClick}
+            >
+              <img
+                className="SendButton"
+                src={SendButton}
+                alt="SendButton"
+                width="15"
+                height="18"
               />
-            </div>
-          ))}
-          <button className="giveup_button" onClick={handleGiveUpClick}>
-          포기하기
-        </button>
-        </div>
+            </button>
 
-        <div className="menu">
-          <div className="e111_301">
-            <div><p className="nickname">{nickname}   님</p>
-            <p className="border_line"></p>
+            {qnas.map((qna, index) => (
+              <div className="QAresponse" key={index}>
+                <QnA
+                  question={qna.question}
+                  answer={
+                    isLoading && qna.question === text ? (
+                      <span className="loading">Loading</span>
+                    ) : (
+                      qna.answer
+                    )
+                  }
+                  borderStrength={index === 0 ? "2px" : "0px"}
+                  borderBottomStrength={
+                    index === qnas.length - 1 ? "0.01px" : "0px"
+                  }
+                />
+              </div>
+            ))}
+            <button className="giveup_button" onClick={handleGiveUpClick}>
+              포기하기
+            </button>
+          </div>
+
+          <div className="border_line">
+            <div>
+              <p className="nickname">{nickname} 님</p>
             </div>
-            <div className="e125_157">
-           
+            <div>
               <img
                 className="profile_photo"
                 src={Profile}
@@ -312,22 +309,21 @@ export default function Problem() {
               />
             </div>
           </div>
-        </div>
 
-        <button className="F22F">F22F</button>
+          <button className="F22F">F22F</button>
 
-        <div className="e168_70">
-          <span className="description">
-            텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의 답을
-            받을 수 있습니다.
-          </span>
-          <span className="description_2">
-            N번째 바다거북수프의 정답을 맞혀보세요.
-          </span>
-        </div>
-        <div className="e218_179"></div>
-        <div>
-          <ScrollToTopButton className="scroll_to_top" />
+          <div className="e168_70">
+            <span className="description">
+              텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의
+              답을 받을 수 있습니다.
+            </span>
+            <span className="description_2">
+              N번째 바다거북수프의 정답을 맞혀보세요.
+            </span>
+          </div>
+          <div>
+            <ScrollToTopButton className="scroll_to_top" />
+          </div>
         </div>
       </div>
     </motion.div>

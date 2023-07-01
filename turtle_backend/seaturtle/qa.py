@@ -11,6 +11,8 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 
+n_number = 1
+
 load_dotenv() 
 openai_apikey = os.getenv('API_KEY')
 os.environ["OPENAI_API_KEY"] = openai_apikey
@@ -48,7 +50,7 @@ def question(query):
 
 def submit(answer):
     messages = []
-    answer += " 이 글에서 건축가 와 비슷한 단어가 들어가있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
+    answer += " 이 글에서 [건축가]와 비슷한 단어가 들어가있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
     messages.append({"role" : "user", "content": answer})
     completion = openai.ChatCompletion.create(
       model = "gpt-3.5-turbo",
@@ -86,7 +88,7 @@ def get_story():
                                   return_source_documents=True)
     problem = seaturtle[0].problem
     keywords = list(Keyword.objects.filter(date = today))
-    
+    n_number += 1
     answer_plus_edit()
 
     return 0
@@ -96,3 +98,6 @@ def getProblem():
 
 def getStory():
     return story
+
+def getNnumber():
+    return n_number

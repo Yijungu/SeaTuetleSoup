@@ -1,12 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .qa import question, submit, getProblem, getStory
+from .qa import question, submit, getProblem, getStory, getNnumber
 import json
 
 class RequestQaView(APIView):
     def post(self, request, format=None):
         data = request.data
-        question_text = question(data["text"])
+        question_text = question(data["data"])
         if question_text is not None:
             return Response({'response': question_text})
         else:
@@ -34,5 +34,13 @@ class GetStroyView(APIView):
         story_text = getStory()
         data = {
             'story': story_text 
+        }
+        return Response(data)
+    
+class GetNnumber(APIView):
+    def get(self, request, format=None):
+        n_number = getNnumber()
+        data = {
+            'n': n_number 
         }
         return Response(data)
