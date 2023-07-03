@@ -112,8 +112,20 @@
   background-color: #367247; /* 보다 진한 색상 코드로 변경하세요 */
 }
 .send_button.tabPressed {
-  background-color: rgb(75, 75, 233); /* 원하는 색상을 입력하세요 */
+  background-color: #3985db; /* 원하는 색상을 입력하세요 */
+  color: white; /* 기본 글씨색 */
 }
+
+
+.send_button.tabPressed:hover {
+  background-color: #3985db; /* 마우스를 올렸을 때의 배경색 */
+}
+
+.send_button.tabPressed:active {
+  background-color: #3f6ea3; /* 버튼을 눌렀을 때의 배경색 */
+}
+
+
 .i125_118_152_122 {
   border: 2.000000238418579px solid rgba(255, 255, 255, 1);
 }
@@ -471,9 +483,10 @@
 
 .nickname {
   color: rgba(0, 0, 0, 1);
+  white-space: nowrap;
   position: absolute;
   left: 38px;
-  top: -6px;
+  top: -8px;
   font-family: Apple SD Gothic Neo;
   text-align: left;
   align-items: center;

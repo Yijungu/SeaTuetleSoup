@@ -4,6 +4,8 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
+
 }
 .container {
   width: 1440px; /* your desired width */
@@ -46,7 +48,7 @@ html {
   position: absolute;
   left: 0px;
   top: 79px;
-  font-family: Titillium Web;
+  /* font-family: Titillium Web; */
   text-align: center;
   font-size: 19px;
   letter-spacing: 0;
