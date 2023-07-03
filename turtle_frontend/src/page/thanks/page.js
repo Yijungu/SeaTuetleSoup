@@ -8,6 +8,8 @@ import SpoonForkButton from "../../images/SpoonForkButton.png";
 import TurtleIcon from "../../images/TurtleIcon.png";
 import UserIcon from "../../images/UserIcon.png";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import { motion } from "framer-motion";
 
 export default function Thanks() {
   const location = useLocation();
@@ -22,6 +24,17 @@ export default function Thanks() {
     localStorage.getItem("totalQuestionsAsked")
   );
   const [nickname, setNickname] = useState("");
+  const [copyText, setCopyText] = useState("");
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  // 각 텍스트를 state에 저장
+  useEffect(() => {
+    setCopyText(
+      `${n}번째 추측만에 정답을 맞혔습니다!\n[나의 플레이]\n가장 처음 풀었던 바다거북수프 번호: ${n}\n도전한 게임 횟수: ${gameAttempts}\n정답 횟수: ${correctAnswers}\n포기 횟수: ${giveUpCount}\n물어본 총 질문 개수: ${totalQuestionsAsked}\n${
+        n + 1
+      }번째 바다거북은 오늘 밤 자정(한국 시간 기준)에 찾아옵니다.`
+    );
+  }, [n, gameAttempts, correctAnswers, giveUpCount, totalQuestionsAsked]);
 
   useEffect(() => {
     const savedNickname = localStorage.getItem("nickname");
@@ -53,6 +66,15 @@ export default function Thanks() {
         console.error("There was an error!", error);
       });
   }, []);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(copyText);
+    setCopySuccess(true);
+    setTimeout(() => {
+      setCopySuccess(false); // 2초 후에 복사 성공 상태를 false로 변경
+    }, 500);
+    // 복사가 완료된 후 알림 메시지를 표시하거나 다른 작업을 수행할 수 있습니다.
+  };
 
   const handleLogoClick = async () => {
     navigate("/");
@@ -124,8 +146,19 @@ export default function Thanks() {
                 alt="CopyButton"
                 width="25"
                 height="25"
+                onClick={handleCopy}
               />
             </div>
+
+            <Modal
+              isOpen={copySuccess}
+              onRequestClose={() => setCopySuccess(false)}
+              overlayClassName="CopyAlertOverlay"
+              className="CopyAlertContent"
+              contentLabel="Copy alert"
+            >
+              <h2>복사 완료</h2>
+            </Modal>
 
             {/* <div className="user_soup">
                 <img

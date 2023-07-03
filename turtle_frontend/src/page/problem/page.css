@@ -480,14 +480,14 @@
   border-radius: 55px;
 }
 
-.profile_photo {
+/* .profile_photo {
   background-color: transparent;
   width: 25px;
   height: 25px;
   position: absolute;
   left: 6px;
   top: 5px;
-}
+} */
 
 .border_line {
   display: inline-flex;
@@ -524,4 +524,46 @@
 
 .giveup_button:active {
   background-color: #5d7ed9;
+}
+
+.ModalOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.ModalContent {
+  position: relative;
+  width: 50%;
+  max-width: 400px;
+  height: 100px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 4px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.button-container button {
+  margin: 0 20px;
 }

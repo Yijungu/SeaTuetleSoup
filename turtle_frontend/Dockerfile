@@ -6,19 +6,17 @@ WORKDIR /app
 
 # 의존성 설치
 COPY package.json package-lock.json ./
-RUN npm install
-RUN npm install react-modal
-RUN npm install @mui/material @emotion/react @emotion/styled
-RUN npm install @mui/icons-material
-RUN npm install react-router-dom
-RUN npm install framer-motion
 # 프로젝트 코드 복사
 COPY . .
 # Install dependencies
 # RUN npm install
 
+RUN npm install
+RUN npm install @mui/material @emotion/react @emotion/styled
+RUN npm install @mui/icons-material
+RUN npm install react-router-dom
+RUN npm install framer-motion
+RUN npm install react-modal
 # Build the Next.js application
-RUN npm run build
-
 # Start the application
 CMD ["npm" ,"start"]

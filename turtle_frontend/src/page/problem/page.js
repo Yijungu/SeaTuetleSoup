@@ -308,14 +308,19 @@ export default function Problem() {
               <button className="giveup_button" onClick={openModal}>
                 포기하기
               </button>
+
               <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
+                overlayClassName="ModalOverlay"
+                className="ModalContent"
                 contentLabel="포기 확인"
               >
                 <h2>정말로 포기를 하시겠습니까?</h2>
-                <button onClick={handleGiveUpClick}>포기하기</button>
-                <button onClick={closeModal}>더해보기</button>
+                <div className="button-container">
+                  <button onClick={handleGiveUpClick}>포기하기</button>
+                  <button onClick={closeModal}>더해보기</button>
+                </div>
               </Modal>
             </div>
           </div>
