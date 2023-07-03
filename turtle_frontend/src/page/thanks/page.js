@@ -5,10 +5,12 @@ import { useLocation } from "react-router-dom";
 import Profile from "../../images/Profile.png";
 import CopyButton from "../../images/CopyButton.png";
 import SpoonForkButton from "../../images/SpoonForkButton.png";
+import TurtleIcon from "../../images/TurtleIcon.png"
+import UserIcon from "../../images/UserIcon.png"
 
 export default function Thanks() {
   const location = useLocation();
-  const [stroy, setStory] = useState("");
+  const [story, setStory] = useState("");
   const [n, setN] = useState(0);
   const userAnswer = location.state?.userAnswer || ""; // state가 없는 경우를 대비해서 기본값을 제공합니다
   const gameAttempts = Number(localStorage.getItem("gameAttempts"));
@@ -54,14 +56,40 @@ export default function Thanks() {
     <div className="container">
       <div className="desktop3">
         <div className="overall_layout">
+          
+        <div className="user_answer_layout">
+        <div className="user_answer_box_tag">
+          <p className="MY">MY</p>
+          <img
+                className="UserIcon"
+                src={UserIcon}
+                alt="UserIcon"
+                width="50"
+                height="30"
+                style={{ transform: "rotate(12.2deg)" }}
+              />
+              </div>
           <div className="user_answer_box">
-            <div className="user_answer_box_tag">사용자 정답</div>
-            <span className="user_answer">{userAnswer}</span>
+            <p className="user_answer">{userAnswer}</p>
+          </div>
+          </div>
+
+          <div className="Ai_answer_layout">
+          <div className="AI_answer_box_tag">
+          <p className="AI">AI</p>
+          <img
+                className="TurtleIcon"
+                src={TurtleIcon}
+                alt="TurtleIcon"
+                width="50"
+                height="30"
+              />
           </div>
           <div className="AI_answer_box">
-            <div className="AI_answer_box_tag">AI 정답</div>
-            <span className="AI_answer">{stroy}</span>
+            <p className="AI_answer">{story}</p>
           </div>
+          </div>
+
           <div className="my_play_box">
             <div className="copy_phrase">
               <span className="my_play">
@@ -105,7 +133,7 @@ export default function Thanks() {
         </div>
         <div className="top_bar">
           <div className="profile">
-            <span className="nickname">{nickname} 님</span>
+            <span className="nickname_thanks">{nickname} 님</span>
             <div className="e125_157">
               <img
                 className="profile_photo"
@@ -116,14 +144,8 @@ export default function Thanks() {
               />
             </div>
           </div>
-
-          <div className="menu">
-            <p className="About_3">About</p>
-            <p className="QnA_3">QnA</p>
-            <p className="Log_3">Log</p>
-          </div>
         </div>
-
+        
         <button className="F22F">F22F</button>
       </div>
     </div>
