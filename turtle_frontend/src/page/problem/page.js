@@ -7,6 +7,7 @@ import Profile from "../../images/Profile.png";
 import SendButton from "../../images/SendButton.png";
 import Loading from "../../component/loading";
 import { motion } from "framer-motion";
+import Modal from "react-modal";
 import ScrollToTopButton from "../../component/scrollbutton";
 
 export default function Problem() {
@@ -24,6 +25,7 @@ export default function Problem() {
   const [tabPressed, setTabPressed] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [nickname, setNickname] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     const savedNickname = localStorage.getItem("nickname");
@@ -127,6 +129,10 @@ export default function Problem() {
     setText(e.target.value);
   };
 
+  const handleLogoClick = async () => {
+    navigate("/");
+  };
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -138,7 +144,7 @@ export default function Problem() {
     }
   };
   const handleGiveUpClick = async () => {
-    setText("포기할게요");
+    closeModal();
     const lastGiveUpDate = localStorage.getItem("lastGiveUpDate");
     const lastCorrectDate = localStorage.getItem("lastCorrectDate");
     const now = new Date();
@@ -240,6 +246,14 @@ export default function Problem() {
     }
   };
 
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -290,9 +304,20 @@ export default function Problem() {
                 />
               </div>
             ))}
-            <button className="giveup_button" onClick={handleGiveUpClick}>
-              포기하기
-            </button>
+            <div>
+              <button className="giveup_button" onClick={openModal}>
+                포기하기
+              </button>
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="포기 확인"
+              >
+                <h2>정말로 포기를 하시겠습니까?</h2>
+                <button onClick={handleGiveUpClick}>포기하기</button>
+                <button onClick={closeModal}>더해보기</button>
+              </Modal>
+            </div>
           </div>
 
           <div className="border_line">
@@ -310,7 +335,9 @@ export default function Problem() {
             </div>
           </div>
 
-          <button className="F22F">F22F</button>
+          <button className="F22F" onClick={handleLogoClick}>
+            F22F
+          </button>
 
           <div className="e168_70">
             <span className="description">

@@ -7,6 +7,7 @@ WORKDIR /app
 # 의존성 설치
 COPY package.json package-lock.json ./
 RUN npm install
+RUN npm install react-modal
 RUN npm install @mui/material @emotion/react @emotion/styled
 RUN npm install @mui/icons-material
 RUN npm install react-router-dom

@@ -116,7 +116,6 @@
   color: white; /* 기본 글씨색 */
 }
 
-
 .send_button.tabPressed:hover {
   background-color: #3985db; /* 마우스를 올렸을 때의 배경색 */
 }
@@ -124,7 +123,6 @@
 .send_button.tabPressed:active {
   background-color: #3f6ea3; /* 버튼을 눌렀을 때의 배경색 */
 }
-
 
 .i125_118_152_122 {
   border: 2.000000238418579px solid rgba(255, 255, 255, 1);
@@ -150,7 +148,7 @@
   font-size: 18px;
   letter-spacing: -0.5;
   line-height: px;
-  border-radius: 10px;
+  border-radius: 27px;
   outline: none;
 }
 .e111_301 {
@@ -287,17 +285,6 @@
   top: -200px;
   border-radius: 14px;
   margin-right: 0px;
-}
-.question_box::before {
-  content: "";
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  background-color: hsl(214, 74%, 91%);
-  /* transform: rotate(220deg); */
-  clip-path: polygon(0% 60%, 100% 0%, 50% 0%);
-  top: 170px;
-  left: -30px;
 }
 
 .i102_77_152_95 {
@@ -486,7 +473,7 @@
   white-space: nowrap;
   position: absolute;
   left: 38px;
-  top: -8px;
+  top: -13px;
   font-family: Apple SD Gothic Neo;
   text-align: left;
   align-items: center;

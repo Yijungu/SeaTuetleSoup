@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "./page.css";
 import Profile from "../../images/Profile.png";
 import Check from "../../images/Check.png";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollToTopButton from "../../component/scrollbutton";
 import React, { useState, useEffect } from "react";
@@ -11,9 +12,12 @@ export default function Home() {
     localStorage.getItem("nickname") || ""
   );
   const [isAnimating, setIsAnimating] = useState(false);
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setNickname(event.target.value);
+  };
+  const handleLogoClick = async () => {
+    navigate("/");
   };
 
   const handleKeyPress = (event) => {
@@ -75,7 +79,9 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <button className="F22F_main">F22F</button>
+          <button className="F22F" onClick={handleLogoClick}>
+            F22F
+          </button>
           <div className="e204_184">
             <div className="e186_126"></div>
             <div className="checkmakr_box">

@@ -16,135 +16,115 @@ html {
 }
 .overall_layout {
   width: 1000px;
-  height: 1000px;
   position: absolute;
   left: 306px;
   top: 165px;
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .user_answer_layout {
-  width: 10px;
-  height: 10px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  flex-direction: column;
   display: flex;
+  width: 860px;
+  margin-bottom: 30px;
 }
 
-
-.user_answer_box {
-  background-color: white;
-  border: 2px solid #5374E8;
-  width: 760px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 190px;
-  position: relative;
-  left: 85px;
-  top: 0px;
-  border-radius: 12px;
-}
 .user_answer_box_tag {
-  background-color: #C7E1FF;
-  border: 2px solid #5374E8;
-  width: 95px;
+  flex: 0 0 95px; /* This means that the box will always be 95px wide and will not grow or shrink */
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 190px;
-  position: absolute;
-  left: -12.5px;
-  top:  0px;
+  background-color: #c7e1ff;
+  border: 2px solid #5374e8;
   border-radius: 12px;
 }
 
-.MY {
-  color: #3A3E45;
-  font-weight: 650;
-  width: 528px;
-  height: 257px;
-  position: absolute;
-  left: 24px;
-  top: 10px;
-  font-family: Inter;
-  text-align: left;
-  font-size: 33px;
-  letter-spacing: -0.5;
-  line-height: px;
-}
-
-.UserIcon {
-  position: absolute;
-  width: 53px;
-  height: 53px;
-  left: 20px;
-  top: 90px;
+.user_answer_box {
+  flex-grow: 1; /* This means that the box will take up the rest of the space in the layout */
+  display: flex;
+  align-items: flex-start;
+  border: 2px solid #5374e8;
+  border-radius: 12px;
+  overflow: auto; /* This means that if the content is too large for the box, it will create a scroll bar */
 }
 
 .user_answer {
-  color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-  width: 750px;
-  position: relative;
+  padding: 20px 30px;
+  width: 100%;
   font-family: Apple SD Gothic Neo;
   font-size: 17px;
+  line-height: 30px;
   letter-spacing: -0.5;
-  line-height: 40px;
-  padding-top: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 30px;
-  overflow-wrap: break-word;
+  color: rgba(18, 36, 51, 1);
   word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.MY {
+  color: #3a3e45;
+  font-weight: 650;
+  position: relative;
+  text-align: center;
+  font-family: Inter;
+  font-size: 33px;
+  letter-spacing: -0.5;
+  line-height: px;
+  left: 25px;
+  top: -20px;
+}
+
+.Icon {
+  position: relative;
+  text-align: center;
+  height: 53px;
+  left: -23px;
+  top: 30px;
 }
 
 .Ai_answer_layout {
-  width: 10px;
-  height: 10px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  flex-direction: column;
   display: flex;
-}
-
-
-.AI_answer_box {
-  border: 2px solid #218C66;
-  width: 760px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 230px;
-  position: relative;
-  left: 85px;
-  top: 215px;
-  border-radius: 12px;
+  width: 860px;
 }
 
 .AI_answer_box_tag {
-  background-color: #DFFFEC;
-  border: 2px solid #218C66;
-  width: 95px;
+  flex: 0 0 95px; /* This means that the box will always be 95px wide and will not grow or shrink */
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 230px;
-  position: absolute;
-  left: -12.5px;
-  top:  215px;
+  background-color: #dfffec;
+  border: 2px solid #218c66;
   border-radius: 12px;
 }
 
+.AI_answer_box {
+  flex-grow: 1; /* This means that the box will take up the rest of the space in the layout */
+  display: flex;
+  align-items: flex-start;
+  border: 2px solid #218c66;
+  border-radius: 12px;
+  overflow: auto; /* This means that if the content is too large for the box, it will create a scroll bar */
+}
+
+.AI_answer {
+  padding: 20px 30px;
+  width: 100%;
+  font-family: Apple SD Gothic Neo;
+  font-size: 17px;
+  line-height: 30px;
+  letter-spacing: -0.5;
+  color: rgba(18, 36, 51, 1);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 .AI {
-  color: #3A3E45;
+  color: #3a3e45;
   font-weight: 680;
   width: 528px;
   height: 257px;
-  position: absolute;
+  position: relative;
   left: 30px;
   top: 20px;
   font-family: Inter;
@@ -155,48 +135,27 @@ html {
 }
 
 .TurtleIcon {
-  position: absolute;
-  width: 55px;
-  height: 30px;
-  left: 20px;
-  top: 120px;
- 
-}
-
-
-
-.AI_answer {
-  color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-  width: 750px;
   position: relative;
-  font-family: Apple SD Gothic Neo;
-  font-size: 17px;
-  letter-spacing: -0.5;
-  line-height: 30px;
-  padding-top: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 30px;
-  overflow-wrap: break-word;
-  word-break: keep-all;
+  text-align: center;
+  height: 40px;
+  left: -18px;
+  top: 30px;
 }
 
 .my_play_box {
-  width: 702.9998779296875px;
-  height: auto;
+  background-color: rgb(255, 255, 255);
+  width: 845px;
+  height: 290px;
   position: relative;
-  left: 10px;
-  top: 500px;
+  left: 5px;
+  top: 40px;
+  border: 2px solid rgb(122, 123, 132);
 }
 
 .copy_phrase {
-  background-color: rgb(255, 255, 255);
-  width: 694.4701538085938px;
-  height: 277.79547119140625px;
+  left: 20px;
   position: relative;
-  left: -5px;
-  top: 40px;
-  border: 2px solid rgb(122, 123, 132);
+  display: flex;
 }
 
 .my_play {
@@ -288,12 +247,12 @@ html {
   justify-content: center;
   align-items: center;
   border: 2px solid rgb(42, 38, 38);
-  background-color: #C7E1FF;
+  background-color: #c7e1ff;
   width: 75px;
   height: 30px;
   position: absolute;
   left: 730px;
-  top: 167px;
+  top: 230px;
 }
 
 .user_soup {
@@ -301,7 +260,7 @@ html {
   justify-content: center;
   align-items: center;
   border: 2px solid rgb(42, 38, 38);
-  background-color: #DFFFEC;
+  background-color: #dfffec;
   width: 75px;
   height: 30px;
   position: absolute;
@@ -325,17 +284,15 @@ html {
 }
 
 .nickname_thanks {
-  color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-  width: 152px;
-  height: 63px;
+  color: rgba(0, 0, 0, 1);
+  white-space: nowrap;
   position: absolute;
-  left: 0px;
-  top: 8px;
+  left: 38px;
+  top: -8px;
   font-family: Apple SD Gothic Neo;
-  text-align: center;
-  font-size: 14.5px;
-  letter-spacing: -0.5;
-  line-height: px;
+  text-align: left;
+  align-items: center;
+  border-radius: 55px;
 }
 
 .profile_photo {
