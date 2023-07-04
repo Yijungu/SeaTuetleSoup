@@ -7,4 +7,5 @@ class Command(BaseCommand):
     help = 'Runs the get_story function'
 
     def handle(self, *args, **options):
+        print("nextday")
         get_story()

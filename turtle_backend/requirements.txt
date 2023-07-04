@@ -8,3 +8,4 @@ chromadb
 tiktoken
 numpy
 python-dotenv
+django-crontab
