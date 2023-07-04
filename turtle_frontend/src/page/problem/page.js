@@ -26,6 +26,7 @@ export default function Problem() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [nickname, setNickname] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [text_t, setText_t] = useState("");
 
   useEffect(() => {
     const savedNickname = localStorage.getItem("nickname");
@@ -98,7 +99,7 @@ export default function Problem() {
 
   useEffect(() => {
     if (updateState) {
-      navigate("/thanks", { state: { userAnswer: text } });
+      navigate("/thanks", { state: { userAnswer: text_t } });
       // 상태 업데이트 완료 표시
       setUpdateState(false);
     }
@@ -168,7 +169,7 @@ export default function Problem() {
     // 실행 중이 아니라면, 실행 중임을 표시
     setIsProcessing(true);
     try {
-      const text_t = text;
+      setText_t(text);
       setTimeout(() => setText(""), 0);
       if (tabPressed === true) {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
