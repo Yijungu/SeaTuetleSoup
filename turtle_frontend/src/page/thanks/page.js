@@ -15,6 +15,7 @@ export default function Thanks() {
   const location = useLocation();
   const [story, setStory] = useState("");
   const [n, setN] = useState(0);
+  const [firstN, setFirstN] = useState(0);
   const navigate = useNavigate();
   const userAnswer = location.state?.userAnswer || ""; // state가 없는 경우를 대비해서 기본값을 제공합니다
   const gameAttempts = Number(localStorage.getItem("gameAttempts"));
@@ -25,14 +26,28 @@ export default function Thanks() {
   );
   const [nickname, setNickname] = useState("");
   const [copyText, setCopyText] = useState("");
+  const [workTime, setWorkTime] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
+  const endTime = localStorage.getItem("endTime");
+
+  useEffect(() => {
+    const storedStartTime = new Date(localStorage.getItem("startTime"));
+    const storedEndTime = new Date(localStorage.getItem("endTime"));
+    // const storedEndTime = new Date();
+    const timeDifference = storedEndTime - storedStartTime;
+    const timeDifferenceInSeconds = Math.round(timeDifference / 1000);
+    // console.log(storedEndTime);
+    const hours = Math.floor(timeDifferenceInSeconds / 3600);
+    const minutes = Math.floor((timeDifferenceInSeconds - hours * 3600) / 60);
+    const seconds = timeDifferenceInSeconds - hours * 3600 - minutes * 60;
+    console.log(hours, "시간", minutes, "분", seconds, "초");
+    setWorkTime(`${hours}시간 ${minutes}분 ${seconds}초`);
+  }, []);
 
   // 각 텍스트를 state에 저장
   useEffect(() => {
     setCopyText(
-      `${n}번째 추측만에 정답을 맞혔습니다!\n[나의 플레이]\n가장 처음 풀었던 바다거북수프 번호: ${n}\n도전한 게임 횟수: ${gameAttempts}\n정답 횟수: ${correctAnswers}\n포기 횟수: ${giveUpCount}\n물어본 총 질문 개수: ${totalQuestionsAsked}\n${
-        n + 1
-      }번째 바다거북은 오늘 밤 자정(한국 시간 기준)에 찾아옵니다.`
+      `${n}번째 바다거북수프 문제를 풀었습니다! \n질문 횟수: ${gameAttempts} \n소요 시간: ${workTime}`
     );
   }, [n, gameAttempts, correctAnswers, giveUpCount, totalQuestionsAsked]);
 
@@ -79,7 +94,15 @@ export default function Thanks() {
   const handleLogoClick = async () => {
     navigate("/");
   };
-
+  // if (!endTime) {
+  //   return (
+  //     <div className="centered-message">
+  //       문제를 포기하거나 정답을 맞추시면 볼 수 있습니다!
+  //     </div>
+  //   );
+  // } else {
+  //   setFirstN(n);
+  // }
   return (
     <div className="container">
       <div className="desktop3">
@@ -120,23 +143,22 @@ export default function Thanks() {
 
           <div className="my_play_box">
             <div className="copy_phrase">
-              <span className="my_play">
-                {n}번째 추측만에 정답을 맞혔습니다!
-              </span>
-              <span className="my_play_2">[나의 플레이]</span>
               <span className="my_play_3">
-                가장 처음 풀었던 바다거북수프 번호: {n} 도전한 게임 횟수:{" "}
-                {gameAttempts}
-              </span>
-              <span className="my_play_4">
-                정답 횟수: {correctAnswers} 포기 횟수: {giveUpCount}
-              </span>
-              <span className="my_play_5">
-                물어본 총 질문 개수: {totalQuestionsAsked}
-              </span>
-              <span className="my_play_6">
-                {n + 1}번째 바다거북은 오늘 밤 자정(한국 시간 기준)에
+                축하합니다! {n}번째 질문에서 정답을 맞혔습니다!
+                <br />
+                {n + 1}번째 수프레시피는 오늘 밤 자정(한국 시간 기준)에
                 찾아옵니다.
+                <br />
+                <br />
+                [My Log]
+                <br />
+                정답 횟수:{correctAnswers} 포기 횟수:{giveUpCount}
+                <br />
+                가장 처음 풀었던 수프 번호: {firstN}
+                <br />
+                도전한 게임 횟수 : {gameAttempts}
+                <br />
+                물어본 총 질문 개수: {totalQuestionsAsked}
               </span>
             </div>
             <div className="copy">

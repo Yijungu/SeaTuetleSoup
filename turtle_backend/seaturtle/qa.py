@@ -38,6 +38,7 @@ qa_chain = RetrievalQA.from_chain_type(llm=turbo_llm,
                     chain_type="stuff",
                     retriever=docsearch.as_retriever(),
                     return_source_documents=True)
+k = 1
 keywords = []
 answer_plus = " 이 글에서 건축가에 대한 이야기가 있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
 problem = "매일 밤, 나는 이웃집 할머니가 낚싯대를 들고 나가는 것을 보았다. 하지만 할머니는 한 번도 고기를 잡아오지 않았다. 왜 그랬을까?"
@@ -65,37 +66,46 @@ def submit(answer):
     return chat_response
 
 def answer_plus_edit():
-    answer_plus = " 이 글에서 "
-    for keyword in keywords:
-        answer_plus += keyword
-        answer_plus += ", "
-    answer_plus += "이랑 비슷한 단어가 들어가 있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
+    global keywords
+    keywords = [keyword.word for keyword in keywords]  # keyword 객체를 keyword.word 문자열로 변환
+    keywords_str = ", ".join(keywords)  # keywords 리스트의 각 항목 사이에 쉼표와 공백 삽입
+    global answer_plus
+    answer_plus = " 이 글에서 " + keywords_str + "이랑 비슷한 단어가 들어가 있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
+
     return 0
 
 def get_story():
     today = datetime.today().day
     seaturtle = SeaTurtle.objects.filter(date = today)
-    story = [seaturtle[0].story]
+    global story
+    story = seaturtle[0].story
     title = str(today) + ".txt"
     with open(title, 'w') as f:
-        for sentence in story:
-            f.write(sentence + '\n')
+            f.write(story + '\n')
     loader = TextLoader(title)
     documents = loader.load()
     texts = text_splitter.split_documents(documents)
     docsearch = Chroma.from_documents(texts, embeddings)
+    global qa_chain
     qa_chain = RetrievalQA.from_chain_type(llm=turbo_llm,
                                   chain_type="stuff",
                                   retriever=docsearch.as_retriever(),
                                   return_source_documents=True)
+    global problem
     problem = seaturtle[0].problem
+    global keywords
     keywords = list(Keyword.objects.filter(date = today))
+    global n_number
     n_number += 1
     answer_plus_edit()
-
+    print(story)
+    print(problem)
+    print("asdasdas")
+    print(getProblem())
     return 0
 
 def getProblem():
+    # print(problem)
     return problem
 
 def getStory():
@@ -103,3 +113,6 @@ def getStory():
 
 def getNnumber():
     return n_number
+
+def printgetStory():
+    print(story)

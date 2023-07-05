@@ -13,7 +13,7 @@ services:
     build:
       context: ./turtle_backend
       dockerfile: Dockerfile
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "service cron start && python manage.py makemigrations && python manage.py crontab remove && python manage.py crontab add && python manage.py runserver 0.0.0.0:8000"
     environment:
       DATABASE_HOST: db
       DATABASE_NAME: mydatabase

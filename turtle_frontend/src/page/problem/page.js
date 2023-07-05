@@ -29,6 +29,27 @@ export default function Problem() {
   const [text_t, setText_t] = useState("");
 
   useEffect(() => {
+    const now = new Date();
+    const currentDate = `${now.getFullYear()}-${
+      now.getMonth() + 1
+    }-${now.getDate()}`;
+    let lastTime = localStorage.getItem("startTime");
+    if (lastTime) {
+      lastTime = new Date(lastTime);
+      const lastDate = `${lastTime.getFullYear()}-${
+        lastTime.getMonth() + 1
+      }-${lastTime.getDate()}`;
+      if (lastDate !== currentDate) {
+        localStorage.setItem("startTime", now);
+        localStorage.setItem("endTime", "");
+      }
+    } else {
+      localStorage.setItem("startTime", now);
+      localStorage.setItem("endTime", "");
+    }
+  }, []);
+
+  useEffect(() => {
     const savedNickname = localStorage.getItem("nickname");
     if (savedNickname) {
       setNickname(savedNickname);
@@ -190,6 +211,7 @@ export default function Problem() {
             now.getMonth() + 1
           }-${now.getDate()}`;
 
+          localStorage.setItem("endTime", now);
           // 마지막으로 정답을 맞춘 날짜를 불러오기
           const lastCorrectDate = localStorage.getItem("lastCorrectDate");
           const lastGiveUpDate = localStorage.getItem("lastGiveUpDate");
@@ -272,6 +294,7 @@ export default function Problem() {
               value={text}
               onChange={handleChange}
               onKeyDown={handleKeyPress}
+              placeholder="질문을 입력하세요."
             />
 
             <button

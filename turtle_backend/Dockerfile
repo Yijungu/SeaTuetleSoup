@@ -13,9 +13,8 @@ ENV DATABASE_NAME mydatabase
 ENV DATABASE_USER myuser
 ENV DATABASE_PASSWORD mypassword
 
-RUN apt-get update && apt-get install -y cron
-ADD crontab /etc/cron.d/hello-cron
-RUN chmod 0644 /etc/cron.d/hello-cron
-RUN crontab /etc/cron.d/hello-cron
+RUN chmod -R 777 /code #권한 설정
+RUN apt-get update
+RUN apt-get install -y cron && touch ./cron.log #crontab 설치 및 로그파일 생성
 
 CMD service cron start && python manage.py runserver

@@ -39,6 +39,7 @@ html {
   background-color: #c7e1ff;
   border: 2px solid #5374e8;
   border-radius: 12px;
+  border-left: 1px solid #218c66;
 }
 
 .user_answer_box {
@@ -48,6 +49,7 @@ html {
   border: 2px solid #5374e8;
   border-radius: 12px;
   overflow: auto; /* This means that if the content is too large for the box, it will create a scroll bar */
+  border-right: 1px solid #218c66;
 }
 
 .user_answer {
@@ -96,6 +98,7 @@ html {
   background-color: #dfffec;
   border: 2px solid #218c66;
   border-radius: 12px;
+  border-right: 1px solid #218c66;
 }
 
 .AI_answer_box {
@@ -105,6 +108,7 @@ html {
   border: 2px solid #218c66;
   border-radius: 12px;
   overflow: auto; /* This means that if the content is too large for the box, it will create a scroll bar */
+  border-left: 1px solid #218c66;
 }
 
 .AI_answer {
@@ -145,7 +149,7 @@ html {
 .my_play_box {
   background-color: rgb(255, 255, 255);
   width: 845px;
-  height: 290px;
+  height: 320px;
   position: relative;
   left: 5px;
   top: 40px;
@@ -169,7 +173,7 @@ html {
   text-align: left;
   font-size: 17px;
   letter-spacing: -0.5;
-  line-height: px;
+  line-height: 20px;
 }
 
 .my_play_2 {
@@ -183,7 +187,7 @@ html {
   text-align: left;
   font-size: 17px;
   letter-spacing: -0.5;
-  line-height: px;
+  line-height: 20px;
 }
 
 .my_play_3 {
@@ -192,12 +196,12 @@ html {
   height: 257px;
   position: absolute;
   left: 32px;
-  top: 115px;
+  top: 45px;
   font-family: Inter;
   text-align: left;
   font-size: 17px;
   letter-spacing: -0.5;
-  line-height: px;
+  line-height: 30px;
 }
 
 .my_play_4 {
@@ -206,12 +210,12 @@ html {
   height: 257px;
   position: absolute;
   left: 32px;
-  top: 145px;
+  top: 165px;
   font-family: Inter;
   text-align: left;
   font-size: 17px;
   letter-spacing: -0.5;
-  line-height: px;
+  line-height: 28px;
 }
 
 .my_play_5 {
@@ -220,12 +224,12 @@ html {
   height: 257px;
   position: absolute;
   left: 32px;
-  top: 175px;
+  top: 215px;
   font-family: Inter;
   text-align: left;
   font-size: 17px;
   letter-spacing: -0.5;
-  line-height: px;
+  line-height: 28px;
 }
 
 .my_play_6 {
@@ -234,12 +238,12 @@ html {
   height: 257px;
   position: absolute;
   left: 32px;
-  top: 205px;
+  top: 240px;
   font-family: Inter;
   text-align: left;
   font-size: 17px;
   letter-spacing: -0.5;
-  line-height: px;
+  line-height: 28px;
 }
 
 .copy {
@@ -252,7 +256,7 @@ html {
   height: 30px;
   position: absolute;
   left: 730px;
-  top: 230px;
+  top: 260px;
 }
 
 .user_soup {
@@ -400,4 +404,12 @@ html {
   font-size: 10px;
   text-align: center;
   outline: none;
+}
+
+.centered-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 브라우저 뷰포트의 높이만큼 설정 */
+  text-align: center;
 }

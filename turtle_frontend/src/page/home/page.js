@@ -79,7 +79,7 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <button className="F22F" onClick={handleLogoClick}>
+          <button className="F22F_main" onClick={handleLogoClick}>
             F22F
           </button>
           <div className="e204_184">
@@ -95,8 +95,8 @@ export default function Home() {
                   className="profile_photo_main"
                   src={Profile}
                   alt="Profile"
-                  width="23"
-                  height="23"
+                  width="30"
+                  height="30"
                 />
               </div>
               <input
@@ -158,18 +158,30 @@ export default function Home() {
               Q. 하루에 한 번 이상 플레이할 수 없나요?
             </span>
             <span className="e186_178">
-              A. 마이수프레시피는 하루에 한 문제만 출제됩니다. 마이수프레시피의
-              목적은 &quot;하루에 한 번, 여러분의 일일퀘스트&quot;가 되는
+              A. 마이수프레시피는 하루에 한 문제만 출제됩니다. 마이수프레시피는
+              ‘꼬맨틀’을 바탕으로 만들게 되었습니다. 마이수프레시피의 목적은
+              꼬맨틀처럼 &quot;하루에 한 번, 여러분의 일일퀘스트&quot;가 되는
               것입니다. 문제는 국제 표준시(UTC) 기준 매일 오후 3시 또는 한국
               표준시(KST) 기준 자정에 바뀝니다.
             </span>
           </div>
           <div className="e186_191">
             <span className="e186_175">
+              Q. 여태까지 플레이한 기록을 볼 수 있나요?
+            </span>
+            <span className="e186_178">
+              A. 마이수프레시피는 쿠키를 사용하여 설정 및 개인 게임 통계를
+              저장하며, 통계 수집을 위해 쿠키 정보를 수집합니다. 따라서 동일
+              브라우저에서 플레이했다면, 여태까지 플레이한 다양한 기록을 확인할
+              수 있습니다.
+            </span>
+          </div>
+          <div className="e186_197">
+            <span className="e186_175">
               Q. 다른 질문이나 피드백은 어떻게 보내나요?
             </span>
             <span className="e186_178">
-              A. 질문이나 피드백은 F22F 메일로 문의해주세요!
+              A. 질문이나 피드백은 F2__2F@naver.com로 문의해주세요!
             </span>
           </div>
           <ScrollToTopButton className="scroll_to_top" />

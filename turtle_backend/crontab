@@ -1,2 +1,0 @@
-13 11 * * * TZ=Asia/Seoul root python /Users/yijungu/SeaTuetleSoup/turtle_backend/seaturtle >> /var/log/cron.log 2>&1
-# An empty line is required at the end of this file for a valid cron file.
