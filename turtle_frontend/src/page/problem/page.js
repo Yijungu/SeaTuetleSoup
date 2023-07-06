@@ -188,16 +188,31 @@ export default function Problem() {
   const handleSendClick = async () => {
     if (isProcessing) return;
     // 실행 중이 아니라면, 실행 중임을 표시
+    console.log("asdasdasdasd");
     setIsProcessing(true);
     try {
       setText_t(text);
+      const text_x = text;
       setTimeout(() => setText(""), 0);
       if (tabPressed === true) {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
+        if (text_x.length <= 10) {
+          setShake(true); // 실패 시 shake 상태를 true로 변경
+          const newQnas = [
+            { question: text_x, answer: "10자 이상으로 입력해주세요." },
+            ...qnas,
+          ];
+          setQnas(newQnas);
+          saveQnas(newQnas);
+          setTotalQuestionsAsked(totalQuestionsAsked + 1);
+          setTimeout(() => setShake(false), 500);
+          return;
+        }
+        console.log(text_x);
         const anotherResponse = await axios.post(
           process.env.REACT_APP_API_URL + "/submit/",
           {
-            data: text_t,
+            data: text_x,
           }
         );
         console.log(anotherResponse.data.response);
@@ -233,7 +248,7 @@ export default function Problem() {
         } else {
           setShake(true); // 실패 시 shake 상태를 true로 변경
           const newQnas = [
-            { question: text, answer: "정답이 아닙니다." },
+            { question: text_x, answer: "정답이 아닙니다." },
             ...qnas,
           ];
           setQnas(newQnas);
@@ -242,20 +257,39 @@ export default function Problem() {
           setTimeout(() => setShake(false), 500);
         }
       } else {
-        const tempQnas = [{ question: text, answer: <Loading /> }, ...qnas];
+        const tempQnas = [{ question: text_x, answer: <Loading /> }, ...qnas];
         setQnas(tempQnas); // 임시로 Loading 애니메이션을 표시
-
+        console.log(text_x);
         const response = await axios.post(
           process.env.REACT_APP_API_URL + "/question/",
           {
-            data: text_t,
+            data: text_x,
           }
         );
-        const updatedQnas = tempQnas.map((qna) =>
-          qna.question === text && qna.answer.type === Loading
-            ? { question: text, answer: response.data.response }
-            : qna
-        );
+        // console(response.data.response);
+        let updatedQnas;
+        if (
+          response.data.response.startsWith("네") ||
+          response.data.response.startsWith("예") ||
+          response.data.response.startsWith("맞습니다") ||
+          response.data.response.startsWith("아니오") ||
+          response.data.response.startsWith("아닙니다")
+        ) {
+          updatedQnas = tempQnas.map((qna) =>
+            qna.question === text_x && qna.answer.type === Loading
+              ? { question: text_x, answer: response.data.response }
+              : qna
+          );
+        } else {
+          updatedQnas = tempQnas.map((qna) =>
+            qna.question === text_x && qna.answer.type === Loading
+              ? {
+                  question: text_x,
+                  answer: "예, 아니오로 대답할 수 있는 질문을 해주세요.",
+                }
+              : qna
+          );
+        }
 
         setQnas(updatedQnas); // 응답으로 교체
         saveQnas(updatedQnas);

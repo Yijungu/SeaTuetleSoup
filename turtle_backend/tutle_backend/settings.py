@@ -135,10 +135,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRONJOBS = [
-    ('20 04 * * *', 'seaturtle.qa.get_story'),
-    ('28 07 * * *', 'seaturtle.qa.get_story'),
-    ('28 16 * * *', 'seaturtle.qa.get_story'),
-    ('0 0 * * *', 'seaturtle.qa.get_story'),
-    ('*/5 * * * *', 'seaturtle.qa.get_story', '>> /Users/yijungu/SeaTuetleSoup/turtle_backend/cron.log')
 ]
 

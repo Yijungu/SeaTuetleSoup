@@ -94,15 +94,15 @@ export default function Thanks() {
   const handleLogoClick = async () => {
     navigate("/");
   };
-  // if (!endTime) {
-  //   return (
-  //     <div className="centered-message">
-  //       문제를 포기하거나 정답을 맞추시면 볼 수 있습니다!
-  //     </div>
-  //   );
-  // } else {
-  //   setFirstN(n);
-  // }
+  if (!endTime) {
+    return (
+      <div className="centered-message">
+        문제를 포기하거나 정답을 맞히면 볼 수 있습니다!
+      </div>
+    );
+  } else {
+    setFirstN(n);
+  }
   return (
     <div className="container">
       <div className="desktop3">
