@@ -71,7 +71,7 @@ def submit(answer):
 def answer_plus_edit():
     global keywords
     # keywords = [keyword.word for keyword in keywords]  # keyword 객체를 keyword.word 문자열로 변환
-    keywords_str = ", ".join(keywords)  # keywords 리스트의 각 항목 사이에 쉼표와 공백 삽입
+    keywords_str = ", ".join(keyword.word for keyword in keywords) # keywords 리스트의 각 항목 사이에 쉼표와 공백 삽입
     global answer_plus
     answer_plus = " 이 글에서 " + keywords_str + "이랑 비슷한 단어가 들어가 있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
     print(answer_plus)
@@ -107,7 +107,7 @@ def get_story():
 def getProblem():
     global last_date
     current_date = datetime.now().date()
-    get_story()
+    # get_story()
     if last_date != current_date:
         get_story()
         last_date = current_date
