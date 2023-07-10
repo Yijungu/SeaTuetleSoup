@@ -86,7 +86,6 @@ html {
   position: absolute;
   left: 38px;
   top: 17px;
-  font-family: Apple SD Gothic Neo;
   text-align: center;
   font-size: 18px;
   letter-spacing: 1;
@@ -453,12 +452,12 @@ html {
   border: 5px solid rgba(0, 0, 0, 1);
 }
 .F22F_main {
-  border: 4.5px solid black;
+  border: 4.5px solid rgb(0, 0, 0);
   color: rgb(21, 21, 21);
   width: 101px;
   height: 45px;
   position: relative;
-  left: 10px;
+  left: 35px;
   top: 40px;
   transform: translateY(-50%);
   font-family: "Apple SD Gothic Neo";
@@ -532,7 +531,7 @@ html {
   width: 213px;
   height: 42px;
   position: absolute;
-  left: 1205px;
+  left: 1155px;
   top: 13px;
 }
 .e186_126 {
@@ -577,14 +576,14 @@ html {
   width: 673px;
   height: 125px;
   position: absolute;
-  left: 167px;
-  top: 2850px;
+  left: 350px;
+  top: 2970px;
 }
 .e186_174 {
   width: 673px;
   height: 125px;
   position: absolute;
-  left: 167px;
+  left: 350px;
   top: 1350px;
 }
 .e186_175 {
@@ -614,8 +613,8 @@ html {
   width: 673px;
   height: 63px;
   position: absolute;
-  left: 0px;
-  top: 85px;
+  left: 180px;
+  top: 65px;
   font-family: Apple SD Gothic Neo;
   text-align: left;
   font-size: 33px;
@@ -626,10 +625,10 @@ html {
 
 .e186_178 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-  width: 1124.1883544921875px;
+  width: 750px;
   height: 103px;
   position: absolute;
-  /* left:167px; */
+  left: 25px;
   top: 40px;
   text-align: left;
   font-size: 20px;
@@ -656,16 +655,16 @@ html {
   width: 673px;
   height: 125px;
   position: absolute;
-  left: 167px;
-  top: 1600px;
+  left: 350px;
+  top: 1640px;
 }
 
 .e186_182 {
   width: 673px;
   height: 125px;
   position: absolute;
-  left: 167px;
-  top: 1850px;
+  left: 350px;
+  top: 1930px;
 }
 
 .e186_184 {
@@ -684,8 +683,8 @@ html {
   width: 673px;
   height: 125px;
   position: absolute;
-  left: 167px;
-  top: 2100px;
+  left: 350px;
+  top: 2180px;
 }
 .e186_186 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -716,8 +715,8 @@ html {
   width: 673px;
   height: 125px;
   position: absolute;
-  left: 167px;
-  top: 2350px;
+  left: 350px;
+  top: 2440px;
 }
 .e186_189 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -748,8 +747,8 @@ html {
   width: 673px;
   height: 125px;
   position: absolute;
-  left: 167px;
-  top: 2600px;
+  left: 350px;
+  top: 2700px;
 }
 .e186_192 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -899,6 +898,17 @@ html {
 
 .checkmakr_box {
   position: absolute;
-  left: 190px;
-  top: 30px;
+  left: 207px;
+  top: 34px;
+}
+
+.A_dot {
+  position: relative;
+  left: 0px;
+  top: 34px;
+  font-size: 20px;
+}
+
+.bold-word {
+  font-weight: 600;
 }

@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .qa import question, submit, getProblem, getStory, getNnumber
+from .qa import question, submit, getProblem, getStory, getNnumber, attach_josa
 import json
 
 class RequestQaView(APIView):
@@ -44,3 +44,12 @@ class GetNnumber(APIView):
             'n': n_number 
         }
         return Response(data)
+    
+class AttachJosa(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        attach_josa_text = attach_josa(data["data"])
+        if attach_josa_text is not None:
+            return Response({'response': attach_josa_text})
+        else:
+            return Response({'status': 'question is required'}, status=400)

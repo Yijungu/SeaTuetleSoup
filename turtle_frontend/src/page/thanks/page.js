@@ -47,7 +47,7 @@ export default function Thanks() {
   // 각 텍스트를 state에 저장
   useEffect(() => {
     setCopyText(
-      `${n}번째 바다거북수프 문제를 풀었습니다! \n질문 횟수: ${gameAttempts} \n소요 시간: ${workTime}`
+      `${n}번째 바다거북수프 문제를 풀었습니다! \n질문 횟수: ${totalQuestionsAsked} \n소요 시간: ${workTime}`
     );
   }, [n, gameAttempts, correctAnswers, giveUpCount, totalQuestionsAsked]);
 
@@ -76,6 +76,11 @@ export default function Thanks() {
       .then((response) => {
         const data = response.data;
         setN(data.n);
+        if (localStorage.getItem("FirstN")) {
+          setFirstN(localStorage.getItem("FirstN"));
+        } else {
+          setFirstN(n);
+        }
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -101,116 +106,102 @@ export default function Thanks() {
       </div>
     );
   } else {
-    setFirstN(n);
-  }
-  return (
-    <div className="container">
-      <div className="desktop3">
-        <div className="overall_layout">
-          {userAnswer && (
-            <div className="user_answer_layout">
-              <div className="user_answer_box_tag">
-                <p className="MY">MY</p>
-                <img
-                  className="Icon"
-                  src={UserIcon}
-                  alt="UserIcon"
-                  width="50"
-                  height="30"
-                  style={{ transform: "rotate(12.2deg)" }}
-                />
+    return (
+      <div className="container">
+        <div className="desktop3">
+          <div className="overall_layout">
+            {userAnswer && (
+              <div className="user_answer_layout">
+                <div className="user_answer_box_tag">
+                  <p className="MY">MY</p>
+                </div>
+                <div className="user_answer_box">
+                  <p className="user_answer">{userAnswer}</p>
+                </div>
               </div>
-              <div className="user_answer_box">
-                <p className="user_answer">{userAnswer}</p>
+            )}
+
+            <div className="Ai_answer_layout">
+              <div className="AI_answer_box_tag">
+                <p className="MY">AI</p>
+              </div>
+              <div className="AI_answer_box">
+                <p className="AI_answer">{story}</p>
               </div>
             </div>
-          )}
 
-          <div className="Ai_answer_layout">
-            <div className="AI_answer_box_tag">
-              <p className="MY">AI</p>
-              <img
-                className="TurtleIcon"
-                src={TurtleIcon}
-                alt="TurtleIcon"
-                width="50"
-              />
-            </div>
-            <div className="AI_answer_box">
-              <p className="AI_answer">{story}</p>
-            </div>
-          </div>
-
-          <div className="my_play_box">
-            <div className="copy_phrase">
-              <span className="my_play_3">
-                축하합니다! {n}번째 질문에서 정답을 맞혔습니다!
-                <br />
-                {n + 1}번째 수프레시피는 오늘 밤 자정(한국 시간 기준)에
-                찾아옵니다.
-                <br />
-                <br />
-                [My Log]
-                <br />
-                정답 횟수:{correctAnswers} 포기 횟수:{giveUpCount}
-                <br />
-                가장 처음 풀었던 수프 번호: {firstN}
-                <br />
-                도전한 게임 횟수 : {gameAttempts}
-                <br />
-                물어본 총 질문 개수: {totalQuestionsAsked}
-              </span>
-            </div>
-            <div className="copy">
-              <img
-                className="copybutton"
-                src={CopyButton}
-                alt="CopyButton"
-                width="25"
-                height="25"
-                onClick={handleCopy}
-              />
-            </div>
-
-            <Modal
-              isOpen={copySuccess}
-              onRequestClose={() => setCopySuccess(false)}
-              overlayClassName="CopyAlertOverlay"
-              className="CopyAlertContent"
-              contentLabel="Copy alert"
-            >
-              <h2>복사 완료</h2>
-            </Modal>
-
-            {/* <div className="user_soup">
+            <div className="my_play_box">
+              <div className="copy_phrase">
+                <span className="my_play_3">
+                  축하합니다! {totalQuestionsAsked}번째 질문에서 정답을
+                  맞혔습니다!
+                  <br />
+                  {n + 1}번째 수프레시피는 오늘 밤 자정(한국 시간 기준)에
+                  찾아옵니다.
+                  <br />
+                  <br />
+                  [My Log]
+                  <br />
+                  정답 횟수:{correctAnswers} 포기 횟수:{giveUpCount}
+                  <br />
+                  가장 처음 풀었던 수프 번호: {firstN}
+                  <br />
+                  도전한 게임 횟수 : {gameAttempts}
+                  <br />
+                  물어본 총 질문 개수: {totalQuestionsAsked}
+                </span>
+              </div>
+              <div className="copy">
                 <img
-                  src={SpoonForkButton}
-                  alt="SpoonForkButton"
+                  className="copybutton"
+                  src={CopyButton}
+                  alt="CopyButton"
                   width="25"
                   height="25"
+                  onClick={handleCopy}
                 />
-              </div> */}
-          </div>
-        </div>
-        <div className="border_line">
-          <div>
-            <p className="nickname">{nickname} 님</p>
-          </div>
-          <div>
-            <img
-              className="profile_photo"
-              src={Profile}
-              alt="Profile"
-              width="25"
-              height="25"
-            />
-          </div>
-        </div>
+              </div>
 
-        <button className="F22F" onClick={handleLogoClick}>
-          F22F
-        </button>
+              <Modal
+                isOpen={copySuccess}
+                onRequestClose={() => setCopySuccess(false)}
+                overlayClassName="CopyAlertOverlay"
+                className="CopyAlertContent"
+                contentLabel="Copy alert"
+              >
+                <h2>복사 완료</h2>
+              </Modal>
+
+              {/* <div className="user_soup">
+                  <img
+                    src={SpoonForkButton}
+                    alt="SpoonForkButton"
+                    width="25"
+                    height="25"
+                  />
+                </div> */}
+            </div>
+          </div>
+          <div className="border_line">
+            <div>
+              <p className="nickname">{nickname} 님</p>
+            </div>
+            <div>
+              <img
+                className="profile_photo"
+                src={Profile}
+                alt="Profile"
+                width="25"
+                height="25"
+              />
+            </div>
+          </div>
+
+          <button className="F22F" onClick={handleLogoClick}>
+            F22F
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

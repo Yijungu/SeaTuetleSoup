@@ -17,8 +17,8 @@ root.render(
       {/* 이 부분에 추가했습니다. */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/thanks" element={<Thanks />} />
-        <Route path="/problem" element={<Problem />} />
+        <Route path="/explanation" element={<Thanks />} />
+        <Route path="/issue" element={<Problem />} />
       </Routes>
     </AnimatePresence>
   </Router>

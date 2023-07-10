@@ -39,7 +39,7 @@ html {
   background-color: #c7e1ff;
   border: 2px solid #5374e8;
   border-radius: 12px;
-  border-left: 1px solid #218c66;
+  border-right: 1px solid #218c66;
 }
 
 .user_answer_box {
@@ -49,7 +49,7 @@ html {
   border: 2px solid #5374e8;
   border-radius: 12px;
   overflow: auto; /* This means that if the content is too large for the box, it will create a scroll bar */
-  border-right: 1px solid #218c66;
+  border-left: 1px solid #218c66;
 }
 
 .user_answer {
@@ -73,8 +73,8 @@ html {
   font-size: 33px;
   letter-spacing: -0.5;
   line-height: px;
-  left: 25px;
-  top: -20px;
+  left: 1px;
+  top: 0%;
 }
 
 .Icon {

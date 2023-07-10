@@ -136,15 +136,23 @@
   top: 10px;
   border-radius: 14px;
 }
-.textbox {
-  color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
+.qeustion_text_box {
   width: 810px;
   height: 38px;
-  position: relative;
   left: -0.5px;
   top: -130px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.textbox_step {
+  color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
+  /* width: 810px; */
+  /* height: 38px; */
+  /* top: 3px; */
+  position: relative;
   font-family: Apple SD Gothic Neo;
-  text-align: left;
+  text-align: center;
   align-items: center;
   justify-content: center;
   font-size: 18px;
@@ -153,6 +161,33 @@
   border-radius: 27px;
   outline: none;
   padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 7px;
+  margin-top: 2px;
+  /* padding-left: 15px; */
+  margin-right: 0px;
+  border: 1px solid black;
+}
+.textbox {
+  color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
+  /* width: 600px; */
+  /* height: 38px; */
+  position: relative;
+  font-family: Apple SD Gothic Neo;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  letter-spacing: -0.5;
+  line-height: px;
+  /* border-radius: 27px; */
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  padding-left: 7px;
+  flex-grow: 1;
+  margin-top: 6px;
+  /* border: 1px solid black; */
 }
 .e111_301 {
   width: 152px;
@@ -569,4 +604,49 @@
 
 .button-container button {
   margin: 0 20px;
+}
+
+.circle {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 0.001px solid black;
+}
+
+.checked {
+  background-color: rgb(0, 0, 0);
+}
+
+.unchecked {
+  background-color: rgb(255, 255, 255);
+}
+
+.circle_check_box {
+  position: relative;
+  display: flex;
+  top: -150px;
+}
+
+.quesiton_check_box {
+  padding-left: 10px;
+  position: relative;
+  width: 50px;
+  height: 10px;
+}
+.result_check_box {
+  width: 50px;
+  position: relative;
+  left: 30px;
+}
+
+.qeustion_text {
+  padding-left: 10px;
+  line-height: 5px;
+  top: -140px;
+  left: -3px;
+  font-size: 18px;
+  position: relative;
+  margin-top: 25px;
+  margin-bottom: 10px;
 }
