@@ -12,20 +12,6 @@ import os
 from dotenv import load_dotenv
 import hgtk
 
-def attach_josa(word):
-    last_char = word[-1]
-    if hgtk.checker.is_hangul(last_char):  # 단어가 한글인지 확인
-        char_info = hgtk.letter.decompose(last_char)
-        if char_info[2] == '':  # 받침이 없는 경우
-            return word + '는', word + '가'
-        else:  # 받침이 있는 경우
-            return word + '은', word + '이'
-    else:
-        return word
-
-word = '사람'  # 입력 단어
-print(attach_josa(word))
-
 n_number = 1
 last_date = date(2000, 1, 1) 
 load_dotenv() 
@@ -121,10 +107,10 @@ def get_story():
 def getProblem():
     global last_date
     current_date = datetime.now().date()
-    # get_story()
-    # if last_date != current_date:
-    #     get_story()
-    #     last_date = current_date
+    get_story()
+    if last_date != current_date:
+        get_story()
+        last_date = current_date
     return problem
 
 def getStory():
