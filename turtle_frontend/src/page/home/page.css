@@ -17,7 +17,7 @@ html {
   position: relative;
   background-color: rgba(255, 255, 255, 1);
   width: 100%;
-  height: 3026px;
+  height: 1026px;
 }
 .e6_15 {
   width: 1105px;
@@ -452,10 +452,10 @@ html {
   border: 5px solid rgba(0, 0, 0, 1);
 }
 .F22F_main {
-  border: 4.5px solid rgb(0, 0, 0);
-  color: rgb(21, 21, 21);
-  width: 101px;
-  height: 45px;
+  /* border: 4.5px solid rgb(0, 0, 0); */
+  /* color: rgb(21, 21, 21); */
+  width: 151px;
+  height: 55px;
   position: relative;
   left: 35px;
   top: 40px;
@@ -466,7 +466,6 @@ html {
   font-size: 35px;
   letter-spacing: -0.3px;
   line-height: 38px;
-  border-radius: 55px;
   background-color: #ffffff;
   padding-top: 2.5px;
 }
@@ -575,21 +574,21 @@ html {
 .e186_197 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 350px;
-  top: 2970px;
+  position: relative;
 }
+
 .e186_174 {
   width: 673px;
-  height: 125px;
-  position: absolute;
-  left: 350px;
-  top: 1350px;
+  min-height: 200px;
+  position: relative;
+  display: block;
 }
+
 .e186_175 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
   width: 673px;
-  height: 63px;
+  min-height: 100px;
+  /* height: 63px; */
   position: absolute;
   left: 0px;
   top: 4px;
@@ -604,9 +603,8 @@ html {
 .e186_176 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 167px;
-  top: 1204px;
+  position: relative;
+  left: -167px;
 }
 .e186_177 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -626,7 +624,7 @@ html {
 .e186_178 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
   width: 750px;
-  height: 103px;
+  min-height: 100px;
   position: absolute;
   left: 25px;
   top: 40px;
@@ -654,17 +652,13 @@ html {
 .e186_179 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 350px;
-  top: 1640px;
+  position: relative;
 }
 
 .e186_182 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 350px;
-  top: 1930px;
+  position: relative;
 }
 
 .e186_184 {
@@ -682,9 +676,7 @@ html {
 .e186_185 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 350px;
-  top: 2180px;
+  position: relative;
 }
 .e186_186 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -714,9 +706,7 @@ html {
 .e186_188 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 350px;
-  top: 2440px;
+  position: relative;
 }
 .e186_189 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -746,9 +736,7 @@ html {
 .e186_191 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 350px;
-  top: 2700px;
+  position: relative;
 }
 .e186_192 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -778,9 +766,7 @@ html {
 .e186_194 {
   width: 673px;
   height: 125px;
-  position: absolute;
-  left: 167px;
-  top: 2850px;
+  position: relative;
 }
 .e186_195 {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
@@ -905,7 +891,7 @@ html {
 .A_dot {
   position: relative;
   left: 0px;
-  top: 34px;
+  top: 53px;
   font-size: 20px;
 }
 
@@ -924,4 +910,12 @@ html {
   font-weight: 650;
   text-align: center;
   font-size: 21px;
+}
+
+.detail {
+  position: absolute;
+  top: 1200px;
+  left: 350px;
+  height: 2000px;
+  /* display: flex; */
 }

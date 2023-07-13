@@ -487,10 +487,8 @@
 }
 
 .F22F {
-  border: 4.5px solid black;
-  color: rgb(21, 21, 21);
-  width: 101px;
-  height: 45px;
+  width: 151px;
+  height: 55px;
   position: relative;
   left: 10px;
   top: 40px;
@@ -501,7 +499,6 @@
   font-size: 35px;
   letter-spacing: -0.3px;
   line-height: 38px;
-  border-radius: 55px;
   background-color: #ffffff;
   padding-top: 2.5px;
 }
@@ -535,7 +532,7 @@
   height: 20px;
   position: relative;
   left: 1250px;
-  top: 0px;
+  top: -20px;
   border-radius: 55px;
 }
 

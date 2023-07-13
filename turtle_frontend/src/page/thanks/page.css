@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
 }
+
 html {
   display: flex;
   justify-content: center;
@@ -10,10 +11,12 @@ html {
 }
 .desktop3 {
   background-color: rgba(255, 255, 255, 1);
-  width: 1440px;
-  height: 1024px;
+  width: 100%;
+  min-height: 200px;
+  margin-bottom: 500px;
   position: relative;
 }
+
 .overall_layout {
   width: 1000px;
   position: absolute;
@@ -32,8 +35,14 @@ html {
 }
 
 .user_answer_box_tag {
-  flex: 0 0 95px; /* This means that the box will always be 95px wide and will not grow or shrink */
+  /* display: flex; */
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
+  /* width: 98px; */
+  flex: 0 0 95px;
+  overflow: auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #c7e1ff;
@@ -50,6 +59,8 @@ html {
   border-radius: 12px;
   overflow: auto; /* This means that if the content is too large for the box, it will create a scroll bar */
   border-left: 1px solid #218c66;
+  align-items: center;
+  justify-content: center;
 }
 
 .user_answer {
@@ -65,16 +76,12 @@ html {
 }
 
 .MY {
-  color: #3a3e45;
-  font-weight: 650;
   position: relative;
-  text-align: center;
-  font-family: Inter;
-  font-size: 33px;
-  letter-spacing: -0.5;
   line-height: px;
+  justify-content: center;
   left: 1px;
   top: 0%;
+  display: flex;
 }
 
 .Icon {
@@ -95,6 +102,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   background-color: #dfffec;
   border: 2px solid #218c66;
   border-radius: 12px;
@@ -109,6 +117,8 @@ html {
   border-radius: 12px;
   overflow: auto; /* This means that if the content is too large for the box, it will create a scroll bar */
   border-left: 1px solid #218c66;
+  align-items: center;
+  justify-content: center;
 }
 
 .AI_answer {
@@ -152,20 +162,26 @@ html {
   height: 277px;
   position: relative;
   left: 5px;
-  top: 40px;
-  border: 3px solid #505050;
+  top: 90px;
+  border: 2px solid #505050;
 }
-
+.line {
+  padding-bottom: 15px;
+}
+#special-br {
+  line-height: 60; /* 줄 간격 조정 */
+}
 .my_sumbit_box {
   background-color: rgb(255, 255, 255);
   width: 775px;
-  height: 277px;
+  height: 290px;
   position: relative;
   left: 5px;
-  top: 100px;
-  border: 3px solid #505050;
+  top: 132px;
+  border: 2.1px solid #505050;
   text-align: center;
   padding-top: 30px;
+  margin-bottom: 250px;
 }
 .submit_problem_box {
   border-radius: 27px;
@@ -173,37 +189,25 @@ html {
   outline: none;
   background-color: #f5f5f5;
   position: relative;
-  width: 300px;
-  height: 180px;
+  width: 290px;
+  height: 155px;
   top: 15px;
-  margin-top: 40px;
   margin: 20px;
-  /* left: 70px; */
-  /* text-align: left; */
-  justify-content: center;
-  text-align: justify;
-  /* display: inline; */
-  /* align-items: end; */
-  /* line-height: 30px;  */
+  padding: 20px;
+  resize: none;
 }
 .submit_explanation_box {
   position: relative;
   width: 300px;
   height: 200px;
   top: 40px;
-  /* left: 70px; */
 }
 .submit_title {
   position: relative;
-  /* left: 20px; */
   top: 30px;
   font-size: 17px;
-  /* font-weight: 50; */
-  padding-left: 30px;
-  padding-right: 290px;
-  /* padding-top: 4000px;
-  padding-bottom: 100px; */
-  /* display: flex; */
+  padding-left: 37px;
+  padding-right: 317px;
 }
 .submit_input_box {
   display: flex;
@@ -237,11 +241,9 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45px;
-  height: 40px;
   position: absolute;
-  left: 800px;
-  top: 15px;
+  left: 790px;
+  top: 10px;
 }
 
 .user_soup {
@@ -302,11 +304,10 @@ html {
 }
 
 .F22F {
-  border: 4.5px solid black;
-  display: inline-block;
-  color: rgb(21, 21, 21);
-  width: 101px;
-  height: 45px;
+  /* border: 4.5px solid black; */
+  /* color: rgb(21, 21, 21); */
+  width: 151px;
+  height: 55px;
   position: relative;
   left: 10px;
   top: 40px;
@@ -317,7 +318,6 @@ html {
   font-size: 35px;
   letter-spacing: -0.3px;
   line-height: 38px;
-  border-radius: 55px;
   background-color: #ffffff;
   padding-top: 2.5px;
 }
@@ -389,6 +389,37 @@ html {
   font-size: 10px;
   text-align: center;
   outline: none;
+}
+.submitAlertContent_ok {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  width: 250px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  text-align: center;
+  outline: none;
+  line-height: 25px;
+}
+
+.submitAlertContent {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  width: 250px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  text-align: center;
+  outline: none;
+  line-height: 25px;
 }
 
 .centered-message {

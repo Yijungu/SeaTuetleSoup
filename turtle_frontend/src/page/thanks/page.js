@@ -3,14 +3,15 @@ import axios from "axios";
 import "./page.css";
 import { useLocation } from "react-router-dom";
 import Profile from "../../images/Profile.png";
+import F22FBeta from "../../images/F22FBeta.png";
 import CopyButton from "../../images/CopyButton.png";
 import SubmitButton from "../../images/SubmitButton.png";
-import SpoonForkButton from "../../images/SpoonForkButton.png";
-import TurtleIcon from "../../images/TurtleIcon.png";
-import UserIcon from "../../images/UserIcon.png";
+import GreenTurtle from "../../images/GreenTurtle.png";
+import BlueSpeechBubble from "../../images/BlueSpeechBubble.png";
+import WhiteSpeechBubble from "../../images/WhiteSpeechBubble.png";
+import WhiteTurtle from "../../images/WhiteTurtle.png";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { motion } from "framer-motion";
 
 Modal.setAppElement("#root");
 
@@ -32,6 +33,7 @@ export default function Thanks() {
   const [workTime, setWorkTime] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [isNickName, setIsNickName] = useState(false);
   const endTime = localStorage.getItem("endTime");
   const [problem, setProblem] = useState("");
   const [explanation, setExplanation] = useState("");
@@ -106,8 +108,15 @@ export default function Thanks() {
   };
 
   const handleSubmitClick = async () => {
-    const user = nickname;
+    if (nickname === "") {
+      setIsNickName(true);
+      setTimeout(() => {
+        setIsNickName(false); // 2초 후에 복사 성공 상태를 false로 변경
+      }, 800);
+      return;
+    }
 
+    const user = nickname;
     try {
       const response = await axios.post(
         process.env.REACT_APP_API_URL + "/submit_problem/",
@@ -123,7 +132,7 @@ export default function Thanks() {
     setSubmitSuccess(true);
     setTimeout(() => {
       setSubmitSuccess(false); // 2초 후에 복사 성공 상태를 false로 변경
-    }, 500);
+    }, 800);
   };
 
   if (!endTime) {
@@ -140,7 +149,40 @@ export default function Thanks() {
             {userAnswer && (
               <div className="user_answer_layout">
                 <div className="user_answer_box_tag">
-                  <p className="MY">MY</p>
+                  <img
+                    className="My"
+                    src={BlueSpeechBubble}
+                    alt="BlueSpeechBubble"
+                    width="33"
+                    height="30"
+                    style={{ margin: "10px" }}
+                  />
+                  <img
+                    className="My"
+                    src={WhiteSpeechBubble}
+                    alt="BlueSpeechBubble"
+                    width="33"
+                    height="30"
+                    padding="30px"
+                    style={{ margin: "10px" }}
+                  />
+                  <img
+                    className="My"
+                    src={BlueSpeechBubble}
+                    alt="BlueSpeechBubble"
+                    width="33"
+                    height="30"
+                    padding="30px"
+                    style={{ margin: "10px" }}
+                  />
+                  <img
+                    className="My"
+                    src={WhiteSpeechBubble}
+                    alt="BlueSpeechBubble"
+                    width="33"
+                    height="30"
+                    style={{ margin: "10px" }}
+                  />
                 </div>
                 <div className="user_answer_box">
                   <p className="user_answer">{userAnswer}</p>
@@ -150,7 +192,42 @@ export default function Thanks() {
 
             <div className="Ai_answer_layout">
               <div className="AI_answer_box_tag">
-                <p className="MY">AI</p>
+                <img
+                  className="My"
+                  src={GreenTurtle}
+                  alt="BlueSpeechBubble"
+                  width="40"
+                  height="30"
+                  padding="30px"
+                  style={{ margin: "10px" }}
+                />
+                <img
+                  className="My"
+                  src={WhiteTurtle}
+                  alt="BlueSpeechBubble"
+                  width="40"
+                  height="30"
+                  padding="30px"
+                  style={{ margin: "10px" }}
+                />
+                <img
+                  className="My"
+                  src={GreenTurtle}
+                  alt="BlueSpeechBubble"
+                  width="40"
+                  height="30"
+                  padding="30px"
+                  style={{ margin: "10px" }}
+                />
+                <img
+                  className="My"
+                  src={WhiteTurtle}
+                  alt="BlueSpeechBubble"
+                  width="40"
+                  height="30"
+                  padding="30px"
+                  style={{ margin: "10px" }}
+                />
               </div>
               <div className="AI_answer_box">
                 <p className="AI_answer">{story}</p>
@@ -160,14 +237,14 @@ export default function Thanks() {
             <div className="my_play_box">
               <div className="copy_phrase">
                 <span className="my_play_3">
-                  {userAnswer &&
-                    "축하합니다! {totalQuestionsAsked}번째 질문에서 정답을 맞혔습니다!"}
-                  {!userAnswer && `다음 ${n + 1}번째 수프레시피을 노려보세요!`}
-                  <br />
-                  {n + 1}번째 수프레시피는 오늘 밤 자정(한국 시간 기준)에
-                  찾아옵니다.
-                  <br />
-                  <br />
+                  <div className="line">
+                    {userAnswer &&
+                      `축하합니다! ${totalQuestionsAsked}번째 질문에서 정답을 맞혔습니다!`}
+                    {!userAnswer &&
+                      `다음 ${n + 1}번째 수프레시피을 노려보세요!`}
+                    {n + 1}번째 수프레시피는 오늘 밤 자정(한국 시간 기준)에
+                    찾아옵니다.
+                  </div>
                   [My Log]
                   <br />
                   정답 횟수:{correctAnswers} 포기 횟수:{giveUpCount}
@@ -184,8 +261,8 @@ export default function Thanks() {
                   className="copybutton"
                   src={CopyButton}
                   alt="CopyButton"
-                  width="25"
-                  height="25"
+                  width="45"
+                  height="40"
                   onClick={handleCopy}
                 />
               </div>
@@ -209,7 +286,7 @@ export default function Thanks() {
                 <span className="submit_title">A.</span>
               </div>
               <div clsasNmae="submit_input_box">
-                <input
+                <textarea
                   className="submit_problem_box"
                   type="text"
                   placeholder="문제와 힌트를 자유롭게 입력해주세요."
@@ -217,7 +294,7 @@ export default function Thanks() {
                   onChange={(e) => setProblem(e.target.value)}
                 />
 
-                <input
+                <textarea
                   className="submit_problem_box"
                   type="text"
                   placeholder="정답과 해설을 자유롭게 입력해주세요."
@@ -230,6 +307,8 @@ export default function Thanks() {
                 className="copybutton"
                 src={SubmitButton}
                 alt="SubmitButton"
+                width="43px"
+                height="43px"
                 onClick={handleSubmitClick}
               />
               <Modal
@@ -239,7 +318,19 @@ export default function Thanks() {
                 className="CopyAlertContent"
                 contentLabel="Copy alert"
               >
-                <h2>제출 완료</h2>
+                <h2>제출완료</h2>
+              </Modal>
+              <Modal
+                isOpen={isNickName}
+                onRequestClose={() => setIsNickName(false)}
+                overlayClassName="CopyAlertOverlay"
+                className="submitAlertContent"
+                contentLabel="Copy alert"
+              >
+                <h2>
+                  닉네임을 설정해주세요.
+                  <br /> 메인 화면에서 설정이 가능합니다.
+                </h2>
               </Modal>
             </div>
           </div>
@@ -252,10 +343,12 @@ export default function Thanks() {
             </div>
           </div>
 
-          <button className="F22F" onClick={handleLogoClick}>
-            F22F
-          </button>
-          <span className="Beta"> -Beta- </span>
+          <img
+            className="F22F"
+            src={F22FBeta}
+            alt="F22FBeta"
+            onClick={handleLogoClick}
+          />
         </div>
       </div>
     );

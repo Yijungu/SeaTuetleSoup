@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import QnA from "../../component/qna";
 import "./page.css";
+import F22FBeta from "../../images/F22FBeta.png";
 import { useNavigate } from "react-router-dom";
 import Profile from "../../images/Profile.png";
 import SendButton from "../../images/SendButton.png";
@@ -468,8 +469,8 @@ export default function Problem() {
               >
                 <h2>정말로 포기를 하시겠습니까?</h2>
                 <div className="button-container">
-                  <button onClick={handleGiveUpClick}>포기하기</button>
-                  <button onClick={closeModal}>더해보기</button>
+                  <button onClick={closeModal}>취소</button>
+                  <button onClick={handleGiveUpClick}>확인</button>
                 </div>
               </Modal>
             </div>
@@ -490,10 +491,12 @@ export default function Problem() {
             </div>
           </div>
 
-          <button className="F22F" onClick={handleLogoClick}>
-            F22F
-          </button>
-          <span className="Beta"> -Beta- </span>
+          <img
+            className="F22F"
+            src={F22FBeta}
+            alt="F22FBeta"
+            onClick={handleLogoClick}
+          />
           <div className="e168_70">
             <span className="description">
               텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의
