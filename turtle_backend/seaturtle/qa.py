@@ -6,15 +6,17 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
 import openai
-from .models import SeaTurtle, Keyword
-from datetime import datetime, date
+from .models import SeaTurtle, Keyword, SubmitProblem
+from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
 import hgtk
+import pytz
+import csv
 
-n_number = 1
-last_date = date(2000, 1, 1) 
-load_dotenv() 
+n_number = 0
+last_date = datetime.now(pytz.timezone('Asia/Seoul')).date()
+load_dotenv()
 openai_apikey = os.getenv('API_KEY')
 os.environ["OPENAI_API_KEY"] = openai_apikey
 openai.api_key = openai_apikey
@@ -25,8 +27,7 @@ turbo_llm = ChatOpenAI(
 )
 embeddings = OpenAIEmbeddings(openai_api_key=openai_apikey)
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-
-sentences_kr = ["그 할머니는 과거에 국제적으로 유명한 천문학자였습니다. 그녀는 은퇴 후에도 계속해서 연구를 하고 싶은 욕구가 있었고, 마을의 산 정상에서 별을 관측하는 것이 가장 이상적이라는 결론을 내렸습니다. 그런데 문제는 그 산은 마을 사람들에게 신성한 산이었습니다. 이 산은 고대부터 마을을 보호해주는 신이 살고 있다는 전설이 있어, 마을 사람들은 존경의 표시로 산에 오르는 것을 허용하지 않았습니다. 그러나 할머니는 과학 연구를 위해 이 규칙을 어겨야만 했습니다. 그래서 그녀는 밤낚시를 즐기는 이웃집 할머니로 마을 사람들에게 알려지기 위해 낚싯대를 들고 다녔습니다. 그렇게 그 주변에 있는 작은 연못으로 낚시를 가는 척하며 산에 올라갔고, 실제로는 그 '낚싯대'는 별을 가리키는 도구로 사용되었습니다. 이런 식으로 그녀는 별을 관측하고 마을 사람들의 의심을 피하며 자신의 연구를 계속할 수 있었습니다. 이것이 이야기의 진상이었습니다."]
+sentences_kr = ["그 할머니는 "]
 
 with open('0.txt', 'w') as f:
     for sentence in sentences_kr:
@@ -43,11 +44,12 @@ k = 1
 keywords = ['시각장애인']
 answer_plus = " 이 글에서 건축가에 대한 이야기가 있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
 problem = "매일 밤, 나는 이웃집 할머니가 낚싯대를 들고 나가는 것을 보았다. 하지만 할머니는 한 번도 고기를 잡아오지 않았다. 왜 그랬을까?"
-story = "그 할머니는 과거에 국제적으로 유명한 천문학자였습니다. 그녀는 은퇴 후에도 계속해서 연구를 하고 싶은 욕구가 있었고, 마을의 산 정상에서 별을 관측하는 것이 가장 이상적이라는 결론을 내렸습니다. 그런데 문제는 그 산은 마을 사람들에게 신성한 산이었습니다. 이 산은 고대부터 마을을 보호해주는 신이 살고 있다는 전설이 있어, 마을 사람들은 존경의 표시로 산에 오르는 것을 허용하지 않았습니다. 그러나 할머니는 과학 연구를 위해 이 규칙을 어겨야만 했습니다. 그래서 그녀는 밤낚시를 즐기는 이웃집 할머니로 마을 사람들에게 알려지기 위해 낚싯대를 들고 다녔습니다. 그렇게 그 주변에 있는 작은 연못으로 낚시를 가는 척하며 산에 올라갔고, 실제로는 그 '낚싯대'는 별을 가리키는 도구로 사용되었습니다. 이런 식으로 그녀는 별을 관측하고 마을 사람들의 의심을 피하며 자신의 연구를 계속할 수 있었습니다. 이것이 이야기의 진상이었습니다."
+story = ""
+correct_answer = ""
 
 def question(query):
     messages = []
-    query = "'네' '아니오' 로만 최대한 짧게 대답해줘. 그리고 모르겠으면 추측해보고 그래도 모르겠으면 모르겠다고 해. " + query 
+    query += " '맞습니다', '아닙니다'로 대답해줘. 만약 답을 모르겠으면 '모르겠습니다'라고 해."
     print(query)
     llm_response = qa_chain(query)
     print(llm_response['result'])
@@ -78,10 +80,14 @@ def answer_plus_edit():
     return 0
 
 def get_story():
-    today = datetime.today().day
+    korea_timezone = pytz.timezone('Asia/Seoul')
+    now = datetime.now(korea_timezone)
+    today = now.day
     seaturtle = SeaTurtle.objects.filter(date = today)
     global story
     print(seaturtle[0].story)
+    global correct_answer
+    correct_answer = seaturtle[0].correct_answer
     story = seaturtle[0].story
     title = str(today) + ".txt"
     with open(title, 'w') as f:
@@ -102,19 +108,20 @@ def get_story():
     global n_number
     n_number += 1
     answer_plus_edit()
+    export_and_delete()
     return 0
 
 def getProblem():
     global last_date
-    current_date = datetime.now().date()
-    # get_story()
-    if last_date != current_date:
+    current_date = datetime.now(pytz.timezone('Asia/Seoul')).date()
+    global n_number
+    if last_date != current_date or n_number == 0:
         get_story()
         last_date = current_date
     return problem
 
 def getStory():
-    return story
+    return correct_answer
 
 def getNnumber():
     return n_number
@@ -133,3 +140,22 @@ def attach_josa(word):
     else:
         return word
 
+def export_and_delete():
+    # 현재 시간을 한국 시간으로 설정
+    timezone = pytz.timezone('Asia/Seoul')
+    yesterday = datetime.now(timezone) - timedelta(days=1)
+
+    # 모든 데이터 가져오기
+    data = SubmitProblem.objects.all()
+
+    # csv 파일로 저장
+    with open('submit_problem_{}.csv'.format(yesterday.strftime('%Y_%m_%d')), 'w', newline='') as csvfile:
+        fieldnames = ['user', 'problem', 'explanation']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        for obj in data:
+            writer.writerow({'user': obj.user, 'problem': obj.problem, 'explanation': obj.explanation})
+
+    # 테이블의 모든 데이터 삭제
+    data.delete()

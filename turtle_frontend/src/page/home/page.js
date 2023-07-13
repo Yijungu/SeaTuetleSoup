@@ -82,6 +82,7 @@ export default function Home() {
           <button className="F22F_main" onClick={handleLogoClick}>
             F22F
           </button>
+          <span className="Beta_main"> -Beta- </span>
           <div className="e204_184">
             <div className="e186_126"></div>
             <div className="checkmakr_box">

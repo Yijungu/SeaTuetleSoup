@@ -88,9 +88,9 @@ export default function Problem() {
       setGameAttempts(savedGameAttempts || 1);
       setTotalQuestionsAsked(savedTotalQuestionsAsked || 0);
     }
-    console.log("asdasd", savedCorrectAnswers);
+
     setCorrectAnswers(savedCorrectAnswers);
-    console.log("asdasd", correctAnswers);
+
     setGiveUpCount(savedGiveUpCount || 0);
   }, []);
 
@@ -109,7 +109,7 @@ export default function Problem() {
   useEffect(() => {
     const savedQnas = JSON.parse(localStorage.getItem("qnas"));
     const savedDate = localStorage.getItem("date");
-    console.log(savedQnas);
+
     const now = new Date();
     const currentDate = `${now.getFullYear()}-${
       now.getMonth() + 1
@@ -140,7 +140,6 @@ export default function Problem() {
   // }, [qnas]);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_API_URL);
     axios
       .get(process.env.REACT_APP_API_URL + "/getQuestion/")
       .then((response) => {
@@ -233,14 +232,13 @@ export default function Problem() {
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
           setTimeout(() => setShake(false), 500);
         } else {
-          console.log(text_x);
           const anotherResponse = await axios.post(
             process.env.REACT_APP_API_URL + "/submit/",
             {
               data: text_x + "?",
             }
           );
-          console.log(anotherResponse.data.response);
+
           if (
             anotherResponse.data.response.startsWith("네") ||
             anotherResponse.data.response.startsWith("예") ||
@@ -255,7 +253,7 @@ export default function Problem() {
             // 마지막으로 정답을 맞춘 날짜를 불러오기
             const lastCorrectDate = localStorage.getItem("lastCorrectDate");
             const lastGiveUpDate = localStorage.getItem("lastGiveUpDate");
-            console.log(lastCorrectDate);
+
             // 마지막으로 정답을 맞춘 날짜와 현재 날짜를 비교하기
             if (
               lastGiveUpDate !== currentDate &&
@@ -283,7 +281,6 @@ export default function Problem() {
           }
         }
       } else {
-        console.log(question_step);
         if (!question_step) {
           setQuestion_Step(true);
           setText_t(text);
@@ -305,24 +302,21 @@ export default function Problem() {
             ...qnas,
           ];
           setQnas(tempQnas); // 임시로 Loading 애니메이션을 표시
-          console.log(text_x);
+
           const response = await axios.post(
             process.env.REACT_APP_API_URL + "/question/",
             {
               data: question_2step_text + " " + text_x,
             }
           );
-          console.log(question_2step_text + " " + text_x);
-          // console(response.data.response);
+
           let updatedQnas;
           if (
             response.data.response.startsWith("네") ||
             response.data.response.startsWith("예") ||
             response.data.response.startsWith("맞습니다") ||
             response.data.response.startsWith("아니오") ||
-            response.data.response.startsWith("아닙니다") ||
-            response.data.response.startsWith("모르겠습니다") ||
-            response.data.response.startsWith("모릅니다")
+            response.data.response.startsWith("아닙니다")
           ) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
@@ -333,12 +327,22 @@ export default function Problem() {
                   }
                 : qna
             );
+          } else if (response.data.response.startsWith("모르")) {
+            updatedQnas = tempQnas.map((qna) =>
+              qna.question === question_2step_text + " " + text_x &&
+              qna.answer.type === Loading
+                ? {
+                    question: question_2step_text + " " + text_x,
+                    answer: "중요하지 않은 내용입니다.",
+                  }
+                : qna
+            );
           } else {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
               qna.answer.type === Loading
                 ? {
-                    question: text_x,
+                    question: question_2step_text + " " + text_x,
                     answer: "예, 아니오로 대답할 수 있는 질문을 해주세요.",
                   }
                 : qna
@@ -409,7 +413,13 @@ export default function Problem() {
                 value={text}
                 onChange={handleChange}
                 onKeyDown={handleKeyPress}
-                placeholder="질문을 입력하세요."
+                placeholder={
+                  !tabPressed
+                    ? question_step
+                      ? "질문을 입력하세요."
+                      : "ex) 남자"
+                    : "정답을 입력해주세요."
+                }
               />
             </div>
 
@@ -483,7 +493,7 @@ export default function Problem() {
           <button className="F22F" onClick={handleLogoClick}>
             F22F
           </button>
-
+          <span className="Beta"> -Beta- </span>
           <div className="e168_70">
             <span className="description">
               텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의

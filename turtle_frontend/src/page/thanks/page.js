@@ -4,12 +4,15 @@ import "./page.css";
 import { useLocation } from "react-router-dom";
 import Profile from "../../images/Profile.png";
 import CopyButton from "../../images/CopyButton.png";
+import SubmitButton from "../../images/SubmitButton.png";
 import SpoonForkButton from "../../images/SpoonForkButton.png";
 import TurtleIcon from "../../images/TurtleIcon.png";
 import UserIcon from "../../images/UserIcon.png";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { motion } from "framer-motion";
+
+Modal.setAppElement("#root");
 
 export default function Thanks() {
   const location = useLocation();
@@ -28,19 +31,21 @@ export default function Thanks() {
   const [copyText, setCopyText] = useState("");
   const [workTime, setWorkTime] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const endTime = localStorage.getItem("endTime");
+  const [problem, setProblem] = useState("");
+  const [explanation, setExplanation] = useState("");
 
   useEffect(() => {
     const storedStartTime = new Date(localStorage.getItem("startTime"));
     const storedEndTime = new Date(localStorage.getItem("endTime"));
-    // const storedEndTime = new Date();
+
     const timeDifference = storedEndTime - storedStartTime;
     const timeDifferenceInSeconds = Math.round(timeDifference / 1000);
-    // console.log(storedEndTime);
+
     const hours = Math.floor(timeDifferenceInSeconds / 3600);
     const minutes = Math.floor((timeDifferenceInSeconds - hours * 3600) / 60);
     const seconds = timeDifferenceInSeconds - hours * 3600 - minutes * 60;
-    console.log(hours, "시간", minutes, "분", seconds, "초");
     setWorkTime(`${hours}시간 ${minutes}분 ${seconds}초`);
   }, []);
 
@@ -99,6 +104,28 @@ export default function Thanks() {
   const handleLogoClick = async () => {
     navigate("/");
   };
+
+  const handleSubmitClick = async () => {
+    const user = nickname;
+
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL + "/submit_problem/",
+        {
+          user: user,
+          problem: problem,
+          explanation: explanation,
+        }
+      );
+    } catch (error) {
+      console.error("There was an error!", error);
+    }
+    setSubmitSuccess(true);
+    setTimeout(() => {
+      setSubmitSuccess(false); // 2초 후에 복사 성공 상태를 false로 변경
+    }, 500);
+  };
+
   if (!endTime) {
     return (
       <div className="centered-message">
@@ -133,8 +160,9 @@ export default function Thanks() {
             <div className="my_play_box">
               <div className="copy_phrase">
                 <span className="my_play_3">
-                  축하합니다! {totalQuestionsAsked}번째 질문에서 정답을
-                  맞혔습니다!
+                  {userAnswer &&
+                    "축하합니다! {totalQuestionsAsked}번째 질문에서 정답을 맞혔습니다!"}
+                  {!userAnswer && `다음 ${n + 1}번째 수프레시피을 노려보세요!`}
                   <br />
                   {n + 1}번째 수프레시피는 오늘 밤 자정(한국 시간 기준)에
                   찾아옵니다.
@@ -161,7 +189,6 @@ export default function Thanks() {
                   onClick={handleCopy}
                 />
               </div>
-
               <Modal
                 isOpen={copySuccess}
                 onRequestClose={() => setCopySuccess(false)}
@@ -171,15 +198,49 @@ export default function Thanks() {
               >
                 <h2>복사 완료</h2>
               </Modal>
+            </div>
+            <div className="my_sumbit_box">
+              <span className="submit_text">
+                더 좋은 바다 거북 수프 문제가 있다면 자유롭게 적어주세요! 추후
+                문제에 반영하겠습니다.
+              </span>
+              <div clsasNmae="submit_input_box">
+                <span className="submit_title">Q.</span>
+                <span className="submit_title">A.</span>
+              </div>
+              <div clsasNmae="submit_input_box">
+                <input
+                  className="submit_problem_box"
+                  type="text"
+                  placeholder="문제와 힌트를 자유롭게 입력해주세요."
+                  value={problem}
+                  onChange={(e) => setProblem(e.target.value)}
+                />
 
-              {/* <div className="user_soup">
-                  <img
-                    src={SpoonForkButton}
-                    alt="SpoonForkButton"
-                    width="25"
-                    height="25"
-                  />
-                </div> */}
+                <input
+                  className="submit_problem_box"
+                  type="text"
+                  placeholder="정답과 해설을 자유롭게 입력해주세요."
+                  value={explanation}
+                  onChange={(e) => setExplanation(e.target.value)}
+                />
+              </div>
+
+              <img
+                className="copybutton"
+                src={SubmitButton}
+                alt="SubmitButton"
+                onClick={handleSubmitClick}
+              />
+              <Modal
+                isOpen={submitSuccess}
+                onRequestClose={() => setSubmitSuccess(false)}
+                overlayClassName="CopyAlertOverlay"
+                className="CopyAlertContent"
+                contentLabel="Copy alert"
+              >
+                <h2>제출 완료</h2>
+              </Modal>
             </div>
           </div>
           <div className="border_line">
@@ -187,19 +248,14 @@ export default function Thanks() {
               <p className="nickname">{nickname} 님</p>
             </div>
             <div>
-              <img
-                className="profile_photo"
-                src={Profile}
-                alt="Profile"
-                width="25"
-                height="25"
-              />
+              <img className="profile_photo" src={Profile} alt="Profile" />
             </div>
           </div>
 
           <button className="F22F" onClick={handleLogoClick}>
             F22F
           </button>
+          <span className="Beta"> -Beta- </span>
         </div>
       </div>
     );

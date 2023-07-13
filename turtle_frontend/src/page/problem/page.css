@@ -650,3 +650,15 @@
   margin-top: 25px;
   margin-bottom: 10px;
 }
+.Beta {
+  color: rgb(21, 21, 21);
+  width: 101px;
+  height: 45px;
+  position: relative;
+  left: -75px;
+  top: 50px;
+  font-family: "Apple SD Gothic Neo";
+  font-weight: 650;
+  text-align: center;
+  font-size: 21px;
+}

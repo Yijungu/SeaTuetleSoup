@@ -1,6 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .qa import question, submit, getProblem, getStory, getNnumber, attach_josa
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import SubmitProblem
 import json
 
 class RequestQaView(APIView):
@@ -53,3 +56,18 @@ class AttachJosa(APIView):
             return Response({'response': attach_josa_text})
         else:
             return Response({'status': 'question is required'}, status=400)
+
+class SubmitProblemRequest(APIView):        
+    def post(self, request, format=None):
+        data = request.data
+        user = data['user']            
+        problem = data["problem"]
+        explanation  = data['explanation']           
+        try:
+            new_problem = SubmitProblem(user=user, problem=problem, explanation=explanation)
+            new_problem.save()
+            return Response({'message': 'Successfully created problem.'}, status=201)
+        except Exception as e:
+            print(str(e))
+            return Response({'error': str(e)}, status=400)
+        
