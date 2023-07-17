@@ -194,6 +194,9 @@ export default function Problem() {
       setTabPressed(!tabPressed);
       setQuestion_Step(false);
     }
+    if (e.key === "Escape") {
+      setQuestion_Step(false);
+    }
   };
   const handleGiveUpClick = async () => {
     closeModal();
@@ -337,23 +340,13 @@ export default function Problem() {
                   }
                 : qna
             );
-          } else if (response.data.response.startsWith("모르")) {
-            updatedQnas = tempQnas.map((qna) =>
-              qna.question === question_2step_text + " " + text_x &&
-              qna.answer.type === Loading
-                ? {
-                    question: question_2step_text + " " + text_x,
-                    answer: "잘 모르겠습니다. 중요하지 않은 내용입니다.",
-                  }
-                : qna
-            );
           } else {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
               qna.answer.type === Loading
                 ? {
                     question: question_2step_text + " " + text_x,
-                    answer: "잘 모르겠습니다. 중요하지 않은 내용입니다.",
+                    answer: "중요하지 않은 내용입니다.",
                   }
                 : qna
             );

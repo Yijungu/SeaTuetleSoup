@@ -23,7 +23,7 @@ openai.api_key = openai_apikey
 
 turbo_llm = ChatOpenAI(
     temperature=0,
-    model_name='gpt-3.5-turbo'
+    model_name='gpt-3.5-turbo',
     max_tokens = 10
 )
 embeddings = OpenAIEmbeddings(openai_api_key=openai_apikey)
