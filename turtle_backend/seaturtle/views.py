@@ -1,10 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .qa import question, submit, getProblem, getStory, getNnumber, attach_josa
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from .models import SubmitProblem
-import json
 
 class RequestQaView(APIView):
     def post(self, request, format=None):
@@ -26,9 +23,11 @@ class RequestSmView(APIView):
 
 class GetQuestionView(APIView):
     def get(self, request, format=None):
-        problem_text = getProblem()
+        problem_text, author, main_character = getProblem()
         data = {
-            'question': problem_text 
+            'question': problem_text,
+            'author': author,
+            'main_character': main_character
         }
         return Response(data)
     

@@ -349,6 +349,9 @@ export default function Thanks() {
             alt="F22FBeta"
             onClick={handleLogoClick}
           />
+          <div className="footer_last">
+            <p>Copyright 2023. F22F. All rights reserved.</p>
+          </div>
         </div>
       </div>
     );

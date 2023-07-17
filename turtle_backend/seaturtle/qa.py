@@ -24,59 +24,46 @@ openai.api_key = openai_apikey
 turbo_llm = ChatOpenAI(
     temperature=0,
     model_name='gpt-3.5-turbo'
+    max_tokens = 10
 )
 embeddings = OpenAIEmbeddings(openai_api_key=openai_apikey)
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-sentences_kr = ["그 할머니는 "]
-
-with open('0.txt', 'w') as f:
-    for sentence in sentences_kr:
-        f.write(sentence + '\n')
-loader = TextLoader("0.txt")
-documents = loader.load()
-texts = text_splitter.split_documents(documents)
-docsearch = Chroma.from_documents(texts, embeddings)
-qa_chain = RetrievalQA.from_chain_type(llm=turbo_llm,
-                    chain_type="stuff",
-                    retriever=docsearch.as_retriever(),
-                    return_source_documents=True)
+sentences_kr = [""]
+loader = None
+documents = None
+texts = None
+docsearch = None
+qa_chain = None
+qa_chain_submit = None
+author = ""
 k = 1
-keywords = ['시각장애인']
-answer_plus = " 이 글에서 건축가에 대한 이야기가 있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
-problem = "매일 밤, 나는 이웃집 할머니가 낚싯대를 들고 나가는 것을 보았다. 하지만 할머니는 한 번도 고기를 잡아오지 않았다. 왜 그랬을까?"
+keywords = None
+answer_plus = ""
+problem = ""
 story = ""
 correct_answer = ""
+main_character = ""
 
 def question(query):
-    messages = []
-    query += " '맞습니다', '아닙니다'로 대답해줘. 만약 답을 모르겠으면 '모르겠습니다'라고 해."
-    print(query)
     llm_response = qa_chain(query)
-    print(llm_response['result'])
     return llm_response['result']
 
 def submit(answer):
-    global answer_plus
-    messages = []
-    answer += answer_plus
-    print(answer)
-    messages.append({"role" : "user", "content": answer})
-    completion = openai.ChatCompletion.create(
-      model = "gpt-3.5-turbo",
-      messages = messages
-    )
-    chat_response = completion.choices[0].message.content
-    print(messages)
-    print(chat_response)
-    return chat_response
+    llm_response = qa_chain(answer)
+    print(llm_response['result'])
+    if llm_response['result'].startswith('네'):
+        global problem
+        answer += " 가 '" +problem+ "'에 대한 답이 맞아?"
+        llm_response = qa_chain_submit(answer)
+        return llm_response['result']
+    return llm_response['result']
 
 def answer_plus_edit():
     global keywords
-    # keywords = [keyword.word for keyword in keywords]  # keyword 객체를 keyword.word 문자열로 변환
-    keywords_str = ", ".join(keyword.word for keyword in keywords) # keywords 리스트의 각 항목 사이에 쉼표와 공백 삽입
+    keywords_str = ", ".join(keyword.word for keyword in keywords)
     global answer_plus
-    answer_plus = " 이 글에서 " + keywords_str + "이랑 비슷한 단어가 들어가 있어? 길게 설명하지 말고 네 아니오로만 대답해줘"
-    print(answer_plus)
+    answer_plus = " 여기에 "+ keywords_str + "이랑 비슷한 단어들이 들어가 있어?"
+    # print(answer_plus)
     return 0
 
 def get_story():
@@ -85,7 +72,7 @@ def get_story():
     today = now.day
     seaturtle = SeaTurtle.objects.filter(date = today)
     global story
-    print(seaturtle[0].story)
+    # print(seaturtle[0].story)
     global correct_answer
     correct_answer = seaturtle[0].correct_answer
     story = seaturtle[0].story
@@ -101,12 +88,30 @@ def get_story():
                                   chain_type="stuff",
                                   retriever=docsearch.as_retriever(),
                                   return_source_documents=True)
+    
+    title = str(today) + "_correct.txt"
+    with open(title, 'w') as f:
+            f.write(correct_answer + '\n')
+    loader = TextLoader(title)
+    documents = loader.load()
+    texts = text_splitter.split_documents(documents)
+    docsearch = Chroma.from_documents(texts, embeddings)
     global problem
     problem = seaturtle[0].problem
+    global qa_chain_submit
+    qa_chain_submit = RetrievalQA.from_chain_type(llm=turbo_llm,
+                                  chain_type="stuff",
+                                  retriever=docsearch.as_retriever(),
+                                  return_source_documents=True)
+    
     global keywords
     keywords = list(Keyword.objects.filter(date = today))
     global n_number
     n_number += 1
+    global author
+    author = seaturtle[0].author
+    global main_character
+    main_character = seaturtle[0].main_character
     answer_plus_edit()
     export_and_delete()
     return 0
@@ -118,16 +123,13 @@ def getProblem():
     if last_date != current_date or n_number == 0:
         get_story()
         last_date = current_date
-    return problem
+    return problem, author, main_character
 
 def getStory():
     return correct_answer
 
 def getNnumber():
     return n_number
-
-def printgetStory():
-    print(story)
 
 def attach_josa(word):
     last_char = word[-1]

@@ -28,6 +28,8 @@ export default function Problem() {
   const [nickname, setNickname] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [text_t, setText_t] = useState("");
+  const [author, setAuthor] = useState("");
+  const [main_character, setMainCharacter] = useState("");
   const [text_question, setText_Question] = useState(
     "어떤 대상에 대해 알고 싶으신가요?"
   );
@@ -146,6 +148,8 @@ export default function Problem() {
       .then((response) => {
         const data = response.data;
         setQuestion(data.question);
+        setAuthor(data.author);
+        setMainCharacter(data.main_character);
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -222,10 +226,10 @@ export default function Problem() {
       setTimeout(() => setText(""), 0);
       if (tabPressed === true) {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
-        if (text_x.length <= 10) {
+        if (text_x.length <= 5) {
           setShake(true); // 실패 시 shake 상태를 true로 변경
           const newQnas = [
-            { question: text_x, answer: "10자 이상으로 입력해주세요." },
+            { question: text_x, answer: "5자 이상으로 입력해주세요." },
             ...qnas,
           ];
           setQnas(newQnas);
@@ -236,10 +240,10 @@ export default function Problem() {
           const anotherResponse = await axios.post(
             process.env.REACT_APP_API_URL + "/submit/",
             {
-              data: text_x + "?",
+              data: text_x,
             }
           );
-
+          // console.log(anotherResponse.data.response);
           if (
             anotherResponse.data.response.startsWith("네") ||
             anotherResponse.data.response.startsWith("예") ||
@@ -307,18 +311,13 @@ export default function Problem() {
           const response = await axios.post(
             process.env.REACT_APP_API_URL + "/question/",
             {
-              data: question_2step_text + " " + text_x,
+              data: question_2step_text + " " + text_x + "?",
             }
           );
 
           let updatedQnas;
-          if (
-            response.data.response.startsWith("네") ||
-            response.data.response.startsWith("예") ||
-            response.data.response.startsWith("맞습니다") ||
-            response.data.response.startsWith("아니오") ||
-            response.data.response.startsWith("아닙니다")
-          ) {
+          if (response.data.response.startsWith("네")) {
+            // if (true) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
               qna.answer.type === Loading
@@ -328,13 +327,23 @@ export default function Problem() {
                   }
                 : qna
             );
+          } else if (response.data.response.startsWith("아니오")) {
+            updatedQnas = tempQnas.map((qna) =>
+              qna.question === question_2step_text + " " + text_x &&
+              qna.answer.type === Loading
+                ? {
+                    question: question_2step_text + " " + text_x,
+                    answer: "아니오.",
+                  }
+                : qna
+            );
           } else if (response.data.response.startsWith("모르")) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
               qna.answer.type === Loading
                 ? {
                     question: question_2step_text + " " + text_x,
-                    answer: "중요하지 않은 내용입니다.",
+                    answer: "잘 모르겠습니다. 중요하지 않은 내용입니다.",
                   }
                 : qna
             );
@@ -344,7 +353,7 @@ export default function Problem() {
               qna.answer.type === Loading
                 ? {
                     question: question_2step_text + " " + text_x,
-                    answer: "예, 아니오로 대답할 수 있는 질문을 해주세요.",
+                    answer: "잘 모르겠습니다. 중요하지 않은 내용입니다.",
                   }
                 : qna
             );
@@ -382,6 +391,7 @@ export default function Problem() {
             <div className="question_box">
               <span className="Question">{question}</span>
             </div>
+            <span className="source">{`출처 : ${author}`}</span>
             <div className="circle_check_box">
               <div
                 className="quesiton_check_box"
@@ -418,7 +428,7 @@ export default function Problem() {
                   !tabPressed
                     ? question_step
                       ? "질문을 입력하세요."
-                      : "ex) 남자"
+                      : `ex) ${main_character}`
                     : "정답을 입력해주세요."
                 }
               />

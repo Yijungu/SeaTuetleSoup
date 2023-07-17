@@ -164,11 +164,15 @@ html {
   left: 5px;
   top: 90px;
   border: 2px solid #505050;
+  /* justify-content: center; */
+  display: flex;
 }
 .line {
+  width: 700px;
   padding-bottom: 15px;
 }
 #special-br {
+  width: 1800px;
   line-height: 60; /* 줄 간격 조정 */
 }
 .my_sumbit_box {
@@ -390,21 +394,6 @@ html {
   text-align: center;
   outline: none;
 }
-.submitAlertContent_ok {
-  position: relative;
-  background-color: white;
-  padding: 20px;
-  width: 250px;
-  height: 50px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  text-align: center;
-  outline: none;
-  line-height: 25px;
-}
 
 .submitAlertContent {
   position: relative;
@@ -428,4 +417,16 @@ html {
   align-items: center;
   height: 100vh; /* 브라우저 뷰포트의 높이만큼 설정 */
   text-align: center;
+}
+
+.footer_last {
+  position: relative;
+  /* right: inherit; */
+  top: 1400px;
+  width: 100%;
+  justify-content: center;
+  border-top: 1px solid black;
+  color: black;
+  text-align: end;
+  padding: 10px 0;
 }

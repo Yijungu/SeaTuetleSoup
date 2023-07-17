@@ -4,6 +4,8 @@ class SeaTurtle(models.Model):
     date = models.AutoField(primary_key=True)
     story = models.TextField()
     problem = models.TextField()
+    author = models.TextField(null=True)
+    main_character = models.TextField(null=True)
     correct_answer = models.TextField(null=True)  # 변경된 필드
 
     def __str__(self):

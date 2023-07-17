@@ -222,8 +222,11 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <ScrollToTopButton className="scroll_to_top" />
+          <div className="footer">
+            <p>Copyright 2023. F22F. All rights reserved.</p>
+          </div>
         </div>
+        <ScrollToTopButton className="scroll_to_top" />
       </div>
     </motion.div>
   );
