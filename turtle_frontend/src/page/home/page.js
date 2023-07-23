@@ -24,7 +24,7 @@ export default function Home() {
     if (event.key === "Enter") {
       setIsAnimating(true);
       setTimeout(() => setIsAnimating(false), 900);
-      localStorage.setItem("nickname", nickname); // The animation lasts 900ms
+      localStorage.setItem("nickname", nickname);
     }
   };
 
@@ -223,7 +223,8 @@ export default function Home() {
             </div>
           </div>
           <div className="footer">
-            <p>Copyright 2023. F22F. All rights reserved.</p>
+            <p className="Bank">Copyright 2023. F22F. All rights reserved.</p>
+            <p className="Bank">카카오뱅크 3333153034882 김영서</p>
           </div>
         </div>
         <ScrollToTopButton className="scroll_to_top" />

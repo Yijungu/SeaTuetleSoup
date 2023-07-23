@@ -14,6 +14,7 @@ class SeaTurtle(models.Model):
 class Keyword(models.Model):
     date = models.ForeignKey(SeaTurtle, on_delete=models.CASCADE)
     word = models.CharField(max_length=200)
+    alternative_word = models.CharField(max_length=200 , null=True)
 
     def __str__(self):
         return self.word
@@ -22,6 +23,13 @@ class SubmitProblem(models.Model):
     user = models.CharField(max_length=200)
     problem = models.TextField()
     explanation = models.TextField()
+
+    def __str__(self):
+        return self.user
+
+class Hint(models.Model):
+    date = models.ForeignKey(SeaTurtle, on_delete=models.CASCADE)
+    hint = models.TextField()
 
     def __str__(self):
         return self.user

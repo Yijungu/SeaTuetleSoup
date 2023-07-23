@@ -922,10 +922,9 @@ html {
 
 .footer {
   position: relative;
-  /* right: inherit; */
   top: 3250px;
-  width: 100%;
-  justify-content: center;
+  left: 110px;
+  width: 85%;
   border-top: 1px solid black;
   color: black;
   text-align: end;

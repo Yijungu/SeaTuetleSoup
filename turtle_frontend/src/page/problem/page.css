@@ -561,6 +561,20 @@
   background-color: #5d7ed9;
 }
 
+.hint_button_box {
+  outline: none;
+  border: 1.5px solid black;
+  color: #292626;
+  background-color: #f8fbff;
+  position: relative;
+  width: 80px;
+  font-size: 14px;
+  line-height: 20px;
+  position: relative;
+  left: 627px;
+  border-radius: 8px;
+}
+
 .ModalOverlay {
   position: fixed;
   top: 0;
@@ -597,6 +611,21 @@
   justify-content: center;
   padding: 0 20px;
   width: 100%;
+}
+
+.hint-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.hint_button {
+  margin: 10px;
+  width: 300px;
+}
+.hint_button_close {
+  margin: 10px;
 }
 
 .button-container button {

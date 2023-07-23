@@ -27,6 +27,7 @@ export default function Problem() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [nickname, setNickname] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [hintmodalIsOpen, setHintModalIsOpen] = useState(false);
   const [text_t, setText_t] = useState("");
   const [author, setAuthor] = useState("");
   const [main_character, setMainCharacter] = useState("");
@@ -34,7 +35,12 @@ export default function Problem() {
     "어떤 대상에 대해 알고 싶으신가요?"
   );
   const [question_step, setQuestion_Step] = useState(false);
+  const [givup, setGiveUp] = useState(false);
   const [question_2step_text, setQuestion_2step_Text] = useState("");
+  const [hintText, setHintText] = useState("1단계 힌트");
+  const [hintText2, setHintText2] = useState("2단계 힌트");
+  const [hint, setHint] = useState("없음");
+  const [hint2, setHint2] = useState("없음");
 
   useEffect(() => {
     const now = new Date();
@@ -128,19 +134,16 @@ export default function Problem() {
 
   useEffect(() => {
     if (updateState) {
-      navigate("/explanation", { state: { userAnswer: text_t } });
-      // 상태 업데이트 완료 표시
-      setUpdateState(false);
+      if (givup) {
+        navigate("/explanation", { state: { userAnswer: "" } });
+        setUpdateState(false);
+      } else {
+        navigate("/explanation", { state: { userAnswer: text_t } });
+        // 상태 업데이트 완료 표시
+        setUpdateState(false);
+      }
     }
   }, [updateState, text]);
-
-  // useEffect(() => {
-  //   const now = new Date();
-  //   const currentDate = `${now.getFullYear()}-${
-  //     now.getMonth() + 1
-  //   }-${now.getDate()}`;
-  //   localStorage.setItem("date", currentDate);
-  // }, [qnas]);
 
   useEffect(() => {
     axios
@@ -150,6 +153,12 @@ export default function Problem() {
         setQuestion(data.question);
         setAuthor(data.author);
         setMainCharacter(data.main_character);
+        setHint(
+          data.hints && data.hints.length > 0 ? data.hints[0].hint : null
+        );
+        setHint2(
+          data.hints && data.hints.length > 1 ? data.hints[1].hint : null
+        );
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -198,6 +207,7 @@ export default function Problem() {
       setQuestion_Step(false);
     }
   };
+
   const handleGiveUpClick = async () => {
     closeModal();
     const lastGiveUpDate = localStorage.getItem("lastGiveUpDate");
@@ -216,6 +226,7 @@ export default function Problem() {
       // 실패 횟수를 증가
       setGiveUpCount(giveUpCount + 1);
     }
+    setGiveUp(true);
     setUpdateState(true);
   };
 
@@ -227,12 +238,18 @@ export default function Problem() {
       setText_t(text);
       const text_x = text;
       setTimeout(() => setText(""), 0);
+      // console.log(process.env.REACT_APP_API_URL + "/submit/");
       if (tabPressed === true) {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
         if (text_x.length <= 5) {
           setShake(true); // 실패 시 shake 상태를 true로 변경
+          console.log("aaa");
           const newQnas = [
-            { question: text_x, answer: "5자 이상으로 입력해주세요." },
+            {
+              question: text_x,
+              aiQuestion: "",
+              answer: "ㅁㄴㅇㅁㅇ",
+            },
             ...qnas,
           ];
           setQnas(newQnas);
@@ -240,17 +257,19 @@ export default function Problem() {
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
           setTimeout(() => setShake(false), 500);
         } else {
+          console.log("bbb");
           const anotherResponse = await axios.post(
             process.env.REACT_APP_API_URL + "/submit/",
             {
               data: text_x,
             }
           );
-          // console.log(anotherResponse.data.response);
+          console.log(anotherResponse.data.response);
           if (
             anotherResponse.data.response.startsWith("네") ||
             anotherResponse.data.response.startsWith("예") ||
-            anotherResponse.data.response.startsWith("맞습니다")
+            anotherResponse.data.response.startsWith("맞습니다") ||
+            anotherResponse.data.response.startsWith("Yes")
           ) {
             const now = new Date();
             const currentDate = `${now.getFullYear()}-${
@@ -279,7 +298,7 @@ export default function Problem() {
           } else {
             setShake(true); // 실패 시 shake 상태를 true로 변경
             const newQnas = [
-              { question: text_x, answer: "정답이 아닙니다." },
+              { question: text_x, aiQuestion: "", answer: "정답이 아닙니다." },
               ...qnas,
             ];
             setQnas(newQnas);
@@ -289,6 +308,7 @@ export default function Problem() {
           }
         }
       } else {
+        console.log("ccc");
         if (!question_step) {
           setQuestion_Step(true);
           setText_t(text);
@@ -301,52 +321,99 @@ export default function Problem() {
           );
           setQuestion_2step_Text(response.data.response);
         } else {
+          console.log("adsasd");
           setQuestion_Step(false);
           const tempQnas = [
             {
               question: question_2step_text + " " + text_x,
+              aiQuestion: <Loading />,
               answer: <Loading />,
             },
             ...qnas,
           ];
           setQnas(tempQnas); // 임시로 Loading 애니메이션을 표시
-
+          console.log("adsasd1");
           const response = await axios.post(
             process.env.REACT_APP_API_URL + "/question/",
             {
-              data: question_2step_text + " " + text_x + "?",
+              data: question_2step_text + " " + text_x,
             }
           );
 
           let updatedQnas;
-          if (response.data.response.startsWith("네")) {
+          console.log(response.data.response);
+          console.log(response.data.ai_question);
+          let responseString = JSON.stringify(response.data.response);
+          if (
+            responseString.includes("Yes") ||
+            responseString.includes("yes")
+          ) {
             // if (true) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
+              qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
                     question: question_2step_text + " " + text_x,
-                    answer: response.data.response,
+                    aiQuestion: response.data.ai_question,
+                    answer: "네.",
                   }
                 : qna
             );
-          } else if (response.data.response.startsWith("아니오")) {
+          } else if (
+            responseString.includes("No") ||
+            responseString.includes("no")
+          ) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
+              qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
                     question: question_2step_text + " " + text_x,
+                    aiQuestion: response.data.ai_question,
                     answer: "아니오.",
+                  }
+                : qna
+            );
+          } else if (
+            responseString.includes("Probably not") ||
+            responseString.includes("Probably not.")
+          ) {
+            updatedQnas = tempQnas.map((qna) =>
+              qna.question === question_2step_text + " " + text_x &&
+              qna.aiQuestion.type === Loading &&
+              qna.answer.type === Loading
+                ? {
+                    question: question_2step_text + " " + text_x,
+                    aiQuestion: response.data.ai_question,
+                    answer: "아마도 맞을 겁니다.",
+                  }
+                : qna
+            );
+          } else if (
+            responseString.includes("Probably.") ||
+            responseString.includes("Probably")
+          ) {
+            updatedQnas = tempQnas.map((qna) =>
+              qna.question === question_2step_text + " " + text_x &&
+              qna.aiQuestion.type === Loading &&
+              qna.answer.type === Loading
+                ? {
+                    question: question_2step_text + " " + text_x,
+                    aiQuestion: response.data.ai_question,
+                    answer: "아마도 아닐 겁니다.",
                   }
                 : qna
             );
           } else {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === question_2step_text + " " + text_x &&
+              qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
                     question: question_2step_text + " " + text_x,
-                    answer: "중요하지 않은 내용입니다.",
+                    aiQuestion: response.data.ai_question,
+                    answer: "필요없는 정보입니다.",
                   }
                 : qna
             );
@@ -372,6 +439,14 @@ export default function Problem() {
     setModalIsOpen(false);
   }
 
+  function openHintModal() {
+    setHintModalIsOpen(true);
+  }
+
+  function closeHintModal() {
+    setHintModalIsOpen(false);
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -384,7 +459,7 @@ export default function Problem() {
             <div className="question_box">
               <span className="Question">{question}</span>
             </div>
-            <span className="source">{`출처 : ${author}`}</span>
+            {author && <span className="source">{`출처 : ${author}`}</span>}
             <div className="circle_check_box">
               <div
                 className="quesiton_check_box"
@@ -404,6 +479,38 @@ export default function Problem() {
                 ></div>
                 {" 정답"}
               </div>
+              <button className="hint_button_box" onClick={openHintModal}>
+                힌트 보기
+              </button>
+              <Modal
+                isOpen={hintmodalIsOpen}
+                onRequestClose={closeHintModal}
+                overlayClassName="ModalOverlay"
+                className="ModalContent"
+                contentLabel="포기 확인"
+              >
+                <div className="hint-button-container">
+                  <button
+                    className="hint_button"
+                    onClick={() => setHintText(hint)}
+                  >
+                    {hintText}
+                  </button>
+                  <button
+                    className="hint_button"
+                    onClick={() => setHintText2(hint2)}
+                  >
+                    {hintText2}
+                  </button>
+                  <button
+                    className="hint_button_close"
+                    onClick={closeHintModal}
+                  >
+                    {" "}
+                    닫기{" "}
+                  </button>
+                </div>
+              </Modal>
             </div>
             <p className="qeustion_text">{text_question}</p>
 
@@ -420,7 +527,7 @@ export default function Problem() {
                 placeholder={
                   !tabPressed
                     ? question_step
-                      ? "질문을 입력하세요."
+                      ? "긍정문 질문을 입력하세요."
                       : `ex) ${main_character}`
                     : "정답을 입력해주세요."
                 }
@@ -444,13 +551,9 @@ export default function Problem() {
               <div className="QAresponse" key={index}>
                 <QnA
                   question={qna.question}
-                  answer={
-                    isLoading && qna.question === text ? (
-                      <span className="loading">Loading</span>
-                    ) : (
-                      qna.answer
-                    )
-                  }
+                  aiQuestion={qna.aiQuestion}
+                  index={index}
+                  answer={qna.answer}
                   borderStrength={index === 0 ? "2px" : "0px"}
                   borderBottomStrength={
                     index === qnas.length - 1 ? "0.01px" : "0px"
@@ -506,7 +609,7 @@ export default function Problem() {
               답을 받을 수 있습니다.
             </span>
             <span className="description_2">
-              Tab 키를 눌러 N번째 바다거북수프의 정답을 맞혀보세요.
+              Tab 키를 눌러 바다거북수프의 정답을 맞혀보세요.
             </span>
           </div>
           <div>

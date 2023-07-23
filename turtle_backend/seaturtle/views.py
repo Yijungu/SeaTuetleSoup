@@ -1,14 +1,16 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .qa import question, submit, getProblem, getStory, getNnumber, attach_josa
+from .qa import *
 from .models import SubmitProblem
+from .serializers import HintSerializer
+
 
 class RequestQaView(APIView):
     def post(self, request, format=None):
         data = request.data
-        question_text = question(data["data"])
+        ai_question ,question_text = question(data["data"])
         if question_text is not None:
-            return Response({'response': question_text})
+            return Response({'ai_question': ai_question, 'response': question_text})
         else:
             return Response({'status': 'question is required'}, status=400)
 
@@ -23,11 +25,14 @@ class RequestSmView(APIView):
 
 class GetQuestionView(APIView):
     def get(self, request, format=None):
-        problem_text, author, main_character = getProblem()
+        problem_text, author, main_character, hints = getProblem()
+        serializer = HintSerializer(hints, many=True)
+
         data = {
             'question': problem_text,
             'author': author,
-            'main_character': main_character
+            'main_character': main_character,
+            'hints': serializer.data
         }
         return Response(data)
     
@@ -70,3 +75,20 @@ class SubmitProblemRequest(APIView):
             print(str(e))
             return Response({'error': str(e)}, status=400)
         
+class ChangeAiQeustion(APIView):        
+    def post(self, request, format=None):
+        data = request.data         
+        chat_response = changeAiQeustion(data["data"])
+        if chat_response is not None:
+            return Response({'response': chat_response})
+        else:
+            return Response({'status': 'submit text is required'}, status=400)
+
+class RequestQaEnView(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        answer = question_en(data["data"])
+        if answer is not None:
+            return Response({'response': answer})
+        else:
+            return Response({'status': 'question is required'}, status=400)

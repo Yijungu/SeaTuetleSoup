@@ -350,7 +350,8 @@ export default function Thanks() {
             onClick={handleLogoClick}
           />
           <div className="footer_last">
-            <p>Copyright 2023. F22F. All rights reserved.</p>
+            <p className="Bank">Copyright 2023. F22F. All rights reserved.</p>
+            <p className="Bank">카카오뱅크 3333153034882 김영서</p>
           </div>
         </div>
       </div>

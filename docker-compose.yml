@@ -13,7 +13,7 @@ services:
     build:
       context: ./turtle_backend
       dockerfile: Dockerfile
-    command: bash -c "python manage.py makemigrations --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:
       DATABASE_HOST: db
       DATABASE_NAME: mydatabase
@@ -31,7 +31,7 @@ services:
       context: ./turtle_frontend
       dockerfile: Dockerfile
     environment:
-      REACT_APP_API_URL: https://mysouprecipes.com/api
+      REACT_APP_API_URL: http://localhost:8000
     volumes:
       - ./turtle_frontend:/app
     ports:
