@@ -78,7 +78,7 @@ const QnA = ({
           data: rerollQuestion,
         }
       );
-      // console.log(response.data.response);
+      console.log(response.data.content);
       let savedQnas = JSON.parse(localStorage.getItem("qnas"));
       let responseString = JSON.stringify(response.data.response);
       if (responseString.includes("Yes") || responseString.includes("yes")) {

@@ -3,6 +3,7 @@ from django.db import models
 class SeaTurtle(models.Model):
     date = models.AutoField(primary_key=True)
     story = models.TextField()
+    answer_plus = models.TextField(null=True)
     problem = models.TextField()
     author = models.TextField(null=True)
     main_character = models.TextField(null=True)

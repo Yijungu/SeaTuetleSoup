@@ -103,7 +103,7 @@ def question(query):
 
     llm_response_tf = qa_chain(chat_response3)
     if llm_response_tf['result'].startswith('Yes') :
-        llm_response = qa_chain(chat_response1['result'])
+        llm_response = qa_chain(chat_response1['result']+" tell me why.")
     else :
         llm_response = qa_chain(chat_response1['result']+" please imagine this story.")
     if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
@@ -150,7 +150,8 @@ def submit(answer):
 
     # if llm_response['result'].startswith('Yes'):
     global problem_en
-    result = "Is The reason why Smith stole the plate is that " +chat_response1['result']
+    global answer_plus
+    result = answer_plus+chat_response1['result']
     llm_response1 = qa_chain_submit(result+" please imagine this story.")
 
     messages = []
@@ -164,13 +165,6 @@ def submit(answer):
     return chat_response1['result'], chat_response3, llm_response1['result']
     return "1: "+ chat_response1['result'] + llm_response['result']
 
-def answer_plus_edit():
-    global keywords
-    keywords_str = ", ".join(keyword.word for keyword in keywords)
-    global answer_plus
-    answer_plus = " 여기에 "+ keywords_str + "이랑 비슷한 단어들이 들어가 있어?"
-    # print(answer_plus)
-    return 0
 
 def get_story():
     korea_timezone = pytz.timezone('Asia/Seoul')
@@ -181,6 +175,8 @@ def get_story():
     # print(seaturtle[0].story)
     global correct_answer
     correct_answer = seaturtle[0].correct_answer
+    global answer_plus
+    answer_plus = seaturtle[0].answer_plus
     story = seaturtle[0].story
     title = str(today) + ".txt"
     with open(title, 'w') as f:
@@ -338,7 +334,7 @@ def question_en(query):
 
     llm_response_tf = qa_chain(chat_response3)
     if llm_response_tf['result'].startswith('Yes') :
-        llm_response = qa_chain(query)
+        llm_response = qa_chain(query+" tell me why.")
     else :
         llm_response = qa_chain(query+" please imagine this story.")
     if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
