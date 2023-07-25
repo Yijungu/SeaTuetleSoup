@@ -545,7 +545,7 @@ export default function Problem() {
                 placeholder={
                   !tabPressed
                     ? question_step
-                      ? "긍정의문문으로 입력하세요."
+                      ? "주어를 넣어 질문을 입력하세요."
                       : `ex) ${main_character}`
                     : "정답을 입력해주세요."
                 }
