@@ -10,20 +10,27 @@ import RerollButton from "../images/RerollButton.png";
 import axios from "axios";
 import Loading from "./loading";
 import RecollQuestion from "../images/RecollQuestion.png";
+import AiQuestionTag from "../images/AiQuestionTag.png";
 
 const QnA = ({
   question,
   answer,
   aiQuestion,
-  borderStrength,
+  aiQuestionKr,
+  opened,
   index,
   borderBottomStrength,
 }) => {
-  const [boxes, setBoxes] = useState(false);
+  const [boxes, setBoxes] = useState(opened);
   const [rerollQuestion, setRerollQuestion] = useState(aiQuestion);
+  const [rerollQuestionKr, setRerollQuestionKr] = useState(aiQuestionKr);
   const [rerolledAnswer, setRerolledAnswer] = useState(answer);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
+
+  useEffect(() => {
+    setBoxes(opened);
+  }, [opened]);
 
   useEffect(() => {
     setRerolledAnswer(answer);
@@ -32,6 +39,10 @@ const QnA = ({
   useEffect(() => {
     setRerollQuestion(aiQuestion);
   }, [aiQuestion]);
+
+  useEffect(() => {
+    setRerollQuestionKr(aiQuestionKr);
+  }, [aiQuestionKr]);
 
   const rerollResponse = async () => {
     setIsAiLoading(true);
@@ -42,12 +53,13 @@ const QnA = ({
           data: question,
         }
       );
-      console.log(response.data.response);
+      console.log(response.data.response_kr);
       if (response.data) {
         let savedQnas = JSON.parse(localStorage.getItem("qnas"));
         savedQnas[index].aiQuestion = response.data.response;
         localStorage.setItem("qnas", JSON.stringify(savedQnas));
         setRerollQuestion(response.data.response);
+        setRerollQuestionKr(response.data.response_kr);
       } else {
         console.error("No data in response");
       }
@@ -66,8 +78,7 @@ const QnA = ({
           data: rerollQuestion,
         }
       );
-
-      console.log(response.data.response);
+      console.log(response.data.content);
       let savedQnas = JSON.parse(localStorage.getItem("qnas"));
       let responseString = JSON.stringify(response.data.response);
       if (responseString.includes("Yes") || responseString.includes("yes")) {
@@ -135,11 +146,13 @@ const QnA = ({
             transform: "rotate(11deg)",
           }}
         />
+
         <Typography>{question}</Typography>
+
         <img
           src={boxes ? DetailCloseButton : DetailOpenButton}
-          width="30"
-          height="30"
+          width="20"
+          height="20"
           style={{
             display: "flex",
             position: "absolute",
@@ -149,59 +162,144 @@ const QnA = ({
         ></img>
       </Box>
       {boxes && (
-        <Box
-          sx={{
-            display: "flex",
-            gap: "0px",
-            alignItems: "center",
-            backgroundColor: "#F3F3F3",
-            width: "815px",
-            minheight: "100px",
-            overflowWrap: "break-word",
-            wordBreak: "keep-all",
-            borderTop: "0.01px solid black",
-          }}
-        >
-          <img
-            src={UserIcon}
-            alt="SeaTurtle"
-            width="26"
-            height="27"
-            style={{
-              padding: "12.5px",
-              marginLeft: "10px",
-              marginRight: "10px",
-              transform: "rotate(11deg)",
-            }}
-          />
-          {isAiLoading ? (
-            <Loading />
-          ) : (
-            <Typography>{rerollQuestion}</Typography>
-          )}
-          <img
-            src={RecollQuestion}
-            width="23w"
-            height="23"
-            style={{
+        <div>
+          <Box
+            sx={{
               display: "flex",
-              position: "absolute",
-              left: "730px",
+              gap: "0px",
+              alignItems: "center",
+              backgroundColor: "#FAFAFA",
+              width: "815px",
+              minheight: "100px",
+              overflowWrap: "break-word",
+              wordBreak: "keep-all",
+              borderTop: "0.01px solid black",
             }}
-            onClick={rerollQuestionFuntion}
-          ></img>
-          <img
-            src={RerollButton}
-            width="23w"
-            height="23"
-            style={{
+          >
+            <img
+              src={AiQuestionTag}
+              alt="SeaTurtle"
+              width="17"
+              height="17"
+              style={{
+                position: "relative",
+                top: "-3px",
+                left: "40px",
+                padding: "12.5px",
+                marginLeft: "10px",
+                marginRight: "10px",
+              }}
+            />
+            {isAiLoading ? (
+              <div
+                style={{
+                  display: "flex",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  paddingLeft: "70px",
+                  paddingright: "300px",
+                }}
+              >
+                <div>
+                  <Loading />
+                </div>
+              </div>
+            ) : (
+              <Typography
+                style={{
+                  position: "relative",
+                  left: "25px",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  paddingLeft: "0px",
+                  fontSize: "14px",
+                  color: "#454545",
+                }}
+              >
+                {rerollQuestion}
+              </Typography>
+            )}
+            <img
+              src={RecollQuestion}
+              width="18w"
+              height="18"
+              style={{
+                display: "flex",
+                position: "absolute",
+                left: "730px",
+              }}
+              onClick={rerollQuestionFuntion}
+            ></img>
+            <img
+              src={RerollButton}
+              width="18w"
+              height="18"
+              style={{
+                display: "flex",
+                position: "absolute",
+                left: "768px",
+              }}
+              onClick={rerollResponse}
+            ></img>
+          </Box>
+          <Box
+            sx={{
               display: "flex",
-              position: "absolute",
-              left: "773px",
+              gap: "0px",
+              alignItems: "center",
+              backgroundColor: "#FAFAFA",
+              width: "815px",
+              minheight: "100px",
+              overflowWrap: "break-word",
+              wordBreak: "keep-all",
+              // borderTop: "0.01px solid black",
             }}
-            onClick={rerollResponse}
-          ></img>
-        </Box>
+          >
+            <img
+              src={AiQuestionTag}
+              alt="SeaTurtle"
+              width="17"
+              height="17"
+              style={{
+                position: "relative",
+                top: "-3px",
+                left: "40px",
+                padding: "12.5px",
+                marginLeft: "10px",
+                marginRight: "10px",
+              }}
+            />
+            {isAiLoading ? (
+              <div
+                style={{
+                  display: "flex",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  paddingLeft: "70px",
+                  paddingright: "300px",
+                }}
+              >
+                <div>
+                  <Loading />
+                </div>
+              </div>
+            ) : (
+              <Typography
+                style={{
+                  position: "relative",
+                  left: "25px",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  paddingLeft: "0px",
+                  fontSize: "14px",
+                  color: "#454545",
+                }}
+              >
+                {rerollQuestionKr}
+              </Typography>
+            )}
+          </Box>
+        </div>
       )}
 
       <Box

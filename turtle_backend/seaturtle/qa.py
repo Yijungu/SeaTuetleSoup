@@ -77,10 +77,10 @@ def question(query):
         query = query.replace(keyword.word, keyword.alternative_word, 1)
         # query = reversed_replaced_text[::-1] 
     messages = []
-    query += " 이 문장을 영어로 번역해줘."
-
+    query += " Translate this into English."
     chat_response1 = qa_chain(query)
-    llm_response = qa_chain(chat_response1['result'] + " imagine it.")
+    chat_response1['result'] = chat_response1['result'].split("?")[0]+"?"
+    llm_response = qa_chain(chat_response1['result'])
     if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
         response = remove_first_word(llm_response['result'])
     else :
@@ -99,8 +99,9 @@ def question(query):
     chat_response = completion.choices[0].message.content
     # llm_response = qa_chain(content)
     messages = []
-    query1 = chat_response + "Does this sentence contain the meaning of not?  Please answer 'yes' or 'no."
-    messages.append({"role" : "user", "content": query1})
+    
+    messages = []
+    messages.append({"role" : "user", "content": chat_response1['result'] + " Translate this into Korean."})
     completion = openai.ChatCompletion.create(
       temperature = 0,
       model = 'gpt-3.5-turbo-0613',
@@ -108,18 +109,13 @@ def question(query):
     )
     chat_response3 = completion.choices[0].message.content
 
-    if chat_response3.startswith('Yes'):
-        if 'Yes' in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('Yes', 'No')
-        elif 'No' in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('No', 'Yes')
-        elif 'Probably right' in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('Probably right', 'Probably not')
-        elif 'Probably not'in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('Probably not', 'Probably right')
-    
-    return chat_response1['result'], chat_response
-    # return llm_response['result'] + content
+    messages = []
+    answer_tf = "Amy overheard the nurse reassuring the doctor. Would posing the question, '"
+    answer_tf += chat_response1['result']+"' be of any help in this context?"
+    answer_tf1 = qa_chain(answer_tf)
+
+    # return chat_response1['result'], chat_response, chat_response3
+    return chat_response1['result'], chat_response, chat_response3
 
 def submit(answer):
     messages = []
@@ -132,9 +128,8 @@ def submit(answer):
       messages = messages
     )
     chat_response = completion.choices[0].message.content
-    chat_response = chat_response.split("?")[0]+"?"
     llm_response = qa_chain(chat_response)
-    
+
     if llm_response['result'].startswith('Yes'):
         global problem
         result = "Is the statement " + chat_response + " a sufficient response to the question " +problem_en
@@ -286,10 +281,19 @@ def changeAiQeustion(query):
     query += " Please rephrase this sentence in a more natural way."
     llm_response = qa_chain2(query)
     llm_response['result'] = llm_response['result'].split("?")[0]+"?"
-    return llm_response['result']
+
+    messages = []
+    messages.append({"role" : "user", "content": llm_response['result'] + " Translate this into Korean."})
+    completion = openai.ChatCompletion.create(
+      temperature = 0,
+      model = 'gpt-3.5-turbo-0613',
+      messages = messages
+    )
+    chat_response3 = completion.choices[0].message.content
+    return llm_response['result'], chat_response3
 
 def question_en(query):
-    llm_response = qa_chain(query + " imagine it.")
+    llm_response = qa_chain(query + "")
     if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
         response = remove_first_word(llm_response['result'])
     else :
@@ -306,25 +310,5 @@ def question_en(query):
       messages = messages,
     )
     chat_response = completion.choices[0].message.content
-    # llm_response = qa_chain(content)
-    messages = []
-    query1 = chat_response + "Does this sentence contain the meaning of not?  Please answer 'yes' or 'no."
-    messages.append({"role" : "user", "content": query1})
-    completion = openai.ChatCompletion.create(
-      temperature = 0,
-      model = 'gpt-3.5-turbo-0613',
-      messages = messages
-    )
-    chat_response3 = completion.choices[0].message.content
 
-    if chat_response3.startswith('Yes'):
-        if 'Yes' in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('Yes', 'No')
-        elif 'No' in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('No', 'Yes')
-        elif 'Probably right' in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('Probably right', 'Probably not')
-        elif 'Probably not'in llm_response['result']:
-            llm_response['result'] = llm_response['result'].replace('Probably not', 'Probably right')
-    
-    return chat_response
+    return chat_response, content

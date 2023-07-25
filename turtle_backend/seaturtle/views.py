@@ -8,9 +8,9 @@ from .serializers import HintSerializer
 class RequestQaView(APIView):
     def post(self, request, format=None):
         data = request.data
-        ai_question ,question_text = question(data["data"])
+        ai_question ,question_text, aiQuestionKr = question(data["data"])
         if question_text is not None:
-            return Response({'ai_question': ai_question, 'response': question_text})
+            return Response({'ai_question': ai_question, 'response': question_text, 'ai_question_kr': aiQuestionKr})
         else:
             return Response({'status': 'question is required'}, status=400)
 
@@ -78,17 +78,17 @@ class SubmitProblemRequest(APIView):
 class ChangeAiQeustion(APIView):        
     def post(self, request, format=None):
         data = request.data         
-        chat_response = changeAiQeustion(data["data"])
+        chat_response, chat_response_kr  = changeAiQeustion(data["data"])
         if chat_response is not None:
-            return Response({'response': chat_response})
+            return Response({'response': chat_response, 'response_kr':chat_response_kr})
         else:
             return Response({'status': 'submit text is required'}, status=400)
 
 class RequestQaEnView(APIView):
     def post(self, request, format=None):
         data = request.data
-        answer = question_en(data["data"])
+        answer, content = question_en(data["data"])
         if answer is not None:
-            return Response({'response': answer})
+            return Response({'response': answer, 'content': content})
         else:
             return Response({'status': 'question is required'}, status=400)

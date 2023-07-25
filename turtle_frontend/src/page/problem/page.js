@@ -34,7 +34,7 @@ export default function Problem() {
   const [text_question, setText_Question] = useState(
     "어떤 대상에 대해 알고 싶으신가요?"
   );
-  const [question_step, setQuestion_Step] = useState(false);
+  const [question_step, setQuestion_Step] = useState(true);
   const [givup, setGiveUp] = useState(false);
   const [question_2step_text, setQuestion_2step_Text] = useState("");
   const [hintText, setHintText] = useState("1단계 힌트");
@@ -182,11 +182,11 @@ export default function Problem() {
   };
   const handleQuesionCheckcclick = (asnync) => {
     setTabPressed(false);
-    setQuestion_Step(false);
+    // setQuestion_Step(false);
   };
   const handleAnswerCheckcclick = (asnync) => {
     setTabPressed(true);
-    setQuestion_Step(false);
+    // setQuestion_Step(false);
   };
 
   const handleLogoClick = async () => {
@@ -201,10 +201,10 @@ export default function Problem() {
     if (e.key === "Tab") {
       e.preventDefault();
       setTabPressed(!tabPressed);
-      setQuestion_Step(false);
+      // setQuestion_Step(false);
     }
     if (e.key === "Escape") {
-      setQuestion_Step(false);
+      // setQuestion_Step(false);
     }
   };
 
@@ -243,12 +243,11 @@ export default function Problem() {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
         if (text_x.length <= 5) {
           setShake(true); // 실패 시 shake 상태를 true로 변경
-          console.log("aaa");
           const newQnas = [
             {
               question: text_x,
               aiQuestion: "",
-              answer: "ㅁㄴㅇㅁㅇ",
+              answer: "5자 이상으로 적어주세요.",
             },
             ...qnas,
           ];
@@ -257,7 +256,6 @@ export default function Problem() {
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
           setTimeout(() => setShake(false), 500);
         } else {
-          console.log("bbb");
           const anotherResponse = await axios.post(
             process.env.REACT_APP_API_URL + "/submit/",
             {
@@ -308,9 +306,8 @@ export default function Problem() {
           }
         }
       } else {
-        console.log("ccc");
         if (!question_step) {
-          setQuestion_Step(true);
+          // setQuestion_Step(true);
           setText_t(text);
           setTimeout(() => setText(""), 0);
           const response = await axios.post(
@@ -319,29 +316,26 @@ export default function Problem() {
               data: text_x,
             }
           );
-          setQuestion_2step_Text(response.data.response);
+          // setQuestion_2step_Text(response.data.response);
         } else {
-          console.log("adsasd");
-          setQuestion_Step(false);
+          // setQuestion_Step(false);
           const tempQnas = [
             {
-              question: question_2step_text + " " + text_x,
+              question: text_x,
               aiQuestion: <Loading />,
               answer: <Loading />,
+              aiQuestionKr: <Loading />,
             },
             ...qnas,
           ];
           setQnas(tempQnas); // 임시로 Loading 애니메이션을 표시
-          console.log("adsasd1");
           const response = await axios.post(
             process.env.REACT_APP_API_URL + "/question/",
             {
-              data: question_2step_text + " " + text_x,
+              data: text_x,
             }
           );
-
           let updatedQnas;
-          console.log(response.data.response);
           console.log(response.data.ai_question);
           let responseString = JSON.stringify(response.data.response);
           if (
@@ -350,12 +344,13 @@ export default function Problem() {
           ) {
             // if (true) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === question_2step_text + " " + text_x &&
+              qna.question === text_x &&
               qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
-                    question: question_2step_text + " " + text_x,
+                    question: text_x,
                     aiQuestion: response.data.ai_question,
+                    aiQuestionKr: response.data.ai_question_kr,
                     answer: "네.",
                   }
                 : qna
@@ -365,12 +360,13 @@ export default function Problem() {
             responseString.includes("no")
           ) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === question_2step_text + " " + text_x &&
+              qna.question === text_x &&
               qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
-                    question: question_2step_text + " " + text_x,
+                    question: text_x,
                     aiQuestion: response.data.ai_question,
+                    aiQuestionKr: response.data.ai_question_kr,
                     answer: "아니오.",
                   }
                 : qna
@@ -380,12 +376,13 @@ export default function Problem() {
             responseString.includes("Probably not.")
           ) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === question_2step_text + " " + text_x &&
+              qna.question === text_x &&
               qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
-                    question: question_2step_text + " " + text_x,
+                    question: text_x,
                     aiQuestion: response.data.ai_question,
+                    aiQuestionKr: response.data.ai_question_kr,
                     answer: "아마도 맞을 겁니다.",
                   }
                 : qna
@@ -395,24 +392,26 @@ export default function Problem() {
             responseString.includes("Probably")
           ) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === question_2step_text + " " + text_x &&
+              qna.question === text_x &&
               qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
-                    question: question_2step_text + " " + text_x,
+                    question: text_x,
                     aiQuestion: response.data.ai_question,
+                    aiQuestionKr: response.data.ai_question_kr,
                     answer: "아마도 아닐 겁니다.",
                   }
                 : qna
             );
           } else {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === question_2step_text + " " + text_x &&
+              qna.question === text_x &&
               qna.aiQuestion.type === Loading &&
               qna.answer.type === Loading
                 ? {
-                    question: question_2step_text + " " + text_x,
+                    question: text_x,
                     aiQuestion: response.data.ai_question,
+                    aiQuestionKr: response.data.ai_question_kr,
                     answer: "필요없는 정보입니다.",
                   }
                 : qna
@@ -459,26 +458,7 @@ export default function Problem() {
             <div className="question_box">
               <span className="Question">{question}</span>
             </div>
-            {author && <span className="source">{`출처 : ${author}`}</span>}
-            <div className="circle_check_box">
-              <div
-                className="quesiton_check_box"
-                onClick={handleQuesionCheckcclick}
-              >
-                <div
-                  className={`circle ${!tabPressed ? "checked" : "unchecked"}`}
-                ></div>
-                {" 질문"}
-              </div>
-              <div
-                className="result_check_box"
-                onClick={handleAnswerCheckcclick}
-              >
-                <div
-                  className={`circle ${tabPressed ? "checked" : "unchecked"}`}
-                ></div>
-                {" 정답"}
-              </div>
+            <div className="hint_giveup_button_box">
               <button className="hint_button_box" onClick={openHintModal}>
                 힌트 보기
               </button>
@@ -511,14 +491,47 @@ export default function Problem() {
                   </button>
                 </div>
               </Modal>
+              <button className="giveup_button" onClick={openModal}>
+                포기하기
+              </button>
+
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                overlayClassName="ModalOverlay"
+                className="ModalContent"
+                contentLabel="포기 확인"
+              >
+                <h2>정말로 포기를 하시겠습니까?</h2>
+                <div className="button-container">
+                  <button onClick={closeModal}>취소</button>
+                  <button onClick={handleGiveUpClick}>확인</button>
+                </div>
+              </Modal>
             </div>
-            <p className="qeustion_text">{text_question}</p>
+            {author && <span className="source">{`출처 : ${author}`}</span>}
+            <div className="circle_check_box">
+              <div
+                className="quesiton_check_box"
+                onClick={handleQuesionCheckcclick}
+              >
+                <div
+                  className={`circle ${!tabPressed ? "checked" : "unchecked"}`}
+                ></div>
+                {" 질문"}
+              </div>
+              <div
+                className="result_check_box"
+                onClick={handleAnswerCheckcclick}
+              >
+                <div
+                  className={`circle ${tabPressed ? "checked" : "unchecked"}`}
+                ></div>
+                {" 정답"}
+              </div>
+            </div>
 
             <div className="qeustion_text_box">
-              {question_step && (
-                <span className="textbox_step">{question_2step_text}</span>
-              )}
-
               <input
                 className={`textbox ${shake ? "shake" : ""}`}
                 value={text}
@@ -552,34 +565,16 @@ export default function Problem() {
                 <QnA
                   question={qna.question}
                   aiQuestion={qna.aiQuestion}
+                  aiQuestionKr={qna.aiQuestionKr}
                   index={index}
                   answer={qna.answer}
-                  borderStrength={index === 0 ? "2px" : "0px"}
+                  opened={index === 0 ? true : false}
                   borderBottomStrength={
                     index === qnas.length - 1 ? "0.01px" : "0px"
                   }
                 />
               </div>
             ))}
-            <div>
-              <button className="giveup_button" onClick={openModal}>
-                포기하기
-              </button>
-
-              <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                overlayClassName="ModalOverlay"
-                className="ModalContent"
-                contentLabel="포기 확인"
-              >
-                <h2>정말로 포기를 하시겠습니까?</h2>
-                <div className="button-container">
-                  <button onClick={closeModal}>취소</button>
-                  <button onClick={handleGiveUpClick}>확인</button>
-                </div>
-              </Modal>
-            </div>
           </div>
 
           <div className="border_line">
