@@ -53,7 +53,7 @@ const QnA = ({
           data: question,
         }
       );
-      console.log(response.data.response_kr);
+      // console.log(response.data.response_kr);
       if (response.data) {
         let savedQnas = JSON.parse(localStorage.getItem("qnas"));
         savedQnas[index].aiQuestion = response.data.response;
@@ -78,7 +78,7 @@ const QnA = ({
           data: rerollQuestion,
         }
       );
-      console.log(response.data.content);
+      // console.log(response.data.response);
       let savedQnas = JSON.parse(localStorage.getItem("qnas"));
       let responseString = JSON.stringify(response.data.response);
       if (responseString.includes("Yes") || responseString.includes("yes")) {
@@ -116,8 +116,10 @@ const QnA = ({
     <Box
       sx={{
         display: "flex",
+        position: "relative",
+        left: "2px",
         flexDirection: "column",
-        width: "810px",
+        width: "813px",
         // height: "50px",
       }}
     >
@@ -220,26 +222,26 @@ const QnA = ({
               </Typography>
             )}
             <img
-              src={RecollQuestion}
-              width="18w"
-              height="18"
+              src={RerollButton}
+              width="15w"
+              height="15"
               style={{
                 display: "flex",
                 position: "absolute",
                 left: "730px",
               }}
-              onClick={rerollQuestionFuntion}
+              onClick={rerollResponse}
             ></img>
             <img
-              src={RerollButton}
-              width="18w"
-              height="18"
+              src={RecollQuestion}
+              width="20w"
+              height="20"
               style={{
                 display: "flex",
                 position: "absolute",
                 left: "768px",
               }}
-              onClick={rerollResponse}
+              onClick={rerollQuestionFuntion}
             ></img>
           </Box>
           <Box

@@ -296,7 +296,12 @@ export default function Problem() {
           } else {
             setShake(true); // 실패 시 shake 상태를 true로 변경
             const newQnas = [
-              { question: text_x, aiQuestion: "", answer: "정답이 아닙니다." },
+              {
+                question: text_x,
+                aiQuestion: anotherResponse.data.ai_question,
+                aiQuestionKr: anotherResponse.data.ai_question_kr,
+                answer: "정답이 아닙니다.",
+              },
               ...qnas,
             ];
             setQnas(newQnas);
@@ -336,7 +341,8 @@ export default function Problem() {
             }
           );
           let updatedQnas;
-          console.log(response.data.ai_question);
+          // console.log(response.data.ai_question);
+          // console.log(response.data.response);
           let responseString = JSON.stringify(response.data.response);
           if (
             responseString.includes("Yes") ||
@@ -355,10 +361,7 @@ export default function Problem() {
                   }
                 : qna
             );
-          } else if (
-            responseString.includes("No") ||
-            responseString.includes("no")
-          ) {
+          } else if (responseString.includes("No")) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === text_x &&
               qna.aiQuestion.type === Loading &&
@@ -373,23 +376,7 @@ export default function Problem() {
             );
           } else if (
             responseString.includes("Probably not") ||
-            responseString.includes("Probably not.")
-          ) {
-            updatedQnas = tempQnas.map((qna) =>
-              qna.question === text_x &&
-              qna.aiQuestion.type === Loading &&
-              qna.answer.type === Loading
-                ? {
-                    question: text_x,
-                    aiQuestion: response.data.ai_question,
-                    aiQuestionKr: response.data.ai_question_kr,
-                    answer: "아마도 맞을 겁니다.",
-                  }
-                : qna
-            );
-          } else if (
-            responseString.includes("Probably.") ||
-            responseString.includes("Probably")
+            responseString.includes("probably not.")
           ) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === text_x &&
@@ -400,6 +387,22 @@ export default function Problem() {
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
                     answer: "아마도 아닐 겁니다.",
+                  }
+                : qna
+            );
+          } else if (
+            responseString.includes("Probably.") ||
+            responseString.includes("probably")
+          ) {
+            updatedQnas = tempQnas.map((qna) =>
+              qna.question === text_x &&
+              qna.aiQuestion.type === Loading &&
+              qna.answer.type === Loading
+                ? {
+                    question: text_x,
+                    aiQuestion: response.data.ai_question,
+                    aiQuestionKr: response.data.ai_question_kr,
+                    answer: "아마도 맞을 겁니다.",
                   }
                 : qna
             );
@@ -455,59 +458,61 @@ export default function Problem() {
       <div className="container">
         <div className="all">
           <div className="e218_192">
-            <div className="question_box">
-              <span className="Question">{question}</span>
-            </div>
-            <div className="hint_giveup_button_box">
-              <button className="hint_button_box" onClick={openHintModal}>
-                힌트 보기
-              </button>
-              <Modal
-                isOpen={hintmodalIsOpen}
-                onRequestClose={closeHintModal}
-                overlayClassName="ModalOverlay"
-                className="ModalContent"
-                contentLabel="포기 확인"
-              >
-                <div className="hint-button-container">
-                  <button
-                    className="hint_button"
-                    onClick={() => setHintText(hint)}
-                  >
-                    {hintText}
-                  </button>
-                  <button
-                    className="hint_button"
-                    onClick={() => setHintText2(hint2)}
-                  >
-                    {hintText2}
-                  </button>
-                  <button
-                    className="hint_button_close"
-                    onClick={closeHintModal}
-                  >
-                    {" "}
-                    닫기{" "}
-                  </button>
-                </div>
-              </Modal>
-              <button className="giveup_button" onClick={openModal}>
-                포기하기
-              </button>
+            <div className="problem_main_box">
+              <div className="question_box">
+                <span className="Question">{question}</span>
+              </div>
+              <div className="hint_giveup_button_box">
+                <button className="hint_button_box" onClick={openHintModal}>
+                  힌트 보기
+                </button>
+                <Modal
+                  isOpen={hintmodalIsOpen}
+                  onRequestClose={closeHintModal}
+                  overlayClassName="ModalOverlay"
+                  className="ModalContent"
+                  contentLabel="포기 확인"
+                >
+                  <div className="hint-button-container">
+                    <button
+                      className="hint_button"
+                      onClick={() => setHintText(hint)}
+                    >
+                      {hintText}
+                    </button>
+                    <button
+                      className="hint_button"
+                      onClick={() => setHintText2(hint2)}
+                    >
+                      {hintText2}
+                    </button>
+                    <button
+                      className="hint_button_close"
+                      onClick={closeHintModal}
+                    >
+                      {" "}
+                      닫기{" "}
+                    </button>
+                  </div>
+                </Modal>
+                <button className="giveup_button" onClick={openModal}>
+                  포기하기
+                </button>
 
-              <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                overlayClassName="ModalOverlay"
-                className="ModalContent"
-                contentLabel="포기 확인"
-              >
-                <h2>정말로 포기를 하시겠습니까?</h2>
-                <div className="button-container">
-                  <button onClick={closeModal}>취소</button>
-                  <button onClick={handleGiveUpClick}>확인</button>
-                </div>
-              </Modal>
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  overlayClassName="ModalOverlay"
+                  className="ModalContent"
+                  contentLabel="포기 확인"
+                >
+                  <h2>정말로 포기를 하시겠습니까?</h2>
+                  <div className="button-container">
+                    <button onClick={closeModal}>취소</button>
+                    <button onClick={handleGiveUpClick}>확인</button>
+                  </div>
+                </Modal>
+              </div>
             </div>
             {author && <span className="source">{`출처 : ${author}`}</span>}
             <div className="circle_check_box">
@@ -540,7 +545,7 @@ export default function Problem() {
                 placeholder={
                   !tabPressed
                     ? question_step
-                      ? "긍정문 질문을 입력하세요."
+                      ? "긍정의문문으로 입력하세요."
                       : `ex) ${main_character}`
                     : "정답을 입력해주세요."
                 }

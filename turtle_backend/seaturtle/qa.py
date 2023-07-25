@@ -35,6 +35,15 @@ turbo_llm2 = ChatOpenAI(
     # max_tokens = 10
 )
 
+turbo_llm4 = ChatOpenAI(
+    temperature = 1,
+    model_name = 'gpt-4',
+    # frequency_penalty = 0
+    # max_tokens = 10
+)
+
+
+
 embeddings = OpenAIEmbeddings(openai_api_key=openai_apikey)
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 sentences_kr = [""]
@@ -44,6 +53,7 @@ texts = None
 docsearch = None
 qa_chain = None
 qa_chain2 = None
+qa_chain4 = None
 qa_chain_submit = None
 author = ""
 k = 1
@@ -80,16 +90,32 @@ def question(query):
     query += " Translate this into English."
     chat_response1 = qa_chain(query)
     chat_response1['result'] = chat_response1['result'].split("?")[0]+"?"
-    llm_response = qa_chain(chat_response1['result'])
+
+    messages = []
+    content =  chat_response1['result'] + " Please change it into a declarative sentence."
+    messages.append({"role" : "user", "content": content})
+    completion = openai.ChatCompletion.create(
+      temperature = 0,
+      model = 'gpt-3.5-turbo-0613',
+      messages = messages,
+    )
+    chat_response3 = completion.choices[0].message.content
+
+    llm_response_tf = qa_chain(chat_response3)
+    if llm_response_tf['result'].startswith('Yes') :
+        llm_response = qa_chain(chat_response1['result'])
+    else :
+        llm_response = qa_chain(chat_response1['result']+" please imagine this story.")
     if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
         response = remove_first_word(llm_response['result'])
     else :
         response = llm_response['result']
 
     messages = []
+
     content =  "Given the information that " + response
     content += " can we confirm that " + chat_response1['result']
-    content += " please answer 'yes.' or 'no.' or 'probably.' or 'probably not.' or 'Ambiguous."  
+    content += " please answer 'yes.' or 'no.' or 'probably.' or 'probably not.' or 'i don't no'"  
     messages.append({"role" : "user", "content": content})
     completion = openai.ChatCompletion.create(
       temperature = 0,
@@ -109,33 +135,34 @@ def question(query):
     )
     chat_response3 = completion.choices[0].message.content
 
-    messages = []
-    answer_tf = "Amy overheard the nurse reassuring the doctor. Would posing the question, '"
-    answer_tf += chat_response1['result']+"' be of any help in this context?"
-    answer_tf1 = qa_chain(answer_tf)
+    # messages = []
+    # answer_tf = "Amy overheard the nurse reassuring the doctor. Would posing the question, '"
+    # answer_tf += chat_response1['result']+"' be of any help in this context?"
+    # answer_tf1 = qa_chain(answer_tf)
 
     # return chat_response1['result'], chat_response, chat_response3
     return chat_response1['result'], chat_response, chat_response3
 
 def submit(answer):
-    messages = []
-    answer += " 이 문장을 영어로 자연스럽게 번역해줘."
-    messages.append({"role" : "user", "content": answer})
+    answer += " Translate this into English."
+    chat_response1 = qa_chain(answer)
+    llm_response = qa_chain(chat_response1['result'])
 
+    # if llm_response['result'].startswith('Yes'):
+    global problem_en
+    result = "Is The reason why Smith stole the plate is that " +chat_response1['result']
+    llm_response1 = qa_chain_submit(result+" please imagine this story.")
+
+    messages = []
+    messages.append({"role" : "user", "content": chat_response1['result'] + " Translate this into Korean."})
     completion = openai.ChatCompletion.create(
       temperature = 0,
       model = 'gpt-3.5-turbo-0613',
       messages = messages
     )
-    chat_response = completion.choices[0].message.content
-    llm_response = qa_chain(chat_response)
-
-    if llm_response['result'].startswith('Yes'):
-        global problem
-        result = "Is the statement " + chat_response + " a sufficient response to the question " +problem_en
-        llm_response = qa_chain_submit(result)
-        return llm_response['result']
-    return llm_response['result']
+    chat_response3 = completion.choices[0].message.content
+    return chat_response1['result'], chat_response3, llm_response1['result']
+    return "1: "+ chat_response1['result'] + llm_response['result']
 
 def answer_plus_edit():
     global keywords
@@ -173,6 +200,12 @@ def get_story():
                                   retriever=docsearch.as_retriever(),
                                   return_source_documents=True)
     
+    global qa_chain4
+    qa_chain4 = RetrievalQA.from_chain_type(llm=turbo_llm4,
+                                  chain_type="stuff",
+                                  retriever=docsearch.as_retriever(),
+                                  return_source_documents=True)
+    
     title = str(today) + "_correct.txt"
     with open(title, 'w') as f:
             f.write(correct_answer + '\n')
@@ -203,7 +236,7 @@ def get_story():
     
     global problem_en
     messages = []
-    messages.append({"role" : "user", "content": problem + " 이 문장을 영어로 바꿔줘."})
+    messages.append({"role" : "user", "content": problem + " Translate this into English."})
 
     completion = openai.ChatCompletion.create(
       model = 'gpt-3.5-turbo-0613',
@@ -293,7 +326,21 @@ def changeAiQeustion(query):
     return llm_response['result'], chat_response3
 
 def question_en(query):
-    llm_response = qa_chain(query + "")
+    messages = []
+    content =  query + " Please change it into a declarative sentence."
+    messages.append({"role" : "user", "content": content})
+    completion = openai.ChatCompletion.create(
+      temperature = 0,
+      model = 'gpt-3.5-turbo-0613',
+      messages = messages,
+    )
+    chat_response3 = completion.choices[0].message.content
+
+    llm_response_tf = qa_chain(chat_response3)
+    if llm_response_tf['result'].startswith('Yes') :
+        llm_response = qa_chain(query)
+    else :
+        llm_response = qa_chain(query+" please imagine this story.")
     if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
         response = remove_first_word(llm_response['result'])
     else :
@@ -302,7 +349,7 @@ def question_en(query):
     messages = []
     content =  "Given the information that " + response
     content += " can we confirm that " + query
-    content += " please answer 'yes.' or 'no.' or 'probably.' or 'probably not.' or 'Ambiguous."  
+    content += " please answer 'yes.' or 'no.' or 'probably.' or 'probably not.'"
     messages.append({"role" : "user", "content": content})
     completion = openai.ChatCompletion.create(
       temperature = 0,

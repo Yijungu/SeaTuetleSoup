@@ -17,9 +17,9 @@ class RequestQaView(APIView):
 class RequestSmView(APIView):
     def post(self, request, format=None):
         data = request.data
-        submit_text = submit(data["data"])
+        ai_question, ai_question_kr,submit_text = submit(data["data"])
         if submit_text is not None:
-            return Response({'response': submit_text})
+            return Response({'ai_question': ai_question, 'ai_question_kr': ai_question_kr, 'response': submit_text})
         else:
             return Response({'status': 'submit text is required'}, status=400)
 
