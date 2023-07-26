@@ -47,7 +47,7 @@ export default function Home() {
               className="e6_20"
               style={{ textDecoration: "none" }}
             >
-              시작하기 ✨{" "}
+              시작하기 ✨
             </Link>
           </div>
           <div className="e19_10">

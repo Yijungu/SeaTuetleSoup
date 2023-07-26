@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import TipButton from "../images/TipButton.png";
+import TipText from "../images/TipText.png";
 import "./tiptoolbutton.css";
 
 function ButtonWithTip() {
@@ -8,7 +10,7 @@ function ButtonWithTip() {
   return (
     <div className="container">
       <button className="round-button" onClick={() => setShowTip(!showTip)}>
-        {"< TIP"}
+        <img src={TipButton} alt="Go to tip" width="50" height="40" />
       </button>
       <CSSTransition
         in={showTip}
@@ -16,7 +18,7 @@ function ButtonWithTip() {
         classNames="slide"
         unmountOnExit
       >
-        <div className="tip-box">
+        {/* <div className="tip-box">
           <p className="tip_text">TIP</p>
           <p className="tip_text">
             1. 글자가 이상하게 나와요.
@@ -36,7 +38,14 @@ function ButtonWithTip() {
             <br /> - 버튼을 오른쪽으로 슬라이드를 하거나 입력 칸을 누르고 탭을
             누른다면 버튼을 전환할 수 있습니다..
           </p>
-        </div>
+        </div> */}
+        <img
+          className="tip-text"
+          src={TipText}
+          alt="tip text"
+          width="248"
+          height="690"
+        />
       </CSSTransition>
     </div>
   );

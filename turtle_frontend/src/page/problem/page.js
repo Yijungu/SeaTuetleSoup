@@ -38,8 +38,8 @@ export default function Problem() {
   const [question_step, setQuestion_Step] = useState(true);
   const [givup, setGiveUp] = useState(false);
   const [question_2step_text, setQuestion_2step_Text] = useState("");
-  const [hintText, setHintText] = useState("1단계 힌트");
-  const [hintText2, setHintText2] = useState("2단계 힌트");
+  const [hintText, setHintText] = useState("힌트 A: 기본적인 힌트");
+  const [hintText2, setHintText2] = useState("힌트 B: 결정적인 힌트");
   const [hint, setHint] = useState("없음");
   const [hint2, setHint2] = useState("없음");
   const [background_text, setBackGroudText] = useState("정답을 입력하세요.");
@@ -482,25 +482,56 @@ export default function Problem() {
                   className="ModalContent"
                   contentLabel="포기 확인"
                 >
-                  <div className="hint-button-container">
+                  <button
+                    style={{
+                      position: "absolute",
+                      right: "3px",
+                      top: "3px",
+                      outline: "none",
+                      border: "0px",
+                      backgroundColor: "#ffffff",
+                    }}
+                    onClick={closeHintModal}
+                  >
+                    x
+                  </button>
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      // marginBottom: "30px",
+                      letterSpacing: "-0.1px",
+                    }}
+                  >
+                    버튼을 눌러 힌트를 확인해보세요.
+                  </p>
+                  <div
+                    style={{ borderTop: "1px solid black" }}
+                    className="hint-button-container"
+                  >
                     <button
+                      style={{
+                        marginTop: "20px",
+                        borderRadius: "4px",
+                        border: "1px solid #2d2d2d",
+                        backgroundColor: "#ffffff",
+                        padding: "7px",
+                      }}
                       className="hint_button"
                       onClick={() => setHintText(hint)}
                     >
                       {hintText}
                     </button>
                     <button
+                      style={{
+                        borderRadius: "4px",
+                        border: "1px solid #2d2d2d",
+                        backgroundColor: "#ffffff",
+                        padding: "7px",
+                      }}
                       className="hint_button"
                       onClick={() => setHintText2(hint2)}
                     >
                       {hintText2}
-                    </button>
-                    <button
-                      className="hint_button_close"
-                      onClick={closeHintModal}
-                    >
-                      {" "}
-                      닫기{" "}
                     </button>
                   </div>
                 </Modal>
@@ -515,10 +546,59 @@ export default function Problem() {
                   className="ModalContent"
                   contentLabel="포기 확인"
                 >
-                  <h2>정말로 포기를 하시겠습니까?</h2>
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      marginBottom: "30px",
+                      letterSpacing: "-0.1px",
+                    }}
+                  >
+                    정말 포기하시겠습니까?
+                  </p>
                   <div className="button-container">
-                    <button onClick={closeModal}>취소</button>
-                    <button onClick={handleGiveUpClick}>확인</button>
+                    <button
+                      style={{
+                        borderRadius: "4px",
+                        border: "1px solid #2d2d2d",
+                        backgroundColor: "#ffffff",
+                        marginLeft: "30px",
+                        padding: "0px",
+                      }}
+                      onClick={closeModal}
+                    >
+                      <p
+                        style={{
+                          marginTop: "5px",
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginRight: "10px",
+                        }}
+                      >
+                        취소
+                      </p>
+                    </button>
+                    <button
+                      style={{
+                        borderRadius: "4px",
+                        border: "1px solid #2d2d2d",
+                        backgroundColor: "#3E5FD1",
+                        marginRight: "30px",
+                        padding: "0px",
+                      }}
+                      onClick={handleGiveUpClick}
+                    >
+                      <p
+                        style={{
+                          color: "#ffffff",
+                          marginTop: "5px",
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginRight: "10px",
+                        }}
+                      >
+                        확인
+                      </p>
+                    </button>
                   </div>
                 </Modal>
               </div>

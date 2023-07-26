@@ -90,7 +90,10 @@ def question(query):
     query += " Translate this into English."
     chat_response1 = qa_chain(query)
     chat_response1['result'] = chat_response1['result'].split("?")[0]+"?"
-
+   
+    if len(chat_response1['result']) >= len(story)//5:
+        return "Please re-enter the question.", "", "질문을 다시 입력해주세요."
+    
     messages = []
     content =  chat_response1['result'] + " Please change it into a declarative sentence."
     messages.append({"role" : "user", "content": content})
@@ -135,12 +138,6 @@ def question(query):
     )
     chat_response3 = completion.choices[0].message.content
 
-    # messages = []
-    # answer_tf = "Amy overheard the nurse reassuring the doctor. Would posing the question, '"
-    # answer_tf += chat_response1['result']+"' be of any help in this context?"
-    # answer_tf1 = qa_chain(answer_tf)
-
-    # return chat_response1['result'], chat_response, chat_response3
     return chat_response1['result'], chat_response, chat_response3
 
 def submit(answer):
