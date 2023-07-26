@@ -10,6 +10,7 @@ import Loading from "../../component/loading";
 import { motion } from "framer-motion";
 import Modal from "react-modal";
 import ScrollToTopButton from "../../component/scrollbutton";
+import ButtonWithTip from "../../component/tiptoolbutton";
 
 export default function Problem() {
   const [text, setText] = useState("");
@@ -41,6 +42,9 @@ export default function Problem() {
   const [hintText2, setHintText2] = useState("2단계 힌트");
   const [hint, setHint] = useState("없음");
   const [hint2, setHint2] = useState("없음");
+  const [background_text, setBackGroudText] = useState("정답을 입력하세요.");
+  const [answerloding_text, setAnswerLodingText] =
+    useState("정답을 확인중입니다.");
 
   useEffect(() => {
     const now = new Date();
@@ -256,6 +260,7 @@ export default function Problem() {
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
           setTimeout(() => setShake(false), 500);
         } else {
+          setBackGroudText("");
           const anotherResponse = await axios.post(
             process.env.REACT_APP_API_URL + "/submit/",
             {
@@ -309,19 +314,23 @@ export default function Problem() {
             setTotalQuestionsAsked(totalQuestionsAsked + 1);
             setTimeout(() => setShake(false), 500);
           }
+          setBackGroudText("정답을 입력하세요.");
         }
       } else {
-        if (!question_step) {
-          // setQuestion_Step(true);
-          setText_t(text);
-          setTimeout(() => setText(""), 0);
-          const response = await axios.post(
-            process.env.REACT_APP_API_URL + "/getJosa/",
+        if (text_x.length <= 5) {
+          setShake(true); // 실패 시 shake 상태를 true로 변경
+          const newQnas = [
             {
-              data: text_x,
-            }
-          );
-          // setQuestion_2step_Text(response.data.response);
+              question: text_x,
+              aiQuestion: "",
+              answer: "5자 이상으로 적어주세요.",
+            },
+            ...qnas,
+          ];
+          setQnas(newQnas);
+          saveQnas(newQnas);
+          setTotalQuestionsAsked(totalQuestionsAsked + 1);
+          setTimeout(() => setShake(false), 500);
         } else {
           // setQuestion_Step(false);
           const tempQnas = [
@@ -547,9 +556,24 @@ export default function Problem() {
                     ? question_step
                       ? "주어를 넣어 질문을 입력하세요."
                       : `ex) ${main_character}`
-                    : "정답을 입력해주세요."
+                    : `${background_text}`
                 }
               />
+              {background_text === "" && (
+                <h1 style={{ position: "absolute" }}>
+                  {answerloding_text.split("").map((char, i) => (
+                    <span
+                      style={{
+                        animationDelay: `${(i - 1) * 100}ms`,
+                        left: i > 2 ? `${33 + (i - 3) * 13}px` : `${i * 13}px`,
+                      }}
+                      className="wave"
+                    >
+                      {char}
+                    </span>
+                  ))}
+                </h1>
+              )}
             </div>
 
             <button
@@ -611,6 +635,9 @@ export default function Problem() {
             <span className="description_2">
               Tab 키를 눌러 바다거북수프의 정답을 맞혀보세요.
             </span>
+          </div>
+          <div>
+            <ButtonWithTip />
           </div>
           <div>
             <ScrollToTopButton className="scroll_to_top" />

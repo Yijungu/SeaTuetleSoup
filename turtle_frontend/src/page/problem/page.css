@@ -145,29 +145,6 @@
   display: flex;
   justify-content: space-between;
 }
-.textbox_step {
-  color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
-  /* width: 810px; */
-  /* height: 38px; */
-  /* top: 3px; */
-  position: relative;
-  font-family: Apple SD Gothic Neo;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  letter-spacing: -0.5;
-  line-height: px;
-  border-radius: 27px;
-  outline: none;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 7px;
-  margin-top: 2px;
-  /* padding-left: 15px; */
-  margin-right: 0px;
-  border: 1px solid black;
-}
 .textbox {
   color: rgba(18.88193730264902, 36.03742964565754, 50.82965210080147, 1);
   /* width: 600px; */
@@ -191,6 +168,35 @@
   margin-top: 12;
   border: 1px solid #989898;
 }
+@keyframes wave {
+  0%,
+  50% {
+    transform: translateY(0);
+  }
+
+  75% {
+    transform: translateY(-7px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.wave {
+  position: absolute;
+  display: inline-block;
+  font-size: 15px;
+  transform-origin: 50% 50%;
+  color: #a4a2a1;
+  padding-left: 20px;
+  padding-top: 4px;
+  animation-name: wave;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
 .e111_301 {
   width: 152px;
   height: 40px;

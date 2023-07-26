@@ -17,6 +17,9 @@ RUN npm install @mui/icons-material
 RUN npm install react-router-dom
 RUN npm install framer-motion
 RUN npm install react-modal
+# RUN npm install react-transition-group
+# RUN npm install react-spring
+
 # Build the Next.js application
 # Start the application
 CMD ["npm" ,"start"]
