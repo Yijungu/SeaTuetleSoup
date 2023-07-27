@@ -105,20 +105,21 @@ def question(query):
     chat_response3 = completion.choices[0].message.content
 
     llm_response_tf = qa_chain(chat_response3)
-    if llm_response_tf['result'].startswith('Yes') :
-        llm_response = qa_chain(chat_response1['result']+" tell me why.")
+    # if llm_response_tf['result'].startswith('Yes') or llm_response_tf['result'].startswith('No') :
+    #     llm_response = qa_chain(chat_response3+" tell me why.")
+    # else :
+    # llm_response = qa_chain(chat_response3+" please imagine this story.")
+
+    if llm_response_tf['result'].startswith('Yes') or llm_response_tf['result'].startswith('No'):
+        response = remove_first_word(llm_response_tf['result'])
     else :
-        llm_response = qa_chain(chat_response1['result']+" please imagine this story.")
-    if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
-        response = remove_first_word(llm_response['result'])
-    else :
-        response = llm_response['result']
+        response = llm_response_tf['result']
 
     messages = []
 
     content =  "Given the information that " + response
     content += " can we confirm that " + chat_response1['result']
-    content += " please answer 'yes.' or 'no.' or 'probably.' or 'probably not.' or 'i don't no'"  
+    content += " please answer 'yes.' or 'no.' or 'probably.' or 'probably not.'"  
     messages.append({"role" : "user", "content": content})
     completion = openai.ChatCompletion.create(
       temperature = 0,
@@ -143,13 +144,13 @@ def question(query):
 def submit(answer):
     answer += " Translate this into English."
     chat_response1 = qa_chain(answer)
-    llm_response = qa_chain(chat_response1['result'])
 
     # if llm_response['result'].startswith('Yes'):
     global problem_en
     global answer_plus
-    result = answer_plus+chat_response1['result']
-    llm_response1 = qa_chain_submit(result+" please imagine this story.")
+    result = chat_response1['result']+" all the reason the couple were happy?"
+    llm_response1 = qa_chain(result+" please answer yes or no.")
+    # llm_response1 = qa_chain("What made the couple happy?")
 
     messages = []
     messages.append({"role" : "user", "content": chat_response1['result'] + " Translate this into Korean."})
@@ -159,8 +160,8 @@ def submit(answer):
       messages = messages
     )
     chat_response3 = completion.choices[0].message.content
-    return chat_response1['result'], chat_response3, llm_response1['result']
-    return "1: "+ chat_response1['result'] + llm_response['result']
+    return chat_response1['result'], chat_response3, llm_response1["result"]
+    
 
 
 def get_story():
@@ -304,7 +305,7 @@ def getHints():
     return hints
 
 def changeAiQeustion(query): 
-    query += " Please rephrase this sentence in a more natural way."
+    query += " please rewrite this question naturally in English."
     llm_response = qa_chain2(query)
     llm_response['result'] = llm_response['result'].split("?")[0]+"?"
 
@@ -319,6 +320,10 @@ def changeAiQeustion(query):
     return llm_response['result'], chat_response3
 
 def question_en(query):
+
+    if query == "Please re-enter the question.":
+        return "", ""
+
     messages = []
     content =  query + " Please change it into a declarative sentence."
     messages.append({"role" : "user", "content": content})
@@ -330,19 +335,22 @@ def question_en(query):
     chat_response3 = completion.choices[0].message.content
 
     llm_response_tf = qa_chain(chat_response3)
-    if llm_response_tf['result'].startswith('Yes') :
-        llm_response = qa_chain(query+" tell me why.")
+    # if llm_response_tf['result'].startswith('Yes') or llm_response_tf['result'].startswith('No') :
+    #     llm_response = qa_chain(chat_response3+" tell me why.")
+    # else :
+    # llm_response = qa_chain(chat_response3+" please imagine this story.")
+
+    if llm_response_tf['result'].startswith('Yes') or llm_response_tf['result'].startswith('No'):
+        response = remove_first_word(llm_response_tf['result'])
     else :
-        llm_response = qa_chain(query+" please imagine this story.")
-    if llm_response['result'].startswith('Yes') or llm_response['result'].startswith('No'):
-        response = remove_first_word(llm_response['result'])
-    else :
-        response = llm_response['result']
+        response = llm_response_tf['result']
 
     messages = []
+
     content =  "Given the information that " + response
     content += " can we confirm that " + query
-    content += " please answer 'yes.' or 'no.' or 'probably.' or 'probably not.'"
+    content += " Please answer 'yes.' or 'no.' or 'probably.' or 'probably not.'"
+    # content += " and look carefully at the given context and answer it."  
     messages.append({"role" : "user", "content": content})
     completion = openai.ChatCompletion.create(
       temperature = 0,

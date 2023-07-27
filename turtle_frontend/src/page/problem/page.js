@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import Modal from "react-modal";
 import ScrollToTopButton from "../../component/scrollbutton";
 import ButtonWithTip from "../../component/tiptoolbutton";
+import Draggable from "react-draggable";
 
 export default function Problem() {
   const [text, setText] = useState("");
@@ -43,8 +44,12 @@ export default function Problem() {
   const [hint, setHint] = useState("없음");
   const [hint2, setHint2] = useState("없음");
   const [background_text, setBackGroudText] = useState("정답을 입력하세요.");
+  const [background_question_text, setBackgroundQuestionText] =
+    useState("주어를 넣어 질문을 입력하세요.");
   const [answerloding_text, setAnswerLodingText] =
     useState("정답을 확인중입니다.");
+  const [position, setPosition] = useState({ x: 5, y: 0 });
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const now = new Date();
@@ -186,10 +191,12 @@ export default function Problem() {
   };
   const handleQuesionCheckcclick = (asnync) => {
     setTabPressed(false);
+    setTimeout(() => setPosition({ x: 8, y: 0 }));
     // setQuestion_Step(false);
   };
   const handleAnswerCheckcclick = (asnync) => {
     setTabPressed(true);
+    setTimeout(() => setPosition({ x: 35, y: 0 }));
     // setQuestion_Step(false);
   };
 
@@ -197,6 +204,9 @@ export default function Problem() {
     navigate("/");
   };
 
+  const handleClick = () => {
+    setIsActive(!isActive);
+  };
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -205,6 +215,11 @@ export default function Problem() {
     if (e.key === "Tab") {
       e.preventDefault();
       setTabPressed(!tabPressed);
+      if (position.x == 35) {
+        setTimeout(() => setPosition({ x: 8, y: 0 }));
+      } else {
+        setTimeout(() => setPosition({ x: 35, y: 0 }));
+      }
       // setQuestion_Step(false);
     }
     if (e.key === "Escape") {
@@ -246,19 +261,9 @@ export default function Problem() {
       if (tabPressed === true) {
         // 텍스트가 '정답'으로 시작하면 다른 주소로 요청
         if (text_x.length <= 5) {
-          setShake(true); // 실패 시 shake 상태를 true로 변경
-          const newQnas = [
-            {
-              question: text_x,
-              aiQuestion: "",
-              answer: "5자 이상으로 적어주세요.",
-            },
-            ...qnas,
-          ];
-          setQnas(newQnas);
-          saveQnas(newQnas);
+          setBackGroudText(" ");
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
-          setTimeout(() => setShake(false), 500);
+          setTimeout(() => setBackGroudText("정답을 입력하세요."), 500);
         } else {
           setBackGroudText("");
           const anotherResponse = await axios.post(
@@ -305,6 +310,7 @@ export default function Problem() {
                 question: text_x,
                 aiQuestion: anotherResponse.data.ai_question,
                 aiQuestionKr: anotherResponse.data.ai_question_kr,
+                answerSubmit: true,
                 answer: "정답이 아닙니다.",
               },
               ...qnas,
@@ -318,19 +324,12 @@ export default function Problem() {
         }
       } else {
         if (text_x.length <= 5) {
-          setShake(true); // 실패 시 shake 상태를 true로 변경
-          const newQnas = [
-            {
-              question: text_x,
-              aiQuestion: "",
-              answer: "5자 이상으로 적어주세요.",
-            },
-            ...qnas,
-          ];
-          setQnas(newQnas);
-          saveQnas(newQnas);
+          setBackgroundQuestionText("");
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
-          setTimeout(() => setShake(false), 500);
+          setTimeout(
+            () => setBackgroundQuestionText("주어를 넣어 질문을 입력하세요"),
+            500
+          );
         } else {
           // setQuestion_Step(false);
           const tempQnas = [
@@ -339,6 +338,7 @@ export default function Problem() {
               aiQuestion: <Loading />,
               answer: <Loading />,
               aiQuestionKr: <Loading />,
+              answerSubmit: false,
             },
             ...qnas,
           ];
@@ -366,6 +366,7 @@ export default function Problem() {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
+                    answerSubmit: false,
                     answer: "네.",
                   }
                 : qna
@@ -379,6 +380,7 @@ export default function Problem() {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
+                    answerSubmit: false,
                     answer: "아니오.",
                   }
                 : qna
@@ -395,6 +397,7 @@ export default function Problem() {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
+                    answerSubmit: false,
                     answer: "아마도 아닐 겁니다.",
                   }
                 : qna
@@ -411,6 +414,7 @@ export default function Problem() {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
+                    answerSubmit: false,
                     answer: "아마도 맞을 겁니다.",
                   }
                 : qna
@@ -424,7 +428,8 @@ export default function Problem() {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
-                    answer: "필요없는 정보입니다.",
+                    answerSubmit: false,
+                    answer: "중요하지 않은 정보입니다.",
                   }
                 : qna
             );
@@ -439,6 +444,20 @@ export default function Problem() {
       setIsLoading(false);
       setIsProcessing(false);
       console.error(error);
+    }
+  };
+
+  const trackPosition = (e, ui) => {
+    setPosition({ x: ui.x, y: ui.y });
+  };
+
+  const endDrag = () => {
+    if (position.x < 21) {
+      setPosition({ x: 8, y: 0 });
+      setTabPressed(false);
+    } else {
+      setPosition({ x: 35, y: 0 });
+      setTabPressed(true);
     }
   };
 
@@ -604,26 +623,6 @@ export default function Problem() {
               </div>
             </div>
             {author && <span className="source">{`출처 : ${author}`}</span>}
-            <div className="circle_check_box">
-              <div
-                className="quesiton_check_box"
-                onClick={handleQuesionCheckcclick}
-              >
-                <div
-                  className={`circle ${!tabPressed ? "checked" : "unchecked"}`}
-                ></div>
-                {" 질문"}
-              </div>
-              <div
-                className="result_check_box"
-                onClick={handleAnswerCheckcclick}
-              >
-                <div
-                  className={`circle ${tabPressed ? "checked" : "unchecked"}`}
-                ></div>
-                {" 정답"}
-              </div>
-            </div>
 
             <div className="qeustion_text_box">
               <input
@@ -634,7 +633,7 @@ export default function Problem() {
                 placeholder={
                   !tabPressed
                     ? question_step
-                      ? "주어를 넣어 질문을 입력하세요."
+                      ? `${background_question_text}`
                       : `ex) ${main_character}`
                     : `${background_text}`
                 }
@@ -654,20 +653,34 @@ export default function Problem() {
                   ))}
                 </h1>
               )}
+              {(background_question_text === "" || background_text === " ") && (
+                <h1 className="shake-text">5자 이상 입력해주세요.</h1>
+              )}
+              <div className={`slider ${isActive ? "active" : ""}`}>
+                <Draggable
+                  axis="x"
+                  bounds={{ left: 8, right: 35, top: 0, bottom: 0 }}
+                  position={position}
+                  onDrag={trackPosition}
+                  onStop={endDrag}
+                >
+                  <div className="slider-button" onClick={handleSendClick}>
+                    <img
+                      className="SendButton"
+                      src={SendButton}
+                      alt="SendButton"
+                      width="10"
+                      height="15"
+                      style={{
+                        top: "3px",
+                        cursor: "move",
+                        transition: "left 0.3s ease-out",
+                      }}
+                    />
+                  </div>
+                </Draggable>
+              </div>
             </div>
-
-            <button
-              className={`send_button ${tabPressed ? "tabPressed" : ""}`}
-              onClick={handleSendClick}
-            >
-              <img
-                className="SendButton"
-                src={SendButton}
-                alt="SendButton"
-                width="15"
-                height="18"
-              />
-            </button>
 
             {qnas.map((qna, index) => (
               <div className="QAresponse" key={index}>
@@ -675,6 +688,7 @@ export default function Problem() {
                   question={qna.question}
                   aiQuestion={qna.aiQuestion}
                   aiQuestionKr={qna.aiQuestionKr}
+                  answerSubmit={qna.answerSubmit}
                   index={index}
                   answer={qna.answer}
                   opened={index === 0 ? true : false}

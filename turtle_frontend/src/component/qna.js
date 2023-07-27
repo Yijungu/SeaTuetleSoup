@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import AiIcon from "../images/AiIcon.png"; // 이미지 import
 import UserIcon from "../images/UserIcon.png"; // 이미지 import
-import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import DetailOpenButton from "../images/DetailOpenButton.png"; // 이미지 import
 import DetailCloseButton from "../images/DetailCloseButton.png";
@@ -19,15 +19,17 @@ const QnA = ({
   aiQuestionKr,
   opened,
   index,
+  answerSubmit,
   borderBottomStrength,
 }) => {
+  const navigate = useNavigate();
   const [boxes, setBoxes] = useState(opened);
   const [rerollQuestion, setRerollQuestion] = useState(aiQuestion);
   const [rerollQuestionKr, setRerollQuestionKr] = useState(aiQuestionKr);
   const [rerolledAnswer, setRerolledAnswer] = useState(answer);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
-
+  const [isAnswerSubmit, setIsAnswerSubmit] = useState(answerSubmit);
   useEffect(() => {
     setBoxes(opened);
   }, [opened]);
@@ -43,6 +45,10 @@ const QnA = ({
   useEffect(() => {
     setRerollQuestionKr(aiQuestionKr);
   }, [aiQuestionKr]);
+
+  useEffect(() => {
+    setIsAnswerSubmit(answerSubmit);
+  }, [answerSubmit]);
 
   const rerollResponse = async () => {
     setIsAiLoading(true);
@@ -71,44 +77,87 @@ const QnA = ({
 
   const rerollQuestionFuntion = async () => {
     setIsAnswerLoading(true);
-    try {
-      const response = await axios.post(
-        process.env.REACT_APP_API_URL + "/questionEn/",
+    if (!isAnswerSubmit) {
+      try {
+        const response = await axios.post(
+          process.env.REACT_APP_API_URL + "/questionEn/",
+          {
+            data: rerollQuestion,
+          }
+        );
+        console.log(response.data.response);
+        let savedQnas = JSON.parse(localStorage.getItem("qnas"));
+        let responseString = JSON.stringify(response.data.response);
+        if (responseString.includes("Yes") || responseString.includes("yes")) {
+          savedQnas[index].answer = "네.";
+          setRerolledAnswer("네.");
+        } else if (responseString.includes("No")) {
+          savedQnas[index].answer = "아니오.";
+          setRerolledAnswer("아니오.");
+        } else if (
+          responseString.includes("Probably not") ||
+          responseString.includes("probably not.")
+        ) {
+          savedQnas[index].answer = "아마 아닐 겁니다.";
+          setRerolledAnswer("아마 아닐 겁니다.");
+        } else if (
+          responseString.includes("Probably.") ||
+          responseString.includes("probably")
+        ) {
+          savedQnas[index].answer = "아마 맞을 겁니다.";
+          setRerolledAnswer("아마 맞을 겁니다.");
+        } else {
+          savedQnas[index].answer = "필요없는 정보입니다.";
+          setRerolledAnswer("중요하지 않은 정보입니다.");
+        }
+        localStorage.setItem("qnas", JSON.stringify(savedQnas));
+      } catch (error) {
+        console.error("Error rerolling response: ", error);
+      }
+    } else {
+      let savedQnas = JSON.parse(localStorage.getItem("qnas"));
+      const anotherResponse = await axios.post(
+        process.env.REACT_APP_API_URL + "/submit/",
         {
           data: rerollQuestion,
         }
       );
-      console.log(response.data.content);
-      let savedQnas = JSON.parse(localStorage.getItem("qnas"));
-      let responseString = JSON.stringify(response.data.response);
-      if (responseString.includes("Yes") || responseString.includes("yes")) {
-        savedQnas[index].answer = "네.";
-        setRerolledAnswer("네.");
-      } else if (
-        responseString.includes("No") ||
-        responseString.includes("no")
+      console.log(anotherResponse.data.response);
+      if (
+        anotherResponse.data.response.startsWith("네") ||
+        anotherResponse.data.response.startsWith("예") ||
+        anotherResponse.data.response.startsWith("맞습니다") ||
+        anotherResponse.data.response.startsWith("Yes")
       ) {
-        savedQnas[index].answer = "아니오.";
-        setRerolledAnswer("아니오.");
-      } else if (
-        responseString.includes("Probably not") ||
-        responseString.includes("Probably not.")
-      ) {
-        savedQnas[index].answer = "아마 아닐 겁니다.";
-        setRerolledAnswer("아마 아닐 겁니다.");
-      } else if (
-        responseString.includes("Probably.") ||
-        responseString.includes("Probably")
-      ) {
-        savedQnas[index].answer = "아마 맞을 겁니다.";
-        setRerolledAnswer("아마 맞을 겁니다.");
+        const now = new Date();
+        const currentDate = `${now.getFullYear()}-${
+          now.getMonth() + 1
+        }-${now.getDate()}`;
+
+        localStorage.setItem("endTime", now);
+        // 마지막으로 정답을 맞춘 날짜를 불러오기
+        const lastCorrectDate = localStorage.getItem("lastCorrectDate");
+        const lastGiveUpDate = localStorage.getItem("lastGiveUpDate");
+
+        // 마지막으로 정답을 맞춘 날짜와 현재 날짜를 비교하기
+        if (lastGiveUpDate !== currentDate && lastCorrectDate !== currentDate) {
+          // 현재 날짜를 마지막으로 정답을 맞춘 날짜로 저장
+
+          localStorage.setItem("lastCorrectDate", currentDate);
+
+          // 정답 횟수를 증가
+          const savedCorrectAnswers = Number(
+            localStorage.getItem("correctAnswers")
+          );
+          localStorage.setItem("correctAnswers", savedCorrectAnswers + 1);
+
+          // setUpdateState(true);
+        }
+        navigate("/explanation", { state: { userAnswer: "" } });
       } else {
-        savedQnas[index].answer = "필요없는 정보입니다.";
-        setRerolledAnswer("필요없는 정보입니다.");
+        savedQnas[index].answer = "정답이 아닙니다.";
+        localStorage.setItem("qnas", JSON.stringify(savedQnas));
       }
-      localStorage.setItem("qnas", JSON.stringify(savedQnas));
-    } catch (error) {
-      console.error("Error rerolling response: ", error);
     }
     setIsAnswerLoading(false);
   };
@@ -216,6 +265,7 @@ const QnA = ({
                   paddingLeft: "0px",
                   fontSize: "14px",
                   color: "#454545",
+                  width: "620px",
                 }}
               >
                 {rerollQuestion}
@@ -228,6 +278,7 @@ const QnA = ({
               style={{
                 display: "flex",
                 position: "absolute",
+                top: "65px",
                 left: "730px",
               }}
               onClick={rerollResponse}
@@ -239,6 +290,7 @@ const QnA = ({
               style={{
                 display: "flex",
                 position: "absolute",
+                top: "63px",
                 left: "768px",
               }}
               onClick={rerollQuestionFuntion}
@@ -295,6 +347,7 @@ const QnA = ({
                   paddingLeft: "0px",
                   fontSize: "14px",
                   color: "#454545",
+                  width: "620px",
                 }}
               >
                 {rerollQuestionKr}

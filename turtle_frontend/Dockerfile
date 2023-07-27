@@ -17,6 +17,7 @@ RUN npm install @mui/icons-material
 RUN npm install react-router-dom
 RUN npm install framer-motion
 RUN npm install react-modal
+# RUN npm install react-draggable
 # RUN npm install react-transition-group
 # RUN npm install react-spring
 
