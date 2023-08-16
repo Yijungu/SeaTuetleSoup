@@ -1,0 +1,250 @@
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container_m {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+}
+
+.home_cover_m {
+  position: relative;
+}
+
+.checkmakr_box_m {
+  position: relative;
+  top: 10px;
+}
+
+.home_title_box_m {
+  margin-top: 20%;
+  display: flex;
+  position: relative;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+}
+
+.home_title_m {
+  font-family: Apple SD Gothic Neo;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.home_title_small_m {
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
+
+.start_button_box_m {
+  position: relative;
+  bottom: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home_to_explanation_m {
+  background-color: rgb(19, 82, 255);
+  width: 4rem;
+  padding: 2%;
+  border-radius: 4%;
+  margin-top: 1.7rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+  font-size: 0.6rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0px 5px 3px rgb(182, 182, 182);
+  letter-spacing: 0.05rem;
+}
+
+.conversation_box_m {
+  display: flex;
+  margin-top: 3rem;
+  position: relative;
+  justify-content: center;
+}
+.HomeConversation {
+  width: 90%;
+}
+
+.computer_screan_top_m,
+.computer_screan_botton_m,
+.computer_screan_button1_m,
+.computer_screan_button2_m,
+.computer_screan_button3_m {
+  position: relative;
+  width: 20%;
+  height: 20%;
+  background-color: #7f1414;
+}
+
+.my_chat_box_m,
+.my_chat_box_2_m {
+  background-color: #e0e0e0;
+}
+
+.AI_chat_box_m,
+.AI_chat_box_2_m {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.F22F_main_m {
+  width: 5rem;
+  height: auto;
+}
+
+.up_bar_m {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.nickname_profile_main_m {
+  display: flex;
+  position: relative;
+  align-items: center;
+  text-align: end;
+  justify-content: end;
+}
+
+.profile_photo_main_m {
+  position: relative;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+}
+
+.nickname_main_m {
+  position: relative;
+  width: 20%;
+  color: rgba(0, 0, 0, 1);
+  margin-right: 0.5rem;
+  border-radius: 5%;
+  height: 10%;
+  font-size: 0.5rem;
+  text-align: center;
+  font-family: Apple SD Gothic Neo;
+  border: none;
+}
+
+.detail_m {
+  /* display: flex; */
+  position: relative;
+  border-top: 1px solid #909090;
+  padding-top: 1.4rem;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 4rem;
+  margin-left: 3%;
+  margin-right: 15%;
+  width: 85%;
+  bottom: 15%;
+  /* align-items: center;
+  justify-content: center;
+  flex-direction: column; */
+}
+.QnA_start_m {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: rem;
+}
+.QnA_box_m {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 3rem;
+  margin-top: 1rem;
+}
+.QnA_question_m {
+  position: relative;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+.QnA_answer_m {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.35rem;
+  position: relative;
+  word-wrap: break-word;
+}
+.QnA_answer_box_m {
+  letter-spacing: 0.03rem;
+  font-weight: 450;
+  color: #232323;
+  position: relative;
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+  word-wrap: break-word;
+}
+.bold-word_m {
+  font-weight: bold;
+}
+
+.footer_m {
+  position: relative;
+  color: black;
+  text-align: end;
+  font-size: 0.5rem;
+  border-top: 1px solid black;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  line-height: 0.4rem;
+}
+.scroll_to_top_m {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 1000; /* z-index를 적절하게 설정하여 다른 요소 위에 나타나도록 할 수 있습니다. */
+}
+/* @media screen and (max-width: 768px) {
+  .home_title_m {
+    font-size: 2rem;
+  }
+
+  .home_title_small_m {
+    font-size: 1rem;
+  }
+
+  .start_button_m {
+    width: 50px;
+    height: 50px;
+  }
+
+  .home_to_explanation_m {
+    font-size: 2rem;
+  }
+
+  .nickname_main_m {
+    font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home_title_m {
+    font-size: 1.5rem;
+  }
+
+  .home_title_small_m {
+    font-size: 1rem;
+  }
+
+  .home_to_explanation_m {
+    font-size: 1rem;
+  }
+
+  .nickname_main_m {
+    font-size: 0.8rem;
+  }
+} */
+/* 192.168.0.29 */

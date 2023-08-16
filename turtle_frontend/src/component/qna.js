@@ -21,6 +21,7 @@ const QnA = ({
   index,
   answerSubmit,
   borderBottomStrength,
+  updateQnas,
 }) => {
   const navigate = useNavigate();
   const [boxes, setBoxes] = useState(opened);
@@ -30,6 +31,9 @@ const QnA = ({
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   const [isAnswerSubmit, setIsAnswerSubmit] = useState(answerSubmit);
+  const [isDelete, setIsDelete] = useState(false);
+  const [isDeleteVisible, setIsDeleteVisible] = useState(false);
+
   useEffect(() => {
     setBoxes(opened);
   }, [opened]);
@@ -96,12 +100,12 @@ const QnA = ({
           setRerolledAnswer("아니오.");
         } else if (
           responseString.includes("Probably not") ||
-          responseString.includes("probably not.")
+          responseString.includes("probably not")
         ) {
           savedQnas[index].answer = "아마 아닐 겁니다.";
           setRerolledAnswer("아마 아닐 겁니다.");
         } else if (
-          responseString.includes("Probably.") ||
+          responseString.includes("Probably") ||
           responseString.includes("probably")
         ) {
           savedQnas[index].answer = "아마 맞을 겁니다.";
@@ -161,6 +165,23 @@ const QnA = ({
     }
     setIsAnswerLoading(false);
   };
+
+  const handleDeleteClick = () => {
+    setIsDelete(true); // 이 컴포넌트의 삭제 상태를 업데이트
+    updateQnas(index); // 상위 컴포넌트의 qnas 상태를 업데이트
+  };
+
+  const handleMouseOver = () => {
+    setIsDeleteVisible(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsDeleteVisible(false);
+  };
+
+  // if (isDelete) {
+  //   return;
+  // } else {
   return (
     <Box
       sx={{
@@ -169,8 +190,9 @@ const QnA = ({
         left: "2px",
         flexDirection: "column",
         width: "813px",
-        // height: "50px",
       }}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
     >
       <Box
         sx={{
@@ -377,7 +399,11 @@ const QnA = ({
           alt="AI"
           width="25"
           height="25"
-          style={{ padding: "12.5px", marginLeft: "10px", marginRight: "10px" }}
+          style={{
+            padding: "12.5px",
+            marginLeft: "10px",
+            marginRight: "10px",
+          }}
         />
         <Typography>
           {isAnswerLoading ? (
@@ -387,8 +413,35 @@ const QnA = ({
           )}
         </Typography>
       </Box>
+      <div
+        style={{
+          position: "absolute",
+          width: "30px",
+          height: "30px",
+          left: "830px",
+        }}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
+        <button
+          style={{
+            position: "absolute",
+            border: "0.1px solid #121212",
+            borderRadius: "5px",
+            backgroundColor: "#ffffff",
+            opacity: isDeleteVisible ? 1 : 0,
+            transition: "opacity 0.3s",
+            pointerEvents: isDeleteVisible ? "auto" : "none",
+          }}
+          onClick={handleDeleteClick}
+        >
+          {" "}
+          ㅡ{" "}
+        </button>
+      </div>
     </Box>
   );
+  // }
 };
 
 export default QnA;

@@ -50,7 +50,16 @@ export default function Problem() {
     useState("정답을 확인중입니다.");
   const [position, setPosition] = useState({ x: 5, y: 0 });
   const [isActive, setIsActive] = useState(false);
+  const [n, setN] = useState(0);
 
+  useEffect(() => {
+    axios
+      .get(process.env.REACT_APP_API_URL + "/getNnumber/")
+      .then((response) => {
+        const data = response.data;
+        setN(data.n);
+      });
+  }, []);
   useEffect(() => {
     const now = new Date();
     const currentDate = `${now.getFullYear()}-${
@@ -111,6 +120,10 @@ export default function Problem() {
 
     setGiveUpCount(savedGiveUpCount || 0);
   }, []);
+
+  // useEffect(() => {
+  //   console.log(qnas);
+  // }, [qnas]);
 
   // 값들이 변경될 때마다 localStorage에 저장한다
   useEffect(() => {
@@ -192,11 +205,13 @@ export default function Problem() {
   const handleQuesionCheckcclick = (asnync) => {
     setTabPressed(false);
     setTimeout(() => setPosition({ x: 8, y: 0 }));
+    updateColor();
     // setQuestion_Step(false);
   };
   const handleAnswerCheckcclick = (asnync) => {
     setTabPressed(true);
     setTimeout(() => setPosition({ x: 35, y: 0 }));
+    updateColor();
     // setQuestion_Step(false);
   };
 
@@ -204,9 +219,6 @@ export default function Problem() {
     navigate("/");
   };
 
-  const handleClick = () => {
-    setIsActive(!isActive);
-  };
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -217,8 +229,10 @@ export default function Problem() {
       setTabPressed(!tabPressed);
       if (position.x == 35) {
         setTimeout(() => setPosition({ x: 8, y: 0 }));
+        updateColor();
       } else {
         setTimeout(() => setPosition({ x: 35, y: 0 }));
+        updateColor();
       }
       // setQuestion_Step(false);
     }
@@ -263,7 +277,7 @@ export default function Problem() {
         if (text_x.length <= 5) {
           setBackGroudText(" ");
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
-          setTimeout(() => setBackGroudText("정답을 입력하세요."), 500);
+          setTimeout(() => setBackGroudText("정답을 입력하세요."), 600);
         } else {
           setBackGroudText("");
           const anotherResponse = await axios.post(
@@ -305,6 +319,7 @@ export default function Problem() {
             setUpdateState(true);
           } else {
             setShake(true); // 실패 시 shake 상태를 true로 변경
+            let savedQnas = JSON.parse(localStorage.getItem("qnas"));
             const newQnas = [
               {
                 question: text_x,
@@ -313,7 +328,7 @@ export default function Problem() {
                 answerSubmit: true,
                 answer: "정답이 아닙니다.",
               },
-              ...qnas,
+              ...savedQnas,
             ];
             setQnas(newQnas);
             saveQnas(newQnas);
@@ -328,10 +343,10 @@ export default function Problem() {
           setTotalQuestionsAsked(totalQuestionsAsked + 1);
           setTimeout(
             () => setBackgroundQuestionText("주어를 넣어 질문을 입력하세요"),
-            500
+            600
           );
         } else {
-          // setQuestion_Step(false);
+          // let savedQnas = JSON.parse(localStorage.getItem("qnas"));
           const tempQnas = [
             {
               question: text_x,
@@ -339,10 +354,14 @@ export default function Problem() {
               answer: <Loading />,
               aiQuestionKr: <Loading />,
               answerSubmit: false,
+              isDelete: false,
+              index: totalQuestionsAsked,
             },
             ...qnas,
           ];
+          let total = totalQuestionsAsked;
           setQnas(tempQnas); // 임시로 Loading 애니메이션을 표시
+
           const response = await axios.post(
             process.env.REACT_APP_API_URL + "/question/",
             {
@@ -351,92 +370,96 @@ export default function Problem() {
           );
           let updatedQnas;
           // console.log(response.data.ai_question);
-          // console.log(response.data.response);
+
           let responseString = JSON.stringify(response.data.response);
-          if (
-            responseString.includes("Yes") ||
-            responseString.includes("yes")
-          ) {
+          console.log(responseString);
+          if (responseString.includes("Yes") || responseString.includes("네")) {
             // if (true) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === text_x &&
-              qna.aiQuestion.type === Loading &&
-              qna.answer.type === Loading
+              qna.question === text_x && qna.index === total
                 ? {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
                     answerSubmit: false,
+                    isDelete: false,
                     answer: "네.",
                   }
                 : qna
             );
-          } else if (responseString.includes("No")) {
+          } else if (
+            responseString.includes("아니오") ||
+            responseString.includes("No")
+          ) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === text_x &&
-              qna.aiQuestion.type === Loading &&
-              qna.answer.type === Loading
+              qna.question === text_x && qna.index === total
                 ? {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
                     answerSubmit: false,
+                    isDelete: false,
                     answer: "아니오.",
                   }
                 : qna
             );
           } else if (
-            responseString.includes("Probably not") ||
-            responseString.includes("probably not.")
+            responseString.includes("Probably no") ||
+            responseString.includes("아마도 아닐 겁니다.")
           ) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === text_x &&
-              qna.aiQuestion.type === Loading &&
-              qna.answer.type === Loading
+              qna.question === text_x && qna.index === total
                 ? {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
                     answerSubmit: false,
+                    isDelete: false,
                     answer: "아마도 아닐 겁니다.",
                   }
                 : qna
             );
           } else if (
-            responseString.includes("Probably.") ||
-            responseString.includes("probably")
+            responseString.includes("Probably") ||
+            responseString.includes("아마도 그럴겁니다")
           ) {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === text_x &&
-              qna.aiQuestion.type === Loading &&
-              qna.answer.type === Loading
+              qna.question === text_x && qna.index === total
                 ? {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
                     answerSubmit: false,
+                    isDelete: false,
                     answer: "아마도 맞을 겁니다.",
                   }
                 : qna
             );
           } else {
             updatedQnas = tempQnas.map((qna) =>
-              qna.question === text_x &&
-              qna.aiQuestion.type === Loading &&
-              qna.answer.type === Loading
+              qna.question === text_x && qna.index === total
                 ? {
                     question: text_x,
                     aiQuestion: response.data.ai_question,
                     aiQuestionKr: response.data.ai_question_kr,
                     answerSubmit: false,
+                    isDelete: false,
                     answer: "중요하지 않은 정보입니다.",
                   }
                 : qna
             );
           }
-          setQnas(updatedQnas); // 응답으로 교체
-          saveQnas(updatedQnas);
-          setTotalQuestionsAsked(totalQuestionsAsked + 1); // localStorage에 저장
+          // 모든 질문이 로딩이 완료되었는지 확인
+          const allLoaded = updatedQnas.every(
+            (qna) => qna.aiQuestion !== Loading && qna.answer !== Loading
+          );
+
+          // 로딩 중인 항목이 없을 경우에만 저장
+          if (allLoaded) {
+            setQnas(updatedQnas); // 응답으로 교체
+            saveQnas(updatedQnas);
+            setTotalQuestionsAsked(totalQuestionsAsked + 1);
+          } // localStorage에 저장
         }
       }
       setIsProcessing(false);
@@ -448,16 +471,30 @@ export default function Problem() {
   };
 
   const trackPosition = (e, ui) => {
+    // Calculate the new color based on newX
+    // Here you may need to adapt the calculation based on your actual min and max x values
+
+    // Update position
     setPosition({ x: ui.x, y: ui.y });
+  };
+
+  const updateColor = () => {
+    const newColor = !tabPressed ? "#5374e8" : "#5DB075";
+
+    // Set the new background color to the button
+    document.querySelector(".slider").style.border = "1px solid " + newColor;
+    document.querySelector(".slider-button").style.background = newColor;
   };
 
   const endDrag = () => {
     if (position.x < 21) {
       setPosition({ x: 8, y: 0 });
       setTabPressed(false);
+      updateColor();
     } else {
       setPosition({ x: 35, y: 0 });
       setTabPressed(true);
+      updateColor();
     }
   };
 
@@ -477,6 +514,15 @@ export default function Problem() {
     setHintModalIsOpen(false);
   }
 
+  function nl2br(str) {
+    return str.split("\n").map((line, index, array) => (
+      <>
+        {line}
+        {index === array.length - 1 ? null : <br />}
+      </>
+    ));
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -485,10 +531,65 @@ export default function Problem() {
     >
       <div className="container">
         <div className="all">
-          <div className="e218_192">
+          <div className="upbar">
+            <div className="border_line">
+              <div>
+                <p className="nickname">{nickname} 님</p>
+              </div>
+              <div>
+                <img
+                  className="profile_photo"
+                  src={Profile}
+                  alt="Profile"
+                  width="25"
+                  height="25"
+                />
+              </div>
+            </div>
+
+            <img
+              className="F22F"
+              src={F22FBeta}
+              alt="F22FBeta"
+              onClick={handleLogoClick}
+            />
+          </div>
+          <div className="problem_box">
+            <div className="description_box">
+              <span className="description">
+                텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의
+                답을 받을 수 있습니다. <br /> Tab 키를 눌러 {n}번째 문제의
+                정답을 맞혀보세요.
+              </span>
+            </div>
             <div className="problem_main_box">
               <div className="question_box">
-                <span className="Question">{question}</span>
+                <span className="Question">{nl2br(question)}</span>
+              </div>
+            </div>
+            {author && <span className="source">{`출처 : ${author}`}</span>}
+            <div className="check_click_box">
+              <div className="circle_check_box">
+                <div
+                  className="quesiton_check_box"
+                  onClick={handleQuesionCheckcclick}
+                >
+                  <div
+                    className={`circle ${
+                      !tabPressed ? "checked" : "unchecked"
+                    }`}
+                  ></div>
+                  {" 질문"}
+                </div>
+                <div
+                  className="quesiton_check_box"
+                  onClick={handleAnswerCheckcclick}
+                >
+                  <div
+                    className={`circle ${tabPressed ? "checked" : "unchecked"}`}
+                  ></div>
+                  {" 정답"}
+                </div>
               </div>
               <div className="hint_giveup_button_box">
                 <button className="hint_button_box" onClick={openHintModal}>
@@ -622,8 +723,6 @@ export default function Problem() {
                 </Modal>
               </div>
             </div>
-            {author && <span className="source">{`출처 : ${author}`}</span>}
-
             <div className="qeustion_text_box">
               <input
                 className={`textbox ${shake ? "shake" : ""}`}
@@ -656,7 +755,7 @@ export default function Problem() {
               {(background_question_text === "" || background_text === " ") && (
                 <h1 className="shake-text">5자 이상 입력해주세요.</h1>
               )}
-              <div className={`slider ${isActive ? "active" : ""}`}>
+              <div className={`slider`}>
                 <Draggable
                   axis="x"
                   bounds={{ left: 8, right: 35, top: 0, bottom: 0 }}
@@ -681,55 +780,36 @@ export default function Problem() {
                 </Draggable>
               </div>
             </div>
-
-            {qnas.map((qna, index) => (
-              <div className="QAresponse" key={index}>
-                <QnA
-                  question={qna.question}
-                  aiQuestion={qna.aiQuestion}
-                  aiQuestionKr={qna.aiQuestionKr}
-                  answerSubmit={qna.answerSubmit}
-                  index={index}
-                  answer={qna.answer}
-                  opened={index === 0 ? true : false}
-                  borderBottomStrength={
-                    index === qnas.length - 1 ? "0.01px" : "0px"
-                  }
-                />
-              </div>
-            ))}
+            {qnas.map(
+              (qna, index) =>
+                !qna.isDelete && (
+                  <div className="QAresponse" key={index}>
+                    <QnA
+                      question={qna.question}
+                      aiQuestion={qna.aiQuestion}
+                      aiQuestionKr={qna.aiQuestionKr}
+                      answerSubmit={qna.answerSubmit}
+                      index={index}
+                      answer={qna.answer}
+                      opened={index === 0 ? true : false}
+                      borderBottomStrength={
+                        index === qnas.length - 1 ? "0.01px" : "0px"
+                      }
+                      updateQnas={(indexToDelete) => {
+                        setQnas(
+                          qnas.map((qna, index) =>
+                            index === indexToDelete
+                              ? { ...qna, isDelete: true }
+                              : qna
+                          )
+                        );
+                      }}
+                    />
+                  </div>
+                )
+            )}
           </div>
 
-          <div className="border_line">
-            <div>
-              <p className="nickname">{nickname} 님</p>
-            </div>
-            <div>
-              <img
-                className="profile_photo"
-                src={Profile}
-                alt="Profile"
-                width="25"
-                height="25"
-              />
-            </div>
-          </div>
-
-          <img
-            className="F22F"
-            src={F22FBeta}
-            alt="F22FBeta"
-            onClick={handleLogoClick}
-          />
-          <div className="e168_70">
-            <span className="description">
-              텍스트 입력 칸에 추측한 내용을 적으면 ‘네’ 또는 ‘아니오’ 형식의
-              답을 받을 수 있습니다.
-            </span>
-            <span className="description_2">
-              Tab 키를 눌러 바다거북수프의 정답을 맞혀보세요.
-            </span>
-          </div>
           <div>
             <ButtonWithTip />
           </div>

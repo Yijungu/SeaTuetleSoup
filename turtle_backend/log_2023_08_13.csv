@@ -1,0 +1,19 @@
+id,date,question,answer,answer2
+342,12,매튜는 횡단보도에서 대기중이였나요? please rewrite this question naturally in English.,No.,"No, Matthew was not waiting at the crosswalk. He was looking at his cell phone and misunderstood that the traffic light had changed to green."
+343,12,매튜는 횡단보도에서 대기중이었나요? please rewrite this question naturally in English.,No.,"No, Matthew was not waiting at the crosswalk. He was looking at his cell phone and misunderstood that the traffic light had changed to green."
+344,12,매튜는 횡단보도 앞에 서있었나요? please rewrite this question naturally in English.,No.,"No, Matthew was not standing in front of the crosswalk."
+345,12,매튜는 사고 나기 전에 횡단보도 앞에 서있었나요? please rewrite this question naturally in English.,Yes.,"Yes, Matthew was standing in front of the crosswalk before the accident happened."
+346,12,매튜는 사고나기 전에 횡단보도에서 대기중이었나요? please rewrite this question naturally in English.,Yes.,"Yes, Matthew was waiting at the crosswalk before the accident happened."
+347,12,매튜는 다른 사람에 의해 죽었나요 please rewrite this question naturally in English.,No.,"No, Matthew was not killed by someone else. He was hurt by a car after misunderstanding the traffic light signal."
+348,14,클로이가 호텔에 간 목적은 돈때문인가요? please rewrite this question naturally in English.,Probably yes.,"Yes, Chloe's purpose of going to the hotel was because she may have to pay a big rent to her friend, which could potentially deplete all of her funds."
+349,14,클로이가 호텔에 간 목적은 돈을 구하기 위함입니까? please rewrite this question naturally in English.,No.,"No, Chloe's purpose for going to the hotel was not to earn money. In fact, she was worried about having to pay a large rent to her friend if she landed on that space."
+350,14,제임스는 영상을 앞에서 부터 보나요? please rewrite this question naturally in English.,Probably no.,"No, James watches the footage in reverse."
+351,14,제임스는 영상을 앞에서 부터 보나요? please rewrite this question naturally in English.,No.,"No, James watches the CCTV footage in reverse."
+352,14,제임스가 되감아한 영상은 사실 가정부가 제임스의 집으로 올라와서 나가지 않았다는 소리가 된다. please rewrite this question naturally in English.,No,
+353,14,제임스가 되감아한 영상은 사실 가정부가 제임스의 집으로 올라와서 나가지 않았다는 소리가 된다. please rewrite this question naturally in English.,No,
+354,14,제임스가 되감아한 영상은 사실 가정부가 제임스의 집으로 올라와서 나가지 않았다는 소리가 된다. please rewrite this question naturally in English.,No,
+355,14,제임스가 되감아본 영상에서 가정부가 제임스 집에서 나와 엘레베이터를 타고 내려가는 모습은 다시말해 엘리베이터를 타고 올라와서 제임스의 집에 계속 있다는 소리가 되기 때문에 제임스는 두려움에 떨었다. please rewrite this question naturally in English.,Yes.,"When James saw the housekeeper coming out of his apartment and taking the elevator down in the CCTV footage, he realized that she was actually still inside his apartment. This discovery shocked him and made him freeze in fear."
+356,14,제임스가 되감아본 영상에서 가정부가 제임스 집에서 나와 엘레베이터를 타고 내려가는 모습은 다시말해 엘리베이터를 타고 올라와서 제임스의 집에 계속 있다는 소리가 되기 때문에 제임스는 두려움에 떨었다. please rewrite this question naturally in English.,No,
+357,14,제임스가 되감아본 영상에서 가정부가 제임스 집에서 나와 엘레베이터를 타고 내려가는 모습은 다시말해 엘리베이터를 타고 올라와서 제임스의 집에 계속 있다는 소리가 되기 때문에 제임스는 두려움에 떨었다. please rewrite this question naturally in English.,No,
+358,14,제임스가 되감아본 영상에서 가정부가 제임스 집에서 나와 엘레베이터를 타고 내려가는 모습은 다시말해 엘리베이터를 타고 올라와서 제임스의 집에 계속 있다는 소리가 되기 때문에 제임스는 두려움에 떨었다. please rewrite this question naturally in English.,No.,
+359,14,제임스가 되감아본 영상에서 가정부가 제임스 집에서 나와 엘레베이터를 타고 내려가는 모습은 다시말해 엘리베이터를 타고 올라와서 제임스의 집에 계속 있다는 소리가 되기 때문에 제임스는 두려움에 떨었다. please rewrite this question naturally in English.,No.,

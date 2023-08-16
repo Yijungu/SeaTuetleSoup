@@ -44,7 +44,7 @@ function ButtonWithTip() {
           src={TipText}
           alt="tip text"
           width="248"
-          height="690"
+          height="720"
         />
       </CSSTransition>
     </div>

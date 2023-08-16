@@ -242,12 +242,13 @@ export default function Thanks() {
                       `축하합니다! ${totalQuestionsAsked}번째 질문에서 정답을 맞혔습니다!`}
                     {!userAnswer &&
                       `다음 ${n + 1}번째 수프레시피을 노려보세요!`}
+                    <br />
                     {n + 1}번째 수프레시피는 오늘 밤 자정(한국 시간 기준)에
                     찾아옵니다.
                   </div>
                   [My Log]
                   <br />
-                  정답 횟수:{correctAnswers} 포기 횟수:{giveUpCount}
+                  {`정답 횟수: ${correctAnswers} 포기 횟수: ${giveUpCount}`}
                   <br />
                   가장 처음 풀었던 수프 번호: {firstN}
                   <br />
@@ -289,7 +290,7 @@ export default function Thanks() {
                 <textarea
                   className="submit_problem_box"
                   type="text"
-                  placeholder="문제와 힌트를 자유롭게 입력해주세요."
+                  placeholder="문제와 힌트를 입력해주세요."
                   value={problem}
                   onChange={(e) => setProblem(e.target.value)}
                 />
@@ -297,7 +298,7 @@ export default function Thanks() {
                 <textarea
                   className="submit_problem_box"
                   type="text"
-                  placeholder="정답과 해설을 자유롭게 입력해주세요."
+                  placeholder="정답과 해설을 입력해주세요."
                   value={explanation}
                   onChange={(e) => setExplanation(e.target.value)}
                 />

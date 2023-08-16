@@ -84,14 +84,6 @@ html {
   display: flex;
 }
 
-.Icon {
-  position: relative;
-  text-align: center;
-  height: 53px;
-  left: -23px;
-  top: 30px;
-}
-
 .Ai_answer_layout {
   display: flex;
   width: 860px;
@@ -133,29 +125,6 @@ html {
   overflow-wrap: break-word;
 }
 
-.AI {
-  color: #3a3e45;
-  font-weight: 680;
-  width: 528px;
-  height: 257px;
-  position: relative;
-  left: 30px;
-  top: 20px;
-  font-family: Inter;
-  text-align: left;
-  font-size: 37px;
-  letter-spacing: -0.5;
-  line-height: px;
-}
-
-.TurtleIcon {
-  position: relative;
-  text-align: center;
-  height: 40px;
-  left: -18px;
-  top: 30px;
-}
-
 .my_play_box {
   background-color: rgb(255, 255, 255);
   width: 775px;
@@ -171,10 +140,7 @@ html {
   width: 700px;
   padding-bottom: 15px;
 }
-#special-br {
-  width: 1800px;
-  line-height: 60; /* 줄 간격 조정 */
-}
+
 .my_sumbit_box {
   background-color: rgb(255, 255, 255);
   width: 775px;
@@ -199,13 +165,9 @@ html {
   margin: 20px;
   padding: 20px;
   resize: none;
+  font-size: 20px;
 }
-.submit_explanation_box {
-  position: relative;
-  width: 300px;
-  height: 200px;
-  top: 40px;
-}
+
 .submit_title {
   position: relative;
   top: 30px;
@@ -216,11 +178,7 @@ html {
 .submit_input_box {
   display: flex;
 }
-.submit_button_last {
-  position: relative;
-  top: -250px;
-  left: 500px;
-}
+
 .copy_phrase {
   left: 20px;
   position: relative;
@@ -250,46 +208,6 @@ html {
   top: 10px;
 }
 
-.user_soup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid rgb(42, 38, 38);
-  background-color: #dfffec;
-  width: 75px;
-  height: 30px;
-  position: absolute;
-  left: 730px;
-  top: 230px;
-}
-
-.top_bar {
-  width: 1671px;
-  height: 70px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-}
-.profile {
-  position: relative;
-  width: 153.56227111816406px;
-  height: 63px;
-  left: 1250px;
-  top: 26.5px;
-}
-
-.nickname_thanks {
-  color: rgba(0, 0, 0, 1);
-  white-space: nowrap;
-  position: absolute;
-  left: 38px;
-  top: -8px;
-  font-family: Apple SD Gothic Neo;
-  text-align: left;
-  align-items: center;
-  border-radius: 55px;
-}
-
 .profile_photo {
   background-color: rgb(255, 255, 255);
   width: 25px;
@@ -298,15 +216,6 @@ html {
   left: 11px;
   top: 4px;
 }
-
-.menu {
-  width: 153.56227111816406px;
-  height: 63px;
-  position: absolute;
-  left: -80px;
-  top: 0px;
-}
-
 .F22F {
   /* border: 4.5px solid black; */
   /* color: rgb(21, 21, 21); */
@@ -324,48 +233,6 @@ html {
   line-height: 38px;
   background-color: #ffffff;
   padding-top: 2.5px;
-}
-
-.QnA_3 {
-  color: rgba(0, 0, 0, 1);
-  width: 770px;
-  height: 58px;
-  position: absolute;
-  left: 900px;
-  top: 6px;
-  font-family: Apple SD Gothic Neo;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: -0.5;
-  line-height: px;
-}
-
-.Log_3 {
-  color: rgba(0, 0, 0, 1);
-  width: 770px;
-  height: 58px;
-  position: absolute;
-  left: 1000px;
-  top: 6px;
-  font-family: Apple SD Gothic Neo;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: -0.5;
-  line-height: px;
-}
-
-.About_3 {
-  color: rgba(0, 0, 0, 1);
-  width: 770px;
-  height: 58px;
-  position: absolute;
-  left: 800px;
-  top: 6px;
-  font-family: Apple SD Gothic Neo;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: -0.5;
-  line-height: px;
 }
 
 .CopyAlertOverlay {

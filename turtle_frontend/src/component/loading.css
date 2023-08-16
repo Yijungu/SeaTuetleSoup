@@ -33,3 +33,43 @@
 .loading > div:nth-child(3) {
   animation-delay: 0.4s;
 }
+
+.loading_m {
+  position: relative;
+  left: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 30px;
+  height: 20px;
+}
+
+@keyframes loading_m {
+  0% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(2px);
+  }
+}
+
+.loading_m > div {
+  background: rgb(150, 150, 150);
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  animation: loading 1.4s infinite;
+}
+
+.loading_m > div:nth-child(2) {
+  animation-delay: 0.5s;
+  background: rgba(150, 150, 150, 0.742);
+}
+
+.loading_m > div:nth-child(3) {
+  animation-delay: 0.9s;
+  background: rgba(150, 150, 150, 0.371);
+}

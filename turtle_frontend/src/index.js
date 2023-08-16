@@ -1,26 +1,67 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
+import {
+  useNavigate,
+  useLocation,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./page/home/page";
 import Thanks from "./page/thanks/page";
 import Problem from "./page/problem/page";
-import { AnimatePresence } from "framer-motion"; // 이 부분을 import 해주세요.
+import MobileHome from "./page/mobileHome/page"; // 이 부분을 추가해주세요.
+import MobileThanks from "./page/mobileThanks/page"; // 이 부분을 추가해주세요.
+import MobileProblem from "./page/mobileProblem/page"; // 이 부분을 추가해주세요.
+import { AnimatePresence } from "framer-motion";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <Router>
+function AppWrapper() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isMobile()) {
+      switch (location.pathname) {
+        case "/":
+          navigate("/mobileHome");
+          break;
+        case "/explanation":
+          navigate("/mobileExplanation");
+          break;
+        case "/issue":
+          navigate("/mobileIssue");
+          break;
+        default:
+          break;
+      }
+    }
+  }, [navigate, location]);
+
+  return (
     <AnimatePresence>
-      {" "}
-      {/* 이 부분에 추가했습니다. */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explanation" element={<Thanks />} />
         <Route path="/issue" element={<Problem />} />
+        <Route path="/mobileHome" element={<MobileHome />} />
+        <Route path="/mobileExplanation" element={<MobileThanks />} />
+        <Route path="/mobileIssue" element={<MobileProblem />} />
       </Routes>
     </AnimatePresence>
+  );
+}
+
+function isMobile() {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Router>
+    <AppWrapper />
   </Router>
 );
 
