@@ -10,10 +10,13 @@ import Loading from "../../component/loading_m";
 import { motion } from "framer-motion";
 import Modal from "react-modal";
 import ScrollToTopButton from "../../component/scrollbutton";
-import ButtonWithTip from "../../component/tiptoolbutton";
+import ButtonWithTip from "../../component/tiptoolbutton_m";
+import KeyButton from "../../component/keybutton_m";
 import Draggable from "react-draggable";
 
 export default function Problem() {
+  const [showTipOne, setShowTipOne] = useState(false);
+  const [showTipTwo, setShowTipTwo] = useState(false);
   const [text, setText] = useState("");
   const [qnas, setQnas] = useState([]);
   const [question, setQuestion] = useState("");
@@ -151,6 +154,7 @@ export default function Problem() {
     } else {
       localStorage.removeItem("qnas");
       localStorage.setItem("date", currentDate);
+      setShowTipTwo(true);
     }
   }, []);
 
@@ -371,8 +375,33 @@ export default function Problem() {
           // console.log(response.data.ai_question);
 
           let responseString = JSON.stringify(response.data.response);
+          let responseProblemCheck = JSON.stringify(
+            response.data.problem_check
+          );
           console.log(responseString);
-          if (responseString.includes("Yes") || responseString.includes("네")) {
+          console.log(responseProblemCheck);
+          if (
+            responseProblemCheck.includes("what") ||
+            responseProblemCheck.includes("you")
+          ) {
+            // if (true) {
+            updatedQnas = tempQnas.map((qna) =>
+              qna.question === text_x && qna.index === total
+                ? {
+                    question: text_x,
+                    aiQuestion: response.data.ai_question,
+                    aiQuestionKr: response.data.ai_question_kr,
+                    answerSubmit: false,
+                    isDelete: false,
+                    answer: "리롤(reroll) 버튼을 누르거나 질문을 수정해주세요.",
+                    problem_check: response.data.problem_check,
+                  }
+                : qna
+            );
+          } else if (
+            responseString.includes("Yes") ||
+            responseString.includes("네")
+          ) {
             // if (true) {
             updatedQnas = tempQnas.map((qna) =>
               qna.question === text_x && qna.index === total
@@ -383,6 +412,7 @@ export default function Problem() {
                     answerSubmit: false,
                     isDelete: false,
                     answer: "네.",
+                    problem_check: response.data.problem_check,
                   }
                 : qna
             );
@@ -399,6 +429,7 @@ export default function Problem() {
                     answerSubmit: false,
                     isDelete: false,
                     answer: "아니오.",
+                    problem_check: response.data.problem_check,
                   }
                 : qna
             );
@@ -415,6 +446,7 @@ export default function Problem() {
                     answerSubmit: false,
                     isDelete: false,
                     answer: "아마도 아닐 겁니다.",
+                    problem_check: response.data.problem_check,
                   }
                 : qna
             );
@@ -431,6 +463,7 @@ export default function Problem() {
                     answerSubmit: false,
                     isDelete: false,
                     answer: "아마도 맞을 겁니다.",
+                    problem_check: response.data.problem_check,
                   }
                 : qna
             );
@@ -444,6 +477,7 @@ export default function Problem() {
                     answerSubmit: false,
                     isDelete: false,
                     answer: "중요하지 않은 정보입니다.",
+                    problem_check: response.data.problem_check,
                   }
                 : qna
             );
@@ -523,6 +557,15 @@ export default function Problem() {
       </>
     ));
   }
+  const toggleTipOne = () => {
+    setShowTipOne(!showTipOne);
+    setShowTipTwo(false);
+  };
+
+  const toggleTipTwo = () => {
+    setShowTipTwo(!showTipTwo);
+    setShowTipOne(false);
+  };
 
   return (
     <motion.div
@@ -555,7 +598,7 @@ export default function Problem() {
             <span className="description_m">
               질문을 적으면 '네' 또는 '아니오’ 형식의 답을 받을 수 있습니다.
               <br />
-              {" " + n}번째 문제의 정답을 맞혀보세요.
+              버튼을 눌러{" " + n}번째 문제의 정답을 맞혀보세요.
             </span>
 
             <div className="problem_main_box_m">
@@ -754,7 +797,11 @@ export default function Problem() {
             {qnas.map(
               (qna, index) =>
                 !qna.isDelete && (
-                  <div className="QAresponse_m" key={index}>
+                  <div
+                    className="QAresponse_m"
+                    style={{ zIndex: qnas.length - index }}
+                    key={index}
+                  >
                     <QnA
                       question={qna.question}
                       aiQuestion={qna.aiQuestion}
@@ -775,18 +822,22 @@ export default function Problem() {
                           )
                         );
                       }}
+                      problemCheck={qna.problem_check}
                     />
                   </div>
                 )
             )}
           </div>
         </div>
-        {/* <div>
-          <ButtonWithTip />
+        <div>
+          <KeyButton initialShowTip={showTipOne} toggleTip={toggleTipOne} />
+        </div>
+        <div>
+          <ButtonWithTip initialShowTip={showTipTwo} toggleTip={toggleTipTwo} />
         </div>
         <div>
           <ScrollToTopButton className="scroll_to_top_m" />
-        </div> */}
+        </div>
       </div>
     </motion.div>
   );

@@ -43,7 +43,7 @@ turbo_llm2 = ChatOpenAI(
 )
 
 turbo_llm4 = ChatOpenAI(
-    temperature = 1,
+    temperature = 0,
     model_name = 'gpt-4',
     # frequency_penalty = 0
     max_tokens = 4
@@ -101,64 +101,70 @@ def question(query):
         output = 0
         global question_number
         question_number += 1
-        query += " please rewrite this question naturally in English."
+
+        messages = []
+        content = query + " Please space the words correctly."
+        messages.append({"role" : "user", "content": content})
+        completion = openai.ChatCompletion.create(
+        temperature = 0,
+        model = 'gpt-3.5-turbo-0613',
+        messages = messages,
+        )
+        query = completion.choices[0].message.content
+
+        # query += " translate this question into a natural positive interrogative sentence in English."
+        query += " translate this question in English."
         # query += " please rewrite this question naturally in English."
         chat_response = qa_chain_translate(query)
         chat_response1 = chat_response['result']
-        
-        # input += query
-        # output += chat_response1['result']
-        
-        # if len(chat_response1['result']) >= len(story)//6:
-        #     return "Please re-enter the question.", "", "질문을 다시 입력해주세요."
-        
-        # messages = []
-        
-        # content =  chat_response1['result'] + " Please change it into a declarative sentence."
-        # messages.append({"role" : "user", "content": content})
-        # completion = openai.ChatCompletion.create(
-        #   temperature = 0,
-        #   model = 'gpt-3.5-turbo-0613',
-        #   messages = messages,
-        # )
-        # chat_response3 = completion.choices[0].message.content
-        # input += content
-        # output += chat_response3
+        problem_check  = "noproblem"
+        if chat_response1.startswith('What') or chat_response1.startswith('Where') or chat_response1.startswith('Why') or chat_response1.startswith('How') or chat_response1.startswith('When') or chat_response1.startswith('Who') :
+            problem_check = "what"
+            test = ""
+        if ' you ' in chat_response1 or ' you?' in chat_response1:
+            problem_check = "you"  
+            test = ""  
+        else :
+            if  ' not ' in chat_response1 :
+                problem_check = "not"
+            docs = docsearch1.get_relevant_documents(chat_response1)
+            test = qa_chain.run(input_documents=docs, question=chat_response1)
 
-        # gpt4_query = chat_response1 + " Answer yes or no or probably or probably no."
-        # gpt4_query = chat_response1
-        # llm_response_tf = qa_chain(gpt4_query)
-        # messages = []
-        # content =  story + " "+ query +"대답은 네, 아니오, 아마도 그럴겁니다. 아마도 아닐 겁니다. 로 해줘."
-        # messages.append({"role" : "user", "content": content})
-        # completion = openai.ChatCompletion.create(
-        #   temperature = 0,
-        #   model = 'gpt-3.5-turbo-0613',
-        #   messages = messages,
-        # )
-        # chat_response2 = completion.choices[0].message.content
-        docs = docsearch1.get_relevant_documents(chat_response1)
-        # test = qa_chain.run(input_documents=docs, question=chat_response1+" Answer 'Yes' or 'No' or 'Probably yes' or 'Probably no'")
-        test = qa_chain.run(input_documents=docs, question=chat_response1)
-        print(test)
-        print(cb)
         # input = num_tokens_from_string(content)
         # output = num_tokens_from_string(test)
         # output += llm_response_tf['result']
 
         last_result = ""
-        if test.startswith('Yes') or test.startswith('No'):
-            response = remove_first_word(test)
+        if test.startswith('Yes') or test.startswith('No') or test == "":
+            last_result = test
+            if problem_check == "not" :
+                if test.startswith('Yes') :
+                    last_result = 'No'
+                else :  
+                    last_result = 'Yes'
         else :
             response = test
 
-        if ('not explicitly' in response or 'not provide' in response or 
-        'not information' in response or 'not mention' in response):
-            if 'but' in response or 'However' in response:
+            if ('not explicitly' in response or 'not provide' in response or 
+            'not information' in response or 'not mention' in response or 
+            'no information' in response or 'not mention' in response ):
+                if 'but' in response or 'However' in response or 'only' in response:
+                    messages = []
+                    content =  "Given the information that " + response
+                    content += " can we confirm that " + chat_response1
+                    content += " please answer 'Probably yes.' or 'Probably no.'." 
+                    messages.append({"role" : "user", "content": content})
+                    completion = openai.ChatCompletion.create(
+                    temperature = 0,
+                    model = 'gpt-3.5-turbo-0613',
+                    messages = messages,
+                    )
+                    last_result = completion.choices[0].message.content
+            else :
                 messages = []
                 content =  "Given the information that " + response
                 content += " can we confirm that " + chat_response1
-                content += " please answer 'Yes.' or 'No.' or 'Probably yes.' or 'Probably no.'" 
+                content += " please answer 'Probably yes.' or 'Probably no.'." 
                 messages.append({"role" : "user", "content": content})
                 completion = openai.ChatCompletion.create(
                 temperature = 0,
@@ -166,22 +172,11 @@ def question(query):
                 messages = messages,
                 )
                 last_result = completion.choices[0].message.content
-        else :
-            messages = []
-            content =  "Given the information that " + response
-            content += " can we confirm that " + chat_response1
-            content += " please answer 'Yes.' or 'No.' or 'Probably yes.' or 'Probably no.'" 
-            messages.append({"role" : "user", "content": content})
-            completion = openai.ChatCompletion.create(
-            temperature = 0,
-            model = 'gpt-3.5-turbo-0613',
-            messages = messages,
-            )
-            last_result = completion.choices[0].message.content
+                # if 'Yes' in last_result : or 'No' in last_result
         # input += num_tokens_from_string(content)
         # output += num_tokens_from_string(chat_response)
 
-        prompt = chat_response1+ "Translate this into Korean."
+        prompt = chat_response1+ "Translate this question into Korean."
 
         response = openai.ChatCompletion.create(
             model = 'gpt-3.5-turbo-0613',
@@ -199,9 +194,9 @@ def question(query):
         # input += chat_response1['result'] + " Translate this into Korean."
         # output += chat_response3
         global last_date
-        new_problem =QuestionLog(date=last_date.day, question=query, answer=last_result, answer2=test)
+        new_problem =QuestionLog(date=last_date.day, question=query, question_kr=chat_response1, answer=last_result, answer2=test)
         new_problem.save()
-    return chat_response1, last_result, chat_response3
+    return chat_response1, last_result, chat_response3, problem_check
     
 
 def submit(answer):
@@ -209,8 +204,8 @@ def submit(answer):
         global question_number
         question_number += 1
         last_result = ""
-
-        answer += " please rewrite this question naturally in English."
+        answer_origin = answer
+        answer += " please rewrite this sentance naturally in English."
         messages = []
         messages.append({"role" : "user", "content": answer})
         completion = openai.ChatCompletion.create(
@@ -226,41 +221,43 @@ def submit(answer):
         global problem_en
         global answer_plus
         
-        docs = docsearch1.get_relevant_documents(chat_response1)
-        # test = qa_chain.run(input_documents=docs, question=chat_response1+" Answer 'Yes' or 'No' or 'Probably yes' or 'Probably no'")
-        result_yes_no = qa_chain.run(input_documents=docs, question=chat_response1)
-        print("result_yes_no :", result_yes_no, chat_response1)
-        if result_yes_no.startswith('Yes') :
-            messages = []
-            content =  "Given the information that " + "'"+answer_plus+"',"
-            content += chat_response1 + " is saying "+keywords[0].alternative_word+"? Answer yes or no." 
-            # content += " Please answer 'yes.' or 'no.' or 'probably.' or 'probably not.'"
-            print(content)
-            messages.append({"role" : "user", "content":content})
-            completion = openai.ChatCompletion.create(
-                temperature = 0,
-                model = 'gpt-3.5-turbo-0613',
-                messages = messages
-                )
-            last_result = completion.choices[0].message.content
-            for keyword in keywords:
-                if last_result.startswith('Yes') :
-                    print(3)
-                    prompt = chat_response1 +f" Does this sentence contain the word '{keyword.word}'? Answer yes or no."
-                    completion = openai.ChatCompletion.create(
-                        model = 'gpt-3.5-turbo-0613',
-                        messages=[
+        # docs = docsearch1.get_relevant_documents(chat_response1)
+        # last_result = qa_chain.run(input_documents=docs, question=chat_response1)
+        # print("result_yes_no :", last_result, chat_response1)
+        # if last_result.startswith('Yes') or 1 :
+            # messages = []
+            # content =  "Given the information that " + "'"+answer_plus+"',"
+            # content += chat_response1 + " is saying "+keywords[0].alternative_word+"? Answer yes or no." 
+            # # content += " Please answer 'yes.' or 'no.' or 'probably.' or 'probably not.'"
+            # print(content)
+            # messages.append({"role" : "user", "content":content})
+            # completion = openai.ChatCompletion.create(
+            #     temperature = 0,
+            #     model = 'gpt-3.5-turbo-0613',
+            #     messages = messages
+            #     )
+            # last_result = completion.choices[0].message.content
+            # for keyword in keywords:
+            #     if last_result.startswith('Yes') :
+            #         print(3)
+            #         prompt = chat_response1 +f" Does this sentence contain the word '{keyword.word}'? Answer yes or no."
+            #         completion = openai.ChatCompletion.create(
+            #             model = 'gpt-3.5-turbo-0613',
+            #             messages=[
                             
-                            {"role": "user", "content": prompt}
-                        ],
-                        temperature=0,
-                    )
+            #                 {"role": "user", "content": prompt}
+            #             ],
+            #             temperature=0,
+            #         )
                     
-                    last_result = completion.choices[0].message.content.strip()
-                    print(prompt)
-
-        else :
-            last_result = "No"
+            #         last_result = completion.choices[0].message.content.strip()
+            #         print(prompt)
+        docs = docsearch1.get_relevant_documents("Is" +keywords[0].alternative_word + " because " + chat_response1 + "?")
+        print("Is" +keywords[0].alternative_word + " because " + chat_response1 + "?")
+        last_result = qa_chain.run(input_documents=docs, question="Is" +keywords[0].alternative_word + " because " + chat_response1 + "?")
+             
+        # else :
+        #     last_result = "No"
 
         messages = []
         messages.append({"role" : "user", "content": chat_response1+ " Translate this into Korean."})
@@ -272,7 +269,7 @@ def submit(answer):
         chat_response3 = completion.choices[0].message.content
 
         global last_date
-        new_problem =QuestionLog(date=last_date.day, question=answer, answer=last_result)
+        new_problem =QuestionLog(date=last_date.day, question=answer, question_kr=chat_response1,  answer=last_result)
         new_problem.save()
         # print(cb)
     return chat_response1, chat_response3, last_result
@@ -282,7 +279,7 @@ def submit(answer):
 def get_story():
     korea_timezone = pytz.timezone('Asia/Seoul')
     now = datetime.now(korea_timezone)
-    today = now.day
+    today = now.day-1
     seaturtle = SeaTurtle.objects.filter(date = today)
     global story
     global correct_answer
@@ -424,14 +421,14 @@ def export_and_delete_Log():
     file_exists = os.path.isfile(filename)
     
     with open(filename, 'a', newline='') as csvfile:
-        fieldnames = ['id','date', 'question', 'answer', 'answer2']
+        fieldnames = ['id','date', 'question', 'question_kr', 'answer', 'answer2']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         if not file_exists:
             writer.writeheader()
 
         for obj in data:
-            writer.writerow({'id': obj.id,'date': obj.date, 'question': obj.question, 'answer': obj.answer, 'answer2': obj.answer2})
+            writer.writerow({'id': obj.id,'date': obj.date, 'question': obj.question, "question_kr": obj.question_kr,'answer': obj.answer, 'answer2': obj.answer2})
 
     data.delete()
 
@@ -467,7 +464,7 @@ def changeAiQeustion(query):
     chat_response1 = chat_response1.split("?")[0]+"?"
 
     messages = []
-    messages.append({"role" : "user", "content": chat_response1 + " Translate this into Korean."})
+    messages.append({"role" : "user", "content": chat_response1 + " Translate this question into Korean."})
     completion = openai.ChatCompletion.create(
       temperature = 0,
       model = 'gpt-3.5-turbo-0613',
@@ -506,13 +503,25 @@ def question_en(query):
     #     response = llm_response_tf['result']
     last_result = ""
     if test.startswith('Yes') or test.startswith('No'):
-        response = remove_first_word(test)
+        last_result = test
     else :
         response = test
 
-    if ('not explicitly' in response or 'not provide' in response or 
-    'not information' in response or 'not mention' in response):
-        if 'but' in response or 'However' in response:
+        if ('not explicitly' in response or 'not provide' in response or 
+        'not information' in response or 'not mention' in response):
+            if 'but' in response or 'However' in response:
+                messages = []
+                content =  "Given the information that " + response
+                content += " can we confirm that " + query
+                content += " please answer 'Yes.' or 'No.' or 'Probably yes.' or 'Probably no.'" 
+                messages.append({"role" : "user", "content": content})
+                completion = openai.ChatCompletion.create(
+                temperature = 0,
+                model = 'gpt-3.5-turbo-0613',
+                messages = messages,
+                )
+                last_result = completion.choices[0].message.content
+        else :
             messages = []
             content =  "Given the information that " + response
             content += " can we confirm that " + query
@@ -524,18 +533,6 @@ def question_en(query):
             messages = messages,
             )
             last_result = completion.choices[0].message.content
-    else :
-        messages = []
-        content =  "Given the information that " + response
-        content += " can we confirm that " + query
-        content += " please answer 'Yes.' or 'No.' or 'Probably yes.' or 'Probably no.'" 
-        messages.append({"role" : "user", "content": content})
-        completion = openai.ChatCompletion.create(
-        temperature = 0,
-        model = 'gpt-3.5-turbo-0613',
-        messages = messages,
-        )
-        last_result = completion.choices[0].message.content
     global last_date
     new_problem =QuestionLog(date=last_date.day, question=query, answer=last_result, answer2=test)
     new_problem.save()

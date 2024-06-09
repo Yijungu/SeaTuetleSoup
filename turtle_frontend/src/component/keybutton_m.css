@@ -1,0 +1,36 @@
+.round-button_key_m {
+  position: fixed;
+  bottom: 7rem; /* .scroll_to_top의 bottom 값에 버튼 높이 및 원하는 간격을 더한 값 */
+  right: 0.65rem; /* .scroll_to_top의 right 값 */
+  outline: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
+}
+
+.key-box_m {
+  position: fixed;
+  bottom: 40px;
+  right: 70px; /* .scroll_to_top의 right 값에 버튼 너비 및 원하는 간격을 더한 값 */
+  width: 280px;
+  min-height: 50px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 2px 2px 10px rgba(255, 255, 255, 1);
+  z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
+  transform-origin: bottom;
+}
+.key-text_m {
+  position: fixed;
+  bottom: 7rem;
+  right: 65px; /* .scroll_to_top의 right 값에 버튼 너비 및 원하는 간격을 더한 값 */
+  z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
+  transform-origin: bottom;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.slide-enter_key_m {
+  transform: translateX(100px);
+  opacity: 0;
+}

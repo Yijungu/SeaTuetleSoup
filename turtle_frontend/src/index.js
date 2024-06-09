@@ -53,6 +53,37 @@ function AppWrapper() {
     </AnimatePresence>
   );
 }
+//   useEffect(() => {
+//     if (isMobile()) {
+//       switch (location.pathname) {
+//         case "/":
+//           navigate("/mobileHome");
+//           break;
+//         case "/explanation":
+//           navigate("/mobileExplanation");
+//           break;
+//         case "/issue":
+//           navigate("/mobileIssue");
+//           break;
+//         default:
+//           break;
+//       }
+//     }
+//   }, [navigate, location]);
+
+//   return (
+//     <AnimatePresence>
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/explanation" element={<Home />} />
+//         <Route path="/issue" element={<Home />} />
+//         <Route path="/mobileHome" element={<MobileHome />} />
+//         <Route path="/mobileExplanation" element={<MobileHome />} />
+//         <Route path="/mobileIssue" element={<MobileHome />} />
+//       </Routes>
+//     </AnimatePresence>
+//   );
+// }
 
 function isMobile() {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

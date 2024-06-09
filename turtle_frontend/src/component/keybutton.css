@@ -1,0 +1,57 @@
+.round-button_key {
+  position: fixed;
+  bottom: 110px; /* .scroll_to_top의 bottom 값에 버튼 높이 및 원하는 간격을 더한 값 */
+  right: 9px; /* .scroll_to_top의 right 값 */
+  outline: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
+}
+
+.key-box {
+  position: fixed;
+  bottom: 10px;
+  right: 70px; /* .scroll_to_top의 right 값에 버튼 너비 및 원하는 간격을 더한 값 */
+  width: 280px;
+  min-height: 50px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
+  transform-origin: bottom;
+}
+.key-text {
+  position: fixed;
+  bottom: 95px;
+  right: 60px; /* .scroll_to_top의 right 값에 버튼 너비 및 원하는 간격을 더한 값 */
+  z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
+  transform-origin: bottom;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.slide-enter_key {
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+.key-text {
+  line-height: 22px;
+}
+
+.slide-enter-active_key {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 500ms, opacity 500ms;
+}
+
+.slide-exit_key {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-exit-active_key {
+  transform: translateX(100px);
+  opacity: 0;
+  transition: transform 500ms, opacity 500ms;
+}

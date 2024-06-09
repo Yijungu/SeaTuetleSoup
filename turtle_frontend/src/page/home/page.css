@@ -71,30 +71,25 @@ html {
   background-color: rgb(19, 82, 255);
   width: 170px;
   height: 56px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 }
 .home_to_explanation {
   color: rgba(255, 255, 255, 1);
-  width: 100px;
-  height: 22px;
-  position: absolute;
-  left: 38px;
-  top: 17px;
-  text-align: center;
   font-size: 18px;
-  letter-spacing: 1;
+  letter-spacing: 3;
   font-weight: 550;
 }
 .conversation_box {
   width: 1105px;
   height: 557.0000610351562px;
   position: absolute;
+  display: flex;
+  position: relative;
+  justify-content: center;
   left: 167px;
   top: 583px;
 }
@@ -211,6 +206,7 @@ html {
   top: -40px;
   left: -6px;
 }
+
 .my_chat_box_2 {
   display: flex;
   color: #ffffff;
@@ -352,7 +348,7 @@ html {
   /* color: rgb(21, 21, 21); */
   width: 151px;
   height: 55px;
-  position: relative;
+  position: absolute;
   left: 35px;
   top: 40px;
   transform: translateY(-50%);
@@ -547,17 +543,45 @@ html {
   position: absolute;
   top: 1200px;
   left: 350px;
-  height: 2000px;
   /* display: flex; */
 }
 
 .footer {
   position: relative;
-  top: 3250px;
+  top: 2250px;
   left: 110px;
   width: 85%;
   border-top: 1px solid black;
   color: black;
   text-align: end;
   padding: 10px 0;
+}
+.UpdateModalOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.UpdateModalContent {
+  position: relative;
+  width: 480px;
+  height: 280px;
+  /* margin: auto; */
+  /* border: 1px solid #2d2d2d; */
+  background: #ffffff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  outline: none;
 }

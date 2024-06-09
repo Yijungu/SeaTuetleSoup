@@ -7,11 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollToTopButton from "../../component/scrollbutton_m";
 import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(true);
   const [nickname, setNickname] = useState(
     localStorage.getItem("nickname") || ""
   );
+  const [hintText, setHintText] = useState("힌트 A: 기본적인 힌트");
+  const [hintText2, setHintText2] = useState("힌트 B: 결정적인 힌트");
+  const [answer, setAnswer] = useState("정답");
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const handleChange = (event) => {
@@ -74,6 +79,80 @@ export default function Home() {
               AI 기반 바다거북수프 공장
             </span>
           </div>
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={setIsOpen}
+            overlayClassName="UpdateModalOverlay_m"
+            className="UpdateModalContent_m"
+            contentLabel="힌트"
+          >
+            <p
+              style={{
+                fontSize: "13px",
+                // marginBottom: "30px",
+                letterSpacing: "-0.1px",
+              }}
+            >
+              AI 바거수 '마수레'가 별안간 잠수를 탔다. 왜일까?
+            </p>
+            <div
+              style={{
+                borderTop: "1px solid black",
+                borderBottom: "1px solid black",
+                paddingBottom: "7px",
+              }}
+              className="hint-button-container_m"
+            >
+              <button
+                style={{
+                  marginTop: "24px",
+                  borderRadius: "4px",
+                  border: "1px solid #2d2d2d",
+                  backgroundColor: "#ffffff",
+                  padding: "7px",
+                }}
+                className="hint_button_m"
+                onClick={() =>
+                  setHintText("마수레는 베타를 떼서 돌아올 것이다.")
+                }
+              >
+                {hintText}
+              </button>
+              <button
+                style={{
+                  borderRadius: "4px",
+                  border: "1px solid #2d2d2d",
+                  backgroundColor: "#ffffff",
+                  padding: "7px",
+                }}
+                className="hint_button"
+                onClick={() =>
+                  setHintText2("마수레는 AI 오류를 고치고자 한다.")
+                }
+              >
+                {hintText2}
+              </button>
+            </div>
+            <button
+              style={{
+                borderRadius: "4px",
+                border: "none",
+                fontSize: "13px",
+                backgroundColor: "#ffffff",
+                padding: "7px",
+                paddingTop: "13px",
+                whiteSpace: "pre-line",
+                lineHeight: "25px",
+              }}
+              onClick={() =>
+                setAnswer(
+                  "정답 정확도 등 AI 관련 자잘한 오류를 조금 더 고쳐서 정식 서비스로 돌아오겠습니다. 항상 플레이해주셔서 감사합니다!\n- 마수레 주인장 -"
+                )
+              }
+            >
+              {answer}
+            </button>
+          </Modal>
           <div className="start_button_box_m">
             {/* <div className="start_button_m"></div> */}
             <Link
@@ -122,8 +201,7 @@ export default function Home() {
                   <br />
                   <br /> 질문에 대한 답을 듣게 되면, 이를 바탕으로 이야기의
                   전말을 추리합니다. 이렇게 반복하여 문답을 진행한 뒤, 정답을
-                  맞히고 싶다면 <span className="bold-word_m">‘Tab 키’</span>를
-                  눌러 정답을 작성하면 됩니다.
+                  맞히고 싶다면 버튼을 눌러 정답을 작성하면 됩니다.
                 </span>
               </div>
             </div>

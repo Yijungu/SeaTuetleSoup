@@ -12,6 +12,13 @@ import Loading from "./loading_m";
 import RecollQuestion from "../images/RecollQuestion.png";
 import AiQuestionTag from "../images/AiQuestionTag.png";
 import QADeleteButton from "../images/QADeleteButton.png";
+import GreenGraph from "../images/GreenGraph.png";
+import YellowGraph from "../images/YellowGraph.png";
+import RedGraph from "../images/RedGraph.png";
+import GreenMassege from "../images/GreenMassege.png";
+import YellowMassege from "../images/YellowMassege.png";
+import RedMassegeYou from "../images/RedMassegeYou.png";
+import RedMassegeWhat from "../images/RedMassegeWhat.png";
 
 const QnA = ({
   question,
@@ -23,6 +30,7 @@ const QnA = ({
   answerSubmit,
   borderBottomStrength,
   updateQnas,
+  problemCheck,
 }) => {
   const navigate = useNavigate();
   const [boxes, setBoxes] = useState(opened);
@@ -34,6 +42,12 @@ const QnA = ({
   const [isAnswerSubmit, setIsAnswerSubmit] = useState(answerSubmit);
   const [isDelete, setIsDelete] = useState(false);
   const [isDeleteVisible, setIsDeleteVisible] = useState(false);
+  const [isProblemCheck, setIsProblemCheck] = useState(problemCheck);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    setIsProblemCheck(problemCheck);
+  }, [problemCheck]);
 
   useEffect(() => {
     setBoxes(opened);
@@ -306,7 +320,7 @@ const QnA = ({
                     fontSize: "0.75rem",
                     color: "#454545",
                     textAlign: "left",
-                    // width: "80%",
+                    width: "75%",
                   }}
                 >
                   {rerollQuestion}
@@ -397,6 +411,102 @@ const QnA = ({
                 {rerollQuestionKr}
               </Typography>
             )}
+            <div
+              style={{
+                position: "relative",
+                textAlign: "right",
+                width: "20%",
+                marginRight: "0.5rem",
+              }}
+            >
+              {isProblemCheck == "noproblem" && (
+                <img
+                  src={GreenGraph}
+                  alt="GreenGraph"
+                  width="20"
+                  height="15"
+                  onMouseEnter={() => setIsHovered(true)} // 마우스가 올라가면 isHovered를 true로 설정
+                  onMouseLeave={() => setIsHovered(false)} // 마우스가 내려가면 isHovered를 false로 설정
+                  style={{
+                    position: "relative",
+                  }}
+                />
+              )}
+              {isProblemCheck == "not" && (
+                <img
+                  src={YellowGraph}
+                  alt="YellowGraph"
+                  width="20"
+                  height="15"
+                  onMouseEnter={() => setIsHovered(true)} // 마우스가 올라가면 isHovered를 true로 설정
+                  onMouseLeave={() => setIsHovered(false)} // 마우스가 내려가면 isHovered를 false로 설정
+                  style={{
+                    position: "relative",
+                    right: "-30%",
+                    padding: "12.5px",
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                  }}
+                />
+              )}
+              {(isProblemCheck == "you" || isProblemCheck == "what") && (
+                <img
+                  src={RedGraph}
+                  alt="RedGraph"
+                  width="20"
+                  height="15"
+                  onMouseEnter={() => setIsHovered(true)} // 마우스가 올라가면 isHovered를 true로 설정
+                  onMouseLeave={() => setIsHovered(false)} // 마우스가 내려가면 isHovered를 false로 설정
+                  style={{
+                    position: "relative",
+                    right: "-0.4rem",
+                    padding: "12.5px",
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                  }}
+                />
+              )}
+
+              <div
+                style={{
+                  position: "absolute",
+                  right: "-1.2rem",
+                }}
+              >
+                {isHovered == true && isProblemCheck == "noproblem" && (
+                  <img
+                    src={GreenMassege}
+                    alt="GreenMassege"
+                    width="300"
+                    height="150"
+                  />
+                )}
+                {isHovered == true && isProblemCheck == "not" && (
+                  <img
+                    src={YellowMassege}
+                    alt="YellowMassege"
+                    width="300"
+                    height="150"
+                  />
+                )}
+                {isHovered == true && isProblemCheck == "you" && (
+                  <img
+                    src={RedMassegeYou}
+                    alt="RedGraph"
+                    width="300"
+                    height="150"
+                  />
+                )}
+                {isHovered == true && isProblemCheck == "what" && (
+                  <img
+                    src={RedMassegeWhat}
+                    alt="RedGraph"
+                    width="300"
+                    height="150"
+                  />
+                )}
+              </div>
+            </div>
           </Box>
         </div>
       )}
@@ -444,7 +554,7 @@ const QnA = ({
         style={{
           position: "absolute",
           top: "0",
-          left: "97%",
+          left: "99%",
           backgroundColor: "#ffffff",
         }}
         onMouseOver={handleMouseOver}

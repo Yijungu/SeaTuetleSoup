@@ -1,10 +1,10 @@
 .round-button {
   position: fixed;
   bottom: 60px; /* .scroll_to_top의 bottom 값에 버튼 높이 및 원하는 간격을 더한 값 */
-  right: 4px; /* .scroll_to_top의 right 값 */
+  right: 9px; /* .scroll_to_top의 right 값 */
   outline: none;
   border: none;
-  background-color: #ffffff;
+  background-color: rgba(0, 0, 0, 0);
   z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
 }
 
@@ -23,12 +23,11 @@
 }
 .tip-text {
   position: fixed;
-  bottom: 10px;
-  right: 70px; /* .scroll_to_top의 right 값에 버튼 너비 및 원하는 간격을 더한 값 */
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  bottom: 40px;
+  right: 60px; /* .scroll_to_top의 right 값에 버튼 너비 및 원하는 간격을 더한 값 */
   z-index: 1001; /* .scroll_to_top의 z-index 값보다 크게 설정 */
   transform-origin: bottom;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .slide-enter {

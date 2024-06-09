@@ -10,6 +10,7 @@ import GreenTurtle from "../../images/GreenTurtle.png";
 import BlueSpeechBubble from "../../images/BlueSpeechBubble.png";
 import WhiteSpeechBubble from "../../images/WhiteSpeechBubble.png";
 import WhiteTurtle from "../../images/WhiteTurtle.png";
+// import RatingModal from "../../component/ratingmodal";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 
@@ -37,6 +38,9 @@ export default function Thanks() {
   const endTime = localStorage.getItem("endTime");
   const [problem, setProblem] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [isOpen, setIsOpen] = useState(true);
+  const [rating, setRating] = useState(Number(localStorage.getItem("rating")));
+  const [starFilled, setStarFilled] = useState(0);
 
   useEffect(() => {
     const storedStartTime = new Date(localStorage.getItem("startTime"));
@@ -135,6 +139,16 @@ export default function Thanks() {
     }, 800);
   };
 
+  const handleRating = (rate) => {
+    setStarFilled(rate);
+  };
+
+  const closeRating = () => {
+    setRating(starFilled);
+    setIsOpen(false);
+    localStorage.setItem("rating", starFilled);
+  };
+
   if (!endTime) {
     return (
       <div className="centered-message">
@@ -145,6 +159,36 @@ export default function Thanks() {
     return (
       <div className="container">
         <div className="desktop3">
+          {!rating && (
+            <Modal
+              isOpen={isOpen}
+              onRequestClose={() => setIsOpen(false)}
+              overlayClassName="RatingOverlay"
+              className="RatingContent"
+              contentLabel="Rating Modal"
+            >
+              <h2>오늘의 레시피는 어떠셨나요?</h2>
+              <div className="stars">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    style={{ color: star <= starFilled ? "gold" : "gray" }}
+                    onClick={() => handleRating(star)}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <br />
+              <button
+                className="rating_button_box"
+                onClick={() => closeRating()}
+              >
+                확인
+              </button>
+            </Modal>
+          )}
+
           <div className="overall_layout">
             {userAnswer && (
               <div className="user_answer_layout">

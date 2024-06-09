@@ -6,11 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollToTopButton from "../../component/scrollbutton";
 import React, { useState, useEffect } from "react";
+import HomeConversation from "../../images/HomeConversationPC.png";
+import Modal from "react-modal";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(true);
   const [nickname, setNickname] = useState(
     localStorage.getItem("nickname") || ""
   );
+  const [hintText, setHintText] = useState("힌트 A: 기본적인 힌트");
+  const [hintText2, setHintText2] = useState("힌트 B: 결정적인 힌트");
+  const [answer, setAnswer] = useState("정답");
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const handleChange = (event) => {
@@ -40,36 +46,99 @@ export default function Home() {
             <span className="home_title">My Soup Recipe</span>
             <span className="home_title_small">AI 기반 바다거북수프 공장</span>
           </div>
-          <div className="start_button_box">
-            <div className="start_button"></div>
-            <Link
-              to="/issue"
-              className="home_to_explanation"
-              style={{ textDecoration: "none" }}
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={setIsOpen}
+            overlayClassName="UpdateModalOverlay"
+            className="UpdateModalContent"
+            contentLabel="포기 확인"
+          >
+            <p
+              style={{
+                fontSize: "15px",
+                // marginBottom: "30px",
+                letterSpacing: "-0.1px",
+              }}
             >
-              시작하기 ✨
-            </Link>
+              AI 바거수 '마수레'가 별안간 잠수를 탔다. 왜일까?
+            </p>
+            <div
+              style={{
+                borderTop: "1px solid black",
+                borderBottom: "1px solid black",
+                paddingBottom: "7px",
+              }}
+              className="hint-button-container"
+            >
+              <button
+                style={{
+                  marginTop: "20px",
+                  borderRadius: "4px",
+                  border: "1px solid #2d2d2d",
+                  backgroundColor: "#ffffff",
+                  padding: "7px",
+                }}
+                className="hint_button"
+                onClick={() =>
+                  setHintText("마수레는 베타를 떼서 돌아올 것이다.")
+                }
+              >
+                {hintText}
+              </button>
+              <button
+                style={{
+                  borderRadius: "4px",
+                  border: "1px solid #2d2d2d",
+                  backgroundColor: "#ffffff",
+                  padding: "7px",
+                }}
+                className="hint_button"
+                onClick={() =>
+                  setHintText2("마수레는 AI 오류를 고치고자 한다.")
+                }
+              >
+                {hintText2}
+              </button>
+            </div>
+            <button
+              style={{
+                borderRadius: "4px",
+                border: "none",
+                fontSize: "15px",
+                backgroundColor: "#ffffff",
+                padding: "7px",
+                paddingTop: "13px",
+                whiteSpace: "pre-line",
+                lineHeight: "25px",
+              }}
+              onClick={() =>
+                setAnswer(
+                  "정답 정확도 등 AI 관련 자잘한 오류를 조금 더 고쳐서 정식 서비스로 돌아오겠습니다. 항상 플레이해주셔서 감사합니다!\n- 마수레 주인장 -"
+                )
+              }
+            >
+              {answer}
+            </button>
+          </Modal>
+          <div className="start_button_box">
+            <div className="start_button">
+              <Link
+                to="/issue"
+                className="home_to_explanation"
+                style={{ textDecoration: "none" }}
+              >
+                시작하기✨
+              </Link>
+            </div>
           </div>
           <div className="conversation_box">
-            <div className="computer_screan_top"></div>
-            <div className="computer_screan_botton"></div>
-
-            <div className="computer_screan"></div>
-            <div className="computer_screan_button1"></div>
-            <div className="computer_screan_button2"></div>
-            <div className="computer_screan_button3"></div>
-
-            <div className="my_chat_box">바닷가 레스토랑인게 중요합니까?</div>
-
-            <div className="AI_chat_box_2">
-              네. 그 남자의 과거와 관련있습니다.
-            </div>
-
-            <div className="AI_chat_box">네. 조금은 관계 있습니다.</div>
-
-            <div className="my_chat_box_2">
-              수프가 남자의 과거와 관련이 있나요?
-            </div>
+            <img
+              className="HomeConversation"
+              src={HomeConversation}
+              alt="HomeConversation"
+              width="600"
+              height="480"
+            />
           </div>
           <img
             className="F22F_main"

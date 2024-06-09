@@ -31,7 +31,7 @@ services:
       context: ./turtle_frontend
       dockerfile: Dockerfile
     environment:
-      REACT_APP_API_URL: https://mysouprecipes.com/api
+      REACT_APP_API_URL: http://localhost:8000
     volumes:
       - ./turtle_frontend:/app
     ports:
