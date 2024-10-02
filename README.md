@@ -1,6 +1,8 @@
-# SeaTuetleSoup
+<img width="753" alt="image" src="https://github.com/user-attachments/assets/1bedce5d-c793-43f6-b0b4-10b29ca20886"># SeaTuetleSoup
 
 **바다거북수프 - 미스터리 게임을 웹페이지에서 AI로 즐길 수 있는 서비스**
+
+<img width="753" alt="image" src="https://github.com/user-attachments/assets/f2cc3742-9f60-44f2-adc6-ad7fa4a3ea5d">
 
 ## 개요
 **SeaTuetleSoup**은 미스터리한 이야기를 알아가는 게임인 "바다거북수프"를 AI를 이용해 웹페이지에서 사용자들이 하루에 한 번씩 즐길 수 있도록 만든 애플리케이션입니다. 이 서비스는 사용자가 AI 사회자와 질의응답을 통해 이야기를 풀어나가면서, 문제의 실체를 밝혀가는 경험을 제공합니다.
