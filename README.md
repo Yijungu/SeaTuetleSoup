@@ -1,4 +1,4 @@
-<img width="753" alt="image" src="https://github.com/user-attachments/assets/1bedce5d-c793-43f6-b0b4-10b29ca20886"># SeaTuetleSoup
+# SeaTuetleSoup
 
 **바다거북수프 - 미스터리 게임을 웹페이지에서 AI로 즐길 수 있는 서비스**
 
